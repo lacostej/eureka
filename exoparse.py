@@ -23,7 +23,7 @@ def randomFrom(array):
   import random
   return array[random.randint(0, len(array) -1 )]
 
-class OneOf(Func):
+class List(Func):
   def __init__(self, values):
     self.values = values
 
@@ -31,7 +31,7 @@ class OneOf(Func):
     return randomFrom(self.values)
 
   def __str__(self):
-#    return "OneOf("+",".join(values)+")"
+#    return "List("+",".join(values)+")"
     return str(self.execute())
 
 class Range(Func):
@@ -162,7 +162,7 @@ def p_statement_assignment(p):
 def p_value_assignment(p):
   '''value_assignment : decimal_range
                       | int_range
-                      | one_of'''
+                      | list'''
   p[0] = p[1]
 
 def p_decimal_range(p):
@@ -183,9 +183,9 @@ def p_int_range(p):
   else:
     p[0] = Range(p[2], p[4], p[7])
 
-def p_one_of(p):
-  'one_of : LPAREN number_list RPAREN'
-  p[0] = OneOf(p[2])
+def p_list(p):
+  'list : LPAREN number_list RPAREN'
+  p[0] = List(p[2])
 
 def p_number_list(p):
   '''number_list : number_list COMMA number
