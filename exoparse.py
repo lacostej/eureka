@@ -24,17 +24,24 @@ def randomFrom(array):
   return array[random.randint(0, len(array) -1 )]
 
 class List(Func):
+  val = None
+
   def __init__(self, values):
     self.values = values
 
   def execute(self):
     return randomFrom(self.values)
 
+  def value(self):
+    if (self.val == None):
+      self.val = str(self.execute())
+    return self.val
+
   def __str__(self):
-#    return "List("+",".join(values)+")"
-    return str(self.execute())
+    return str(self.value())
 
 class Range(Func):
+  val = None
   def __init__(self, start, stop, exclude=None):
     self.start = start
     self.stop = stop
@@ -44,13 +51,21 @@ class Range(Func):
     theRange = range(self.start, self.stop)
     if (self.exclude != None):
       theRange.remove(self.exclude)
-    return randomFrom(theRange)
+    r = randomFrom(theRange)
+    return r
+
+  def value(self):
+    if (self.val == None):
+      self.val = str(self.execute())
+    return self.val
 
   def __str__(self):
 #    return "Range("+str(self.start)+","+str(self.stop)+")"
-    return str(self.execute())
+    return "Range(" + self.value() + ")"
 
 class DecimalRange(Func):
+  val = None
+
   def __init__(self, start, stop, exclude=None):
     self.start = start
     self.stop = stop
@@ -62,17 +77,24 @@ class DecimalRange(Func):
     intr = 0
     while (intr == 0):
       intr = random.randint(self.start * 100, self.stop * 100)
-    return decimal.Decimal(intr)/100
+    value=decimal.Decimal(intr)/100
+    return value
+
+  def value(self):
+    if (self.val == None):
+      self.val = str(self.execute())
+    return self.val
 
   def __str__(self):
 #    return "Range("+str(self.start)+","+str(self.stop)+")"
-    return str(self.execute())
+    return str(self.value())
 
 signOps=['+','-',':','*']
 sign1Ops=['+', '-']
 sign2Ops=['*', ':']
 
 class PredefinedFunction(Func):
+  val = None
   def __init__(self, func_symbol):
     self.functions = { #Built in Function table
       '\sign' : Executor(randomFrom, signOps),
@@ -81,17 +103,32 @@ class PredefinedFunction(Func):
     }
     self.function = self.functions[func_symbol]
 
+  def execute(self):
+    return self.function.execute()
+
+  def value(self):
+    if (self.val == None):
+      self.val = str(self.execute())
+    return self.val
+
   def __str__(self):
-    return "Range("+str(self.function.execute())+")"
+    return "Range("+self.value()+")"
 
 class Variable:
   function = None
+  val = None
 
   def __init__(self, name):
     self.name = name
 
+  def compute(self):
+    self.val = str(self.function.execute())
+
+  def value(self):
+    return self.val
+
   def __str__(self):
-    return "var " + self.name + ":" + str(self.function)
+    return "var " + self.name + ":" + self.value()
 
 class Exercice:
   def __init__(self, description, statements, formula, result):
@@ -100,12 +137,34 @@ class Exercice:
     self.formula = formula
     self.result = result
 
+  def dirty_replace(self, text):
+    '''temporary function until we implement formual and solution parsing'''
+    for s in self.statements:
+      if  (text[0] == s.name):
+        text = self.myreplace(text, s.name + " ", s.value() + " ", 1)
+      text = self.myreplace(text, "(" + s.name, "(" + s.value() )
+      text = self.myreplace(text, s.name + ")", s.value() + ")" )
+      text = self.myreplace(text, "{" + s.name, "{" + s.value() )
+      text = self.myreplace(text, s.name + "}", s.value() + "}" )
+      text = self.myreplace(text, " " + s.name, " " + s.value())
+      text = self.myreplace(text, "*" + s.name, "*" + s.value())
+      text = self.myreplace(text, "^" + s.name, "^" + s.value())
+    return text
+
+  def myreplace(self, text, old, new, count=None):
+    if (count != None):
+      v = text.replace(old, new, count)
+    else:
+      v = text.replace(old, new)
+#    print "replace " + old + " " + new + " " + v
+    return v
+
   def generate(self):
     print "Generating: " + str(self.description)
     for s in self.statements:
       print str(s)
-    print "Formula: " + self.formula
-    print "Result: " + self.result
+    print "Formula: " + self.dirty_replace(self.formula)
+    print "Result: " + self.dirty_replace(self.result)
 
 
 def p_exercise(p):
@@ -136,12 +195,13 @@ def p_statements(p):
 def p_statement(p):
   'statement : statement_decl statement_assignment'
 #  print "** statement"
-  s = []
+  variables = []
   for var in p[1]:
     var.function = p[2]
+    var.compute()
 #    print type(var)
-  s += p[1]
-  p[0] = s
+  variables += p[1]
+  p[0] = variables
 
 def p_statement_decl(p):
   '''statement_decl : statement_decl COMMA VAR
