@@ -6,14 +6,12 @@ import re
 tokens=(
   'COMMENT',
   'CAT_LINE',
-#  'TEXT',
   'LINE_SEP',
   'EXERCISE_LINE',
 )
 
 t_COMMENT=r'\#.*'
 t_CAT_LINE=r'\\cat .+'
-#t_TEXT=r'".+"'
 t_LINE_SEP=r'---'
 t_EXERCISE_LINE=r'.+'
 
@@ -21,7 +19,6 @@ t_EXERCISE_LINE=r'.+'
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-#    print "***"
 
 # Compute column. 
 #     input is the input text string
