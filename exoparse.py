@@ -126,16 +126,27 @@ def p_statement_decl(p):
     p[0] = [ Variable(p[1]) ]
 
 def p_statement_assignment(p):
-  '''statement_assignment : LPAREN number sep number RPAREN
+  '''statement_assignment : range
+                          | one_of
                           | function_assignment'''
 #  print "** statement_decl"
-  if (p[1] == "("):
-    if (p[3] == ","): 
-      p[0] = OneOf(p[2], p[4])
-    else:
-      p[0]=Range(p[2], p[4])
+  p[0] = p[1]
+
+def p_range(p):
+  'range : LPAREN number SEMICOLON number RPAREN'
+  p[0] = Range(p[2], p[4])
+
+def p_one_of(p):
+  'one_of : LPAREN number_list RPAREN'
+  p[0] = OneOf(p[2])
+
+def p_number_list(p):
+  '''number_list : number_list COMMA number
+               | number'''
+  if (type(p[1]) == list):
+    p[0] = p[1] + [ p[3] ]
   else:
-    p[0] = p[1]
+    p[0] = [ p[1] ]
 
 def p_function_assignment(p):
   '''function_assignment : FUNC_SIGNALL
@@ -146,12 +157,6 @@ def p_function_assignment(p):
 def p_number(p):
   '''number : NUMBER'''
 #  print "** number " + str(p[1])
-  p[0] = p[1]
-
-def p_sep(p):
-  '''sep : COMMA 
-         | SEMICOLON'''
-#  print "** sep"
   p[0] = p[1]
 
 def p_formula(p):

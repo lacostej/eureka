@@ -25,8 +25,7 @@ tokens=(
   'RPAREN',
 #  'LBRACE',
 #  'RBRACE',
-  'VAR',
-  'EOL'
+  'VAR'
 )
 
 t_TEXT=r'".+"'
@@ -50,7 +49,6 @@ t_RPAREN='\)'
 #t_LBRACE='{'
 #t_RBRACE='}'
 t_VAR=r'[a-z]'
-t_EOL=r'\n'
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
