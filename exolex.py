@@ -4,10 +4,7 @@ import ply.lex as lex
 import re
 
 tokens=(
-#  'COMMENT',
-#  'CATSYMBOL',
   'TEXT',
-#  'LINE_SEP',
 #  'VARNAME',
 #  'RESSYMBOL',
   'FUNC_SIGNALL',
@@ -32,10 +29,7 @@ tokens=(
   'EOL'
 )
 
-#t_COMMENT=r'\#.*'
-#t_CATSYMBOL=r'\\cat'
 t_TEXT=r'".+"'
-#t_LINE_SEP=r'---'
 #t_RESSYMBOL=r'\\res'
 t_FUNC_SIGNALL=r'\\sign'
 t_FUNC_SIGN1=r'\\sign1'
