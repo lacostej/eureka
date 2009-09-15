@@ -206,6 +206,7 @@ a, c, h (1;9)
 b (a)
 u , v, w, x, y, z \sign
 \solve a u b^c v (b w b) x b y (b z h*b)
+\solution FIXME
 ---
 \cat "likninger"
 ---
@@ -263,14 +264,16 @@ u , v, w, y, z, r, t \sign1
 "NivÃ¥ 8: l¿s likningene ved regn g. Sett pr¿ve pÃ¥ svarene"
 a,b,c,d,e,f,g,h,i,j,k,l (1;5)
 x (x)
-\solve u , v, w, y, z, r, t \sign1
-\frac {a}{b} u \frac {c}{d} * (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {i}{x} y \frac {k}{l})
+u , v, w, y, z, r, t \sign1
+\solve \frac {a}{b} u \frac {c}{d} * (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {i}{x} y \frac {k}{l})
+\solution FIXME
 ---
 "NivÃ¥ 9: l¿s likningene ved regn g. Sett pr¿ve pÃ¥ svarene"
 a,b,c,d,e,f,g,h,i,j,k,l (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d}* (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {i}{x} y \frac {k}{l})
+\solution FIXME
 ---
 "NivÃ¥ 10: l¿s likningene ved regn g. Sett pr¿ve pÃ¥ svarene"
 a, b, c, d (1;9)
@@ -284,12 +287,14 @@ a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d} * (\frac {x}{e} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {x}{i} y \frac {k}{l}) z \frac {m}{n}* (\frac {x}{o} r \frac {p}{q})
+\solution FIXME
 ---
 "NivÃ¥ 12: l¿s likningene ved regn g. Sett pr¿ve pÃ¥ svarene"
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d}* (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h} * (\frac {i}{x} y \frac {k}{l}) z \frac {m}{n} * (\frac {o}{x} r \frac {p}{q})
+\solution FIXME
 ---
 "NivÃ¥ 13: l¿s potens likningene ved regn g"
 x (x)
@@ -326,6 +331,7 @@ a,c   (3;9)
 x (x)
 a,b,c   (1;9)
 \solve a*x^2+\res {a*(b+c)} *x+\res {a*b*c}=0
+\solution FIXME
 ---
 "NivÃ¥ 19: l¿s andregradslikning ved regning"
 x (x)
@@ -337,47 +343,61 @@ a,b   (1;9)
 x (x)
 a,b,c   (1;6)
 \solve a*x^2+b*x+c=0
+\solution FIXME
 ---
 "NivÃ¥ 21: l¿s andregradslikning ved regning"
 x (x)
 a,b,c,d   (1;9)
 \solve a* x* (x + b) = c + d*x
+\solution FIXME
 ---
 "NivÃ¥ 22: "l¿s andregradslikning ved regning"
 x (x)
 a,b,c,d,e   (1;9)
 \solve \frac {a}{x} + \frac {b}{c*x}=e+d*x
+\solution FIXME
 ---
 \cat "formler"
 ---
-Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for Ã¥ beregne strekning
+"Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for Ã¥ beregne strekning"
 \solve v=\frac {s}{t}
+\solution FIXME
 ---
 "Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for Ã¥ beregne tiden"
 \solve v=\frac {s}{t}
+\solution FIXME
 ---
 "Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for Ã¥ beregne antall celsiusgrader"
 \solve y=1,8*x+32
+\solution FIXME
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med h¿yden h, delt pÃ¥ 2. F n en formel for Ã¥ beregne h¿yden"
 \solve A=\frac {gh} {2}
+\solution FIXME
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med h¿yden h, delt pÃ¥ 2. F n en formel for Ã¥ beregne grunnl ja"
 \solve A=\frac {gh} {2}
+\solution FIXME
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med h¿yden h i andre. Massen mÃ¥les i kilogram og h¿yden i meter. F n en formel for Ã¥ beregne massen"
 \solve I=\frac {m} {h^2}
+\solution FIXME
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med h¿yden h i andre. Massen mÃ¥les i kilogram og h¿yden i meter. F n en formel for Ã¥ beregne h¿yden"
 \solve I=\frac {m} {h^2}
+\solution FIXME
 ---
 "Pyramidevolum: Volumet V av en pyramide med grunnflate G og h¿yde h er V=\frac {Gh}{3}. F n h¿yden  uttrykt ved V og G"
 \solve V=\frac {Gh}{3}
+\solution FIXME
 ---
 "Pyramidevolum: Volumet V av en pyramide med grunnflate G og h¿yde h er V=\frac {Gh}{3}. F n grunnflate uttrykt ved V og h"
 \solve V=\frac {Gh}{3}
+\solution FIXME
 ---
 "Skelettvekten: S=0,0567*K^1,093 gir en god modell for sammenhengen mellom kroppsvekten K og skjelettvekten S for pattedyr. S og \solve K mÃ¥lt i kilogram. F n K uttrykt ved S"
+\solve FIXME
+\solution FIXME
 ---
 \cat "potenser"
 ---
@@ -386,23 +406,23 @@ a   (1;20)
 \solve a^0
 \solution 1
 ---
-"regn utÃ¢â¬Â
+"regn ut"
 a, b (1;4)
 \solve a^b
 \solution \res{a^b}
 ---
-"regn utÃ¢â¬Â
+"regn ut"
 a,b (1;4)
 \solve -a^b
 \solution -\res{a^b}
 ---
-"regn utÃ¢â¬Â
+"regn ut"
 a (-4;-1)
 b (1;4)
 \solve (a)^b
 \solution \res{a^b}
 ---
-"regn utÃ¢â¬Â
+"regn ut"
 a (1;10)
 \solve (-1)^a
 \solution \res{(-1)^a}
@@ -635,7 +655,7 @@ d (d)
 \solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
 ---
 "NivÃ¥ 17bis: regn ut og angi potensformen"
-a,c, (2;5)
+a,c (2;5)
 f,g,e (-5;-1)
 b (b)
 d (d)

@@ -184,7 +184,8 @@ def p_int_range(p):
     p[0] = Range(p[2], p[4], p[7])
 
 def p_list(p):
-  'list : LPAREN number_list RPAREN'
+  '''list : LPAREN number_list RPAREN
+          | LPAREN letter_list RPAREN'''
   p[0] = List(p[2])
 
 def p_number_list(p):
@@ -194,6 +195,18 @@ def p_number_list(p):
     p[0] = p[1] + [ p[3] ]
   else:
     p[0] = [ p[1] ]
+
+def p_letter_list(p):
+  '''letter_list : letter_list COMMA letter
+                 | letter'''
+  if (type(p[1]) == list):
+    p[0] = p[1] + [ p[3] ]
+  else:
+    p[0] = [ p[1] ]
+
+def p_letter(p):
+  '''letter : VAR'''
+  p[0] = p[1]
 
 def p_function_assignment(p):
   '''function_assignment : FUNC_SIGNALL
