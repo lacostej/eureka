@@ -1,0 +1,70 @@
+\cat "regning med hele tall"
+---
+"l1: addisjon og substraksjon med negative tall. Regn ut"
+# ignored
+a (1;10)
+b (-10;-1)
+s \sign1
+\solve a s (b)
+\solution \res {a s (b)}
+---
+" l2: addisjon og substraksjon med negative tall. Regn ut"
+a,b (1;10)
+s,t \sign1
+\solve t a s b
+\solution \res {t a s b}
+---
+" l3: multiplikasjon og divisjon med negative tall. Regn ut"
+a,b (1;10)
+e,f,g (-10;-1)
+s,t,u,v \sign2
+\solve a s (e) t b u (f) v (g)
+\solution \res { a s (e) t b u (f) v (g) }
+---
+" l4: addisjon og substraksjon med negative tall. Regn ut"
+a,b (1;10)
+e,f,g (-10;-1)
+s,t,u,v \sign1
+\solve a s (e) t b u (f) v (g)
+\solution \res { a s (e) t b u (f) v (g) }
+---
+" l5: mixup med negative tall. Regn ut"
+a,b (1;10)
+e,f,g,h (-10;-1)
+s,t,u,v \sign
+\solve (a s (e) t b)*h u (f) v (g)
+\solution \res { a s (e) t b u (f) v (g)}
+---
+" l6: mixup med negative tall og potens. Regn ut"
+a,b (1;10)
+e,f,g,h,j (-10;-1)
+i (2;4)
+s,t,u,v,w \sign
+\solve (a s (e) t b)*h u ((f) v (g))^i w j
+\solution \res { (a s (e) t b)*h u ((f) v (g))^i w j}
+---
+\cat " br¿k "
+---
+" forkort mest mulig: "
+a,b,c,d,e,f,g (1,2,3,5,7,11,13)
+\solve \frac {\res{a*b*c*d*e}}{\res {c*d*e*f*g}}
+\solution \frac {a*b}{f*g}
+---
+" addisjon og substraksjon med br¿ker "
+a,b,c,d,e,f (1;10)
+u,v \sign1
+\solve \frac {a}{b} u \frac {c}{d} v \frac {e}{f}
+\solution \res {\frac {a}{b} u \frac {c}{d} v \frac {e}{f}}
+---
+" addisjon og substraksjon med br¿ker "
+a,b,c,d,e,f (1;10)
+u,v \sign1
+\solve a u \frac {c}{d} v \frac {e}{f}
+\solution \res {a u \frac {c}{d} v \frac {e}{f}}
+---
+" multiplikasjon og divisjon med br¿ker "
+a,b,c,d,e,f (1;10)
+u,v \sign2
+\solve \frac {a}{b} u \frac {c}{d} v \frac {e}{f}
+\solution \res {\frac {a}{b} u \frac {c}{d} v \frac {e}{f}}
+---
