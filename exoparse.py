@@ -8,6 +8,14 @@ import ply.lex as lex
 import re
 lex.lex(reflags=re.UNICODE)
 
+class Executor:
+  def __init__(self, function, param):
+    self.function = function
+    self.param = param
+
+  def execute(self):
+    return self.function(self.param)
+
 class Func:
   pass
 
@@ -45,23 +53,20 @@ sign2Ops=['*', ':']
 class PredefinedFunction(Func):
   def __init__(self, func_symbol):
     self.functions = { #Built in Function table
-      '\sign' : randomFrom(signOps),
-      '\sign1' : randomFrom(sign1Ops),
-      '\sign2' : randomFrom(sign2Ops)
+      '\sign' : Executor(randomFrom, signOps),
+      '\sign1' : Executor(randomFrom, sign1Ops),
+      '\sign2' : Executor(randomFrom, sign2Ops)
     }
     self.function = self.functions[func_symbol]
 
   def __str__(self):
-    return "Range("+str(self.function)+")"
+    return "Range("+str(self.function.execute())+")"
 
 class Variable:
   function = None
 
   def __init__(self, name):
     self.name = name
-
-  def setFunction(function):
-    self.function = function
 
   def __str__(self):
     return "var " + self.name + ":" + str(self.function)
