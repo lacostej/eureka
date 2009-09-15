@@ -18,6 +18,7 @@ tokens=(
 #  'DIVIDE',
 #  'POWER',
   'NUMBER',
+  'BACKSLASH',
   'COMMA',
 #  'EQUAL',
   'SEMICOLON',
@@ -35,6 +36,7 @@ t_FUNC_SIGN1=r'\\sign1'
 t_FUNC_SIGN2=r'\\sign2'
 t_SOLVE=r'\\solve .+'
 t_SOLUTION=r'\\solution .+'
+t_BACKSLASH=r'\\'
 #t_PLUS=r'\+'
 #t_MINUS=r'\-'
 #t_MULTIPLY=r'\*'

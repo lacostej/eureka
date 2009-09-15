@@ -35,12 +35,16 @@ class OneOf(Func):
     return str(self.execute())
 
 class Range(Func):
-  def __init__(self, start, stop):
+  def __init__(self, start, stop, exclude=None):
     self.start = start
     self.stop = stop
+    self.exclude = exclude
 
   def execute(self):
-    return randomFrom(range(self.start, self.stop))
+    theRange = range(self.start, self.stop)
+    if (self.exclude != None):
+      theRange.remove(self.exclude)
+    return randomFrom(theRange)
 
   def __str__(self):
 #    return "Range("+str(self.start)+","+str(self.stop)+")"
@@ -138,8 +142,13 @@ def p_statement_assignment(p):
   p[0] = p[1]
 
 def p_range(p):
-  'range : LPAREN number SEMICOLON number RPAREN'
-  p[0] = Range(p[2], p[4])
+  '''range : LPAREN number SEMICOLON number RPAREN
+           | LPAREN number SEMICOLON number RPAREN BACKSLASH number'''
+  print len(p)
+  if (len(p) == 6):
+    p[0] = Range(p[2], p[4])
+  else:
+    p[0] = Range(p[2], p[4], p[7])
 
 def p_one_of(p):
   'one_of : LPAREN number_list RPAREN'
