@@ -12,6 +12,7 @@ tokens=(
   'FUNC_SIGN2',
   'SOLVE',
   'SOLUTION',
+  'DECIMAL',
 #  'PLUS',
 #  'MINUS',
 #  'MULTIPLY',
@@ -36,6 +37,7 @@ t_FUNC_SIGN1=r'\\sign1'
 t_FUNC_SIGN2=r'\\sign2'
 t_SOLVE=r'\\solve .+'
 t_SOLUTION=r'\\solution .+'
+t_DECIMAL=r'\\d'
 t_BACKSLASH=r'\\'
 #t_PLUS=r'\+'
 #t_MINUS=r'\-'

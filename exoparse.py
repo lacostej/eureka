@@ -50,6 +50,24 @@ class Range(Func):
 #    return "Range("+str(self.start)+","+str(self.stop)+")"
     return str(self.execute())
 
+class DecimalRange(Func):
+  def __init__(self, start, stop, exclude=None):
+    self.start = start
+    self.stop = stop
+    self.exclude = exclude
+
+  def execute(self):
+    import random
+    import decimal
+    intr = 0
+    while (intr == 0):
+      intr = random.randint(self.start * 100, self.stop * 100)
+    return decimal.Decimal(intr)/100
+
+  def __str__(self):
+#    return "Range("+str(self.start)+","+str(self.stop)+")"
+    return str(self.execute())
+
 signOps=['+','-',':','*']
 sign1Ops=['+', '-']
 sign2Ops=['*', ':']
@@ -135,16 +153,31 @@ def p_statement_decl(p):
     p[0] = [ Variable(p[1]) ]
 
 def p_statement_assignment(p):
-  '''statement_assignment : range
-                          | one_of
+  '''statement_assignment : value_assignment
                           | function_assignment'''
 #  print "** statement_decl"
   p[0] = p[1]
 
-def p_range(p):
-  '''range : LPAREN number SEMICOLON number RPAREN
-           | LPAREN number SEMICOLON number RPAREN BACKSLASH number'''
-  print len(p)
+
+def p_value_assignment(p):
+  '''value_assignment : decimal_range
+                      | int_range
+                      | one_of'''
+  p[0] = p[1]
+
+def p_decimal_range(p):
+  '''decimal_range : DECIMAL LPAREN number SEMICOLON number RPAREN
+                   | DECIMAL LPAREN number SEMICOLON number RPAREN BACKSLASH number'''
+#  print len(p)
+  if (len(p) == 7):
+    p[0] = DecimalRange(p[3], p[5])
+  else:
+    p[0] = DecimalRange(p[3], p[5], p[8])
+
+def p_int_range(p):
+  '''int_range : LPAREN number SEMICOLON number RPAREN
+               | LPAREN number SEMICOLON number RPAREN BACKSLASH number'''
+#  print len(p)
   if (len(p) == 6):
     p[0] = Range(p[2], p[4])
   else:
