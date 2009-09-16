@@ -159,7 +159,7 @@ class Exercice:
       text = self.myreplace(text, "-" + s.name, "-" + s.value())
       text = self.myreplace(text, "+" + s.name, "+" + s.value())
       text = self.myreplace(text, ":" + s.name, ":" + s.value())
-  return text
+    return text
 #    return self.resolve(text)
 
   def findStartStopBraces(self, text, idx):
