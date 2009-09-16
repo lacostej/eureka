@@ -11,6 +11,8 @@ exoLexer = lex.lex(reflags=re.UNICODE)
 import calc
 from utils import *
 
+nodeXmlConvertor = calc.NodeXmlConvertor()
+
 class MyException(Exception):
   def __init__(self, value):
     self.value = value
@@ -234,8 +236,11 @@ class Exercice:
       print str(s)
     print "Formula: " + self.dirty_replace(self.formula)
     print "Result: " + self.dirty_replace(self.result)
-    print "Formula: " + prettyPrintXMLTxt(self.parse(self.formula).toXml())
-    print "Result: " + prettyPrintXMLTxt(self.parse(self.result).toXml())
+    print "Formula: " + self.toPrettyXml(self.parse(self.formula))
+    print "Result: " + self.toPrettyXml(self.parse(self.result))
+
+  def toPrettyXml(self, node):
+    return prettyPrintXMLTxt(nodeXmlConvertor.visit(node))
 
 def p_exercise(p):
   'exercise : description statements formula result'

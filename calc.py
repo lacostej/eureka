@@ -65,30 +65,34 @@ class Node:
       self.children = [ ]
     self.leaf = leaf
 
-  def toXml(self):
-    return self.nodeToXml()
+class NodeXmlConvertor:
+#  def __init__(self):
+#    pass
 
-  def nodeToXml(self):
+  def visit(self, node):
+    'convert the node to an XML representation'
+    return self.nodeToXml(node)
+
+  def nodeToXml(self, node):
     'recursive XML representation of the node'
     ch = ""
 #    print self.children
-    for c in self.children:
+    for c in node.children:
       if (isinstance(c, Node)):
 #        print "____ instance " + str(type(c))
         if len(ch) > 0:
           ch += ","
-        ch += c.nodeToXml()
+        ch += self.nodeToXml(c)
       else:
 #        print "____ type " + str(type(c))
         if len(ch) > 0:
           ch += ","
         ch += str(c)
     leafstr = ""
-    if self.leaf:
-      leafstr = "<leaf>" + self.leaf.nodeToXml() + "</leaf>"
-    return "<node><type>" + str(self.type) +  "</type><children>" + ch + "</children>" + leafstr + "</node>"
+    if node.leaf:
+      leafstr = "<leaf>" + self.nodeToXml(node.leaf) + "</leaf>"
+    return "<node><type>" + str(node.type) +  "</type><children>" + ch + "</children>" + leafstr + "</node>"
 
-    
 class Calc(FormulaParser):
 
     tokens = (
