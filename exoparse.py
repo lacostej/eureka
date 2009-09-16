@@ -149,6 +149,10 @@ class Exercice:
       text = self.myreplace(text, " " + s.name, " " + s.value())
       text = self.myreplace(text, "*" + s.name, "*" + s.value())
       text = self.myreplace(text, "^" + s.name, "^" + s.value())
+      text = self.myreplace(text, "=" + s.name, "=" + s.value())
+      text = self.myreplace(text, "-" + s.name, "-" + s.value())
+      text = self.myreplace(text, "+" + s.name, "+" + s.value())
+      text = self.myreplace(text, ":" + s.name, ":" + s.value())
     return text
 
   def myreplace(self, text, old, new, count=None):
