@@ -8,6 +8,7 @@ tokens=(
   'FUNC_SIGNALL',
   'FUNC_SIGN1',
   'FUNC_SIGN2',
+#  'FUNC_SIGN3',
   'SOLVE',
   'SOLUTION',
   'DECIMAL',
@@ -24,6 +25,7 @@ t_TEXT=r'".+"'
 t_FUNC_SIGNALL=r'\\sign'
 t_FUNC_SIGN1=r'\\sign1'
 t_FUNC_SIGN2=r'\\sign2'
+#t_FUNC_SIGN3=r'\\sign3'
 t_SOLVE=r'\\solve .+'
 t_SOLUTION=r'\\solution .+'
 t_DECIMAL=r'\\d'

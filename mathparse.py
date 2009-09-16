@@ -1,15 +1,5 @@
 #!/usr/bin/python
 
-'''
-formula: 2argexpr | 1argexpr | expr | parentformula
-parentformula: ( formula )
-2argexpr: function { formula } { formula } | formula SIGN formula
-1argexpr: 1argfunction { formula }
-expr: var number
-function: FRAC SQRT
-1argfunction: RES
-'''
-
 # Get the token map from the lexer.  This is required.
 from mathlex import *
 
@@ -110,7 +100,7 @@ def toto():
 def parseFile(text):
   # Build the parser
   import ply.yacc as yacc
-  parser = yacc.yacc(tabmodule="exofile")
+  parser = yacc.yacc(tabmodule="mathparse_parsetab")
 
   #print "\n" + lines
   return parser.parse(lines)
@@ -119,10 +109,14 @@ def parseExos(exercises):
   import exoparse
   for r in exercises:
     print r
+#    print "---"
 #    print r.text
     print "---"
-    exercise = exoparse.parseExo(r.text)
-    exercise.generate()
+    exercise = exoparse.parseExo(r.text+"\n")
+    if not exercise:
+      print "ERROR: couldn't parse exercise. Skipping"
+    else:
+      exercise.generate()
 
 if __name__ == "__main__":
   lines = ""

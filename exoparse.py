@@ -6,7 +6,10 @@ from exolex import *
 # Build the lexer
 import ply.lex as lex
 import re
-lex.lex(reflags=re.UNICODE)
+exoLexer = lex.lex(reflags=re.UNICODE)
+
+import calc
+from utils import *
 
 class MyException(Exception):
   def __init__(self, value):
@@ -98,6 +101,7 @@ class DecimalRange(Func):
 signOps=['+','-',':','*']
 sign1Ops=['+', '-']
 sign2Ops=['*', ':']
+#sign3Ops=['', '-']
 
 class PredefinedFunction(Func):
   val = None
@@ -105,7 +109,8 @@ class PredefinedFunction(Func):
     self.functions = { #Built in Function table
       '\sign' : Executor(randomFrom, signOps),
       '\sign1' : Executor(randomFrom, sign1Ops),
-      '\sign2' : Executor(randomFrom, sign2Ops)
+      '\sign2' : Executor(randomFrom, sign2Ops),
+#      '\sign3' : Executor(randomFrom, sign3Ops)
     }
     self.function = self.functions[func_symbol]
 
@@ -128,13 +133,13 @@ class Variable:
     self.name = name
 
   def compute(self):
-    self.val = str(self.function.execute())
+    self.val = self.function.execute()
 
   def value(self):
     return self.val
 
   def __str__(self):
-    return "var " + self.name + ":" + self.value()
+    return "var " + self.name + ":" + str(self.value())
 
 class Exercice:
   def __init__(self, description, statements, formula, result):
@@ -146,22 +151,32 @@ class Exercice:
   def dirty_replace(self, text):
     '''temporary function until we implement formual and solution parsing'''
     for s in self.statements:
+      val = str(s.value())
       if  (text[0] == s.name):
-        text = self.myreplace(text, s.name + " ", s.value() + " ", 1)
-      text = self.myreplace(text, "(" + s.name, "(" + s.value() )
-      text = self.myreplace(text, s.name + ")", s.value() + ")" )
-      text = self.myreplace(text, "{" + s.name, "{" + s.value() )
-      text = self.myreplace(text, s.name + "}", s.value() + "}" )
-      text = self.myreplace(text, " " + s.name, " " + s.value())
-      text = self.myreplace(text, "*" + s.name, "*" + s.value())
-      text = self.myreplace(text, "^" + s.name, "^" + s.value())
-      text = self.myreplace(text, "=" + s.name, "=" + s.value())
-      text = self.myreplace(text, "-" + s.name, "-" + s.value())
-      text = self.myreplace(text, "+" + s.name, "+" + s.value())
-      text = self.myreplace(text, ":" + s.name, ":" + s.value())
+        text = self.myreplace(text, s.name + " ", val + " ", 1)
+      text = self.myreplace(text, "(" + s.name, "(" + val )
+      text = self.myreplace(text, s.name + ")", val + ")" )
+      text = self.myreplace(text, "{" + s.name, "{" + val )
+      text = self.myreplace(text, s.name + "}", val + "}" )
+      text = self.myreplace(text, " " + s.name, " " + val)
+      text = self.myreplace(text, "*" + s.name, "*" + val)
+      text = self.myreplace(text, "^" + s.name, "^" + val)
+      text = self.myreplace(text, "=" + s.name, "=" + val)
+      text = self.myreplace(text, "-" + s.name, "-" + val)
+      text = self.myreplace(text, "+" + s.name, "+" + val)
+      text = self.myreplace(text, ":" + s.name, ":" + val)
     return text
 #    return self.resolve(text)
 
+  def parse(self, text):
+    formulaParser = calc.Calc()
+    for s in self.statements:
+      formulaParser.names[s.name] = s.value()
+
+    result = formulaParser.parse(text)
+    print "====== parsing: " + text + " into " + str(type(result)) + " " + str(result)
+    return result
+ 
   def findStartStopBraces(self, text, idx):
     lbrace = -1
     rbrace = -1
@@ -219,10 +234,12 @@ class Exercice:
       print str(s)
     print "Formula: " + self.dirty_replace(self.formula)
     print "Result: " + self.dirty_replace(self.result)
-
+    print "Formula: " + prettyPrintXMLTxt(self.parse(self.formula).toXml())
+    print "Result: " + prettyPrintXMLTxt(self.parse(self.result).toXml())
 
 def p_exercise(p):
   'exercise : description statements formula result'
+  print "exo"
   p[0] = Exercice(p[1], p[2], p[3], p[4])
 
 def unquoteTEXT(text):
@@ -326,6 +343,7 @@ def p_function_assignment(p):
   '''function_assignment : FUNC_SIGNALL
                          | FUNC_SIGN1
                          | FUNC_SIGN2'''
+#                         | FUNC_SIGN3'''
   p[0] = PredefinedFunction(p[1])  
 
 def p_number(p):
@@ -351,20 +369,24 @@ def p_error(p):
 #  tok = yacc.token()             # Get the next token
 #  yacc.errok()
 
-def toto():
-# Read ahead looking for a closing '---'
-  while 1:
-    tok = yacc.token()             # Get the next token
-    print tok
-    if not tok or tok.type == 'LINE_SEP': break
-  if tok and tok.type == "LINE_SEP": print "Found LINE_SEP"
-  yacc.restart()
-
 def parseExo(lines):
   # Build the parser
   import ply.yacc as yacc
-  parser = yacc.yacc(tabmodule="exo")
-  return parser.parse(lines)
+  import os
+  try:
+    modname = os.path.split(os.path.splitext(__file__)[0])[1]
+  except:
+    modname = "parser"+"_"+"exoparse"
+    raise 
+#  self.debugfile = modname + ".dbg"
+  tabmodule = modname + "_" + "parsetab"
+
+  parser = yacc.yacc(tabmodule=tabmodule)
+#  print parser
+#  print "========= PARSING EXO"
+#  print lines
+#  print "========="
+  return parser.parse(lines, lexer=exoLexer)
 
 if __name__ == "__main__":
   lines = ""
