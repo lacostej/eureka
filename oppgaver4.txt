@@ -299,25 +299,25 @@ u , v, w, y, z, r, t \sign1
 "NivÃ¥ 13: l¿s potens likningene ved regn g"
 x (x)
 a,b   (2;9)
-\solve x^a= \res {b^a)
+\solve x^a= \res {b^a}
 \solution x=b
 ---
 "NivÃ¥ 14: l¿s potens likningene ved regning"
 x (x)
 a,b,c   (2;9)
-\solve c*x^a= \res {\res {b^a) *c}
+\solve c*x^a= \res {\res {b^a} *c}
 \solution x=b
 ---
 "NivÃ¥ 15: l¿s potens likningene ved regning"
 x (x)
 a,b   \d(2;9)
-\solve x^a= \res {b^a)
+\solve x^a= \res {b^a}
 \solution x=b
 ---
 "NivÃ¥ 16: l¿s potens likningene ved regning"
 x (x)
 a,b,c   \d(2;9)
-\solve c*x^a= \res {\res {b^a) *c}
+\solve c*x^a= \res {\res {b^a} *c}
 \solution x=b
 ---
 "NivÃ¥ 17: l¿s andregradslikning ved regning"
@@ -700,7 +700,7 @@ b   (2;10)
 a,c,d,e   (2;9)
 b   (2;10)
 \solve \frac {\sqrt {a}  {\res {b^a}} * \sqrt {c}  {\res {b^a} ^d}} { \res {b^a}^e * \sqrt {c}  {\res {b^a} ^e}}
-\solution \sqrt {c} {b^\res{c+a*d-a*e-a*e*c}
+\solution \sqrt {c} {b^\res{c+a*d-a*e-a*e*c}}
 ---
 "NivÃ¥ 4 ter: regn ut"
 a   (2;9)
