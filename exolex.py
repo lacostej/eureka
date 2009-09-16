@@ -5,33 +5,22 @@ import re
 
 tokens=(
   'TEXT',
-#  'VARNAME',
-#  'RESSYMBOL',
   'FUNC_SIGNALL',
   'FUNC_SIGN1',
   'FUNC_SIGN2',
   'SOLVE',
   'SOLUTION',
   'DECIMAL',
-#  'PLUS',
-#  'MINUS',
-#  'MULTIPLY',
-#  'DIVIDE',
-#  'POWER',
   'NUMBER',
   'BACKSLASH',
   'COMMA',
-#  'EQUAL',
   'SEMICOLON',
   'LPAREN',
   'RPAREN',
-#  'LBRACE',
-#  'RBRACE',
   'VAR'
 )
 
 t_TEXT=r'".+"'
-#t_RESSYMBOL=r'\\res'
 t_FUNC_SIGNALL=r'\\sign'
 t_FUNC_SIGN1=r'\\sign1'
 t_FUNC_SIGN2=r'\\sign2'
@@ -39,19 +28,10 @@ t_SOLVE=r'\\solve .+'
 t_SOLUTION=r'\\solution .+'
 t_DECIMAL=r'\\d'
 t_BACKSLASH=r'\\'
-#t_PLUS=r'\+'
-#t_MINUS=r'\-'
-#t_MULTIPLY=r'\*'
-#t_DIVIDE=r'\\'
-#t_POWER=r'\^'
-##t_NUMBER=r'\d+'
 t_COMMA=r','
-#t_EQUAL=r'='
 t_SEMICOLON=r';'
 t_LPAREN='\('
 t_RPAREN='\)'
-#t_LBRACE='{'
-#t_RBRACE='}'
 t_VAR=r'[a-z]'
 
 # A regular expression rule with some action code
