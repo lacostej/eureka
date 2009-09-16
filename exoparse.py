@@ -8,6 +8,12 @@ import ply.lex as lex
 import re
 lex.lex(reflags=re.UNICODE)
 
+class MyException(Exception):
+  def __init__(self, value):
+    self.value = value
+  def __str__(self):
+    return repr(self.value)
+
 class Executor:
   def __init__(self, function, param):
     self.function = function
@@ -153,7 +159,51 @@ class Exercice:
       text = self.myreplace(text, "-" + s.name, "-" + s.value())
       text = self.myreplace(text, "+" + s.name, "+" + s.value())
       text = self.myreplace(text, ":" + s.name, ":" + s.value())
+  return text
+#    return self.resolve(text)
+
+  def findStartStopBraces(self, text, idx):
+    lbrace = -1
+    rbrace = -1
+    openedbraces = 0
+    while (idx > -1):
+      nextlbrace = text.find("{", idx)
+      nextrbrace = text.find("}", idx)
+#      print str(nextlbrace) + " - " + str(nextrbrace)
+      if (nextlbrace < nextrbrace and nextlbrace != -1):
+        openedbraces += 1
+        if (lbrace == -1):
+          lbrace = nextlbrace
+        idx = nextlbrace + 1
+      elif ((nextlbrace > nextrbrace or nextlbrace == -1) and nextrbrace != -1):
+        openedbraces -= 1
+        if (rbrace == -1 and openedbraces == 0):
+          rbrace = nextrbrace
+        idx = nextrbrace + 1
+#      print "new idx: " + str(idx)
+      if (nextlbrace == -1 and nextrbrace == -1):
+        idx = -1
+
+    if (nextlbrace == -1 and lbrace == -1):
+      raise MyException("left curly brace in " + text + " not found") 
+    if (nextrbrace == -1 and rbrace == -1):
+      raise MyException("right curly brace in " + text + " not found")
+    return lbrace, rbrace
+
+  def resolve(self, text):
+#    print text
+    idx = 0
+    while (idx > -1):
+      residx = text.find("\\res")
+      idx = residx
+      if (idx > -1):
+        lbrace, rbrace = self.findStartStopBraces(text, residx)
+        text = text[0: residx] + self.compute(text[lbrace + 1: rbrace]) + text[rbrace + 1: len(text)]
+#        print text
     return text
+
+  def compute(self, text):
+    return "|" + text + "|"
 
   def myreplace(self, text, old, new, count=None):
     if (count != None):
