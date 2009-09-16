@@ -1,0 +1,6 @@
+" l2: addisjon og substraksjon med negative tall. Regn ut"
+a (-10;10)\0
+b (1;10)
+s \sign1
+\solve a s b
+\solution \res {a s b}
