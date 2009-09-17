@@ -63,4 +63,4 @@ def testMultipleSolutions():
   text = f.read()
   e = exoparse.parseExo(text)
   e.generate()
-  assert False
+
