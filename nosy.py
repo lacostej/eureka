@@ -12,6 +12,9 @@ def checkSum():
     for f in glob.glob ('*.py'):
         stats = os.stat (f)
         val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
+    for f in glob.glob ('tests/*.py'):
+        stats = os.stat (f)
+        val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
     for f in glob.glob ('*.kid'):
         stats = os.stat (f)
         val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
