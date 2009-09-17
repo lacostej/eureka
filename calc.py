@@ -78,7 +78,10 @@ class Node:
        if (ch != ""):
          ch += ","
        ch += str(c)
-     return "Node: " + self.type + ",(" + ch + ")," + str(self.leaf)
+     r = "Node: " + self.type + ",(" + ch + ")"
+     if (self.leaf):
+       r += "," + str(self.leaf)
+     return r
 
 class NodeXmlConvertor:
   def visit(self, node):
