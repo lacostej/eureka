@@ -93,6 +93,22 @@ def testEvaluatePowersAndStandardForm():
   evaluation = evaluate(v, "\\stdform {\\res { a*10^b s c*10^d}}")
   assert formulaTextOutput.visit(evaluation) == "0.0008220140515222482435597189696"
 
+def testOperationsFractions():
+  v = {
+    "a": 3,
+    "b": 7,
+    "c": 1,
+    "d": 4,
+    "e": 1,
+    "f": 1,
+    "u": '+',
+    "v": '-'
+  }
+  evaluation = evaluate(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}")
+  s = formulaTextOutput.visit(evaluation)
+  print s
+  assert s  == "-9/28"
+
 def evaluate(variables, formula):
   formulaParser = calc.Calc()
   for s in variables:

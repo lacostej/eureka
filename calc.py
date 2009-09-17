@@ -193,11 +193,42 @@ class NodeResultEvaluator:
         return node.children[0] - node.children[1]
       if (node.type == '+' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] + node.children[1]
+      if ((node.type == '+' or node.type == '-') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
+        sign = 1
+        if (node.type=='-'):
+          sign = -1
+        top = topIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1]) + sign * topIntOrFracInt(node.children[1]) * bottomIntOrFracInt(node.children[0]) 
+        bottom = bottomIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1])
+        top, bottom = reduceFrac(top, bottom)
+        return Node("frac", [top, bottom])
       if (node.type == '*' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] * node.children[1]
       if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
         # FIXME this can lead to problems if x / y with y > x and both ints
         return decimal.Decimal(node.children[0]) / node.children[1]
+
+def topIntOrFracInt(intOrFrac):
+  if (not isIntOrFracInt(intOrFrac)):
+    raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
+  print toXmlConvertor.visit(intOrFrac)
+  if isinstance(intOrFrac, int):
+    return intOrFrac
+  return intOrFrac.children[0]
+
+def bottomIntOrFracInt(intOrFrac):
+  if (not isIntOrFracInt(intOrFrac)):
+    raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
+  print toXmlConvertor.visit(intOrFrac)
+  if isinstance(intOrFrac, int):
+    return abs(intOrFrac)
+  return intOrFrac.children[1]
+
+def reduceFrac(top, bottom):
+  # FIXME implement
+  return top, bottom
+
+def isIntOrFracInt(x):
+  return isinstance(x, int) or (isinstance(x, Node) and x.type == "frac" and isinstance(x.children[0], int) and isinstance(x.children[1], int))
 
 def isNumber(x):
   return isinstance(x, int) or isinstance(x, decimal.Decimal)
