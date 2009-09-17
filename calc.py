@@ -193,6 +193,11 @@ class NodeResultEvaluator:
         return node.children[0] - node.children[1]
       if (node.type == '+' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] + node.children[1]
+      if (node.type == '*' and isNumber(node.children[0]) and isNumber(node.children[1])):
+        return node.children[0] * node.children[1]
+      if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
+        # FIXME this can lead to problems if x / y with y > x and both ints
+        return decimal.Decimal(node.children[0]) / node.children[1]
       if ((node.type == '+' or node.type == '-') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
         sign = 1
         if (node.type=='-'):
@@ -201,16 +206,21 @@ class NodeResultEvaluator:
         bottom = bottomIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1])
         top, bottom = reduceFrac(top, bottom)
         return Node("frac", [top, bottom])
-      if (node.type == '*' and isNumber(node.children[0]) and isNumber(node.children[1])):
-        return node.children[0] * node.children[1]
-      if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
-        # FIXME this can lead to problems if x / y with y > x and both ints
-        return decimal.Decimal(node.children[0]) / node.children[1]
+      if ((node.type == '*') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
+        top = topIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1]) 
+        bottom = bottomIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1])
+        top, bottom = reduceFrac(top, bottom)
+        return Node("frac", [top, bottom])
+      if ((node.type == ':') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
+        top = topIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1]) 
+        bottom = bottomIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1])
+        top, bottom = reduceFrac(top, bottom)
+        return Node("frac", [top, bottom])
 
 def topIntOrFracInt(intOrFrac):
   if (not isIntOrFracInt(intOrFrac)):
     raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
-  print toXmlConvertor.visit(intOrFrac)
+#  print toXmlConvertor.visit(intOrFrac)
   if isinstance(intOrFrac, int):
     return intOrFrac
   return intOrFrac.children[0]
@@ -218,7 +228,7 @@ def topIntOrFracInt(intOrFrac):
 def bottomIntOrFracInt(intOrFrac):
   if (not isIntOrFracInt(intOrFrac)):
     raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
-  print toXmlConvertor.visit(intOrFrac)
+#  print toXmlConvertor.visit(intOrFrac)
   if isinstance(intOrFrac, int):
     return abs(intOrFrac)
   return intOrFrac.children[1]
@@ -245,8 +255,7 @@ class NodeFormulaSimpleOuptutGenerator:
   def formatNumber(self, node):
     if (isinstance(node, int)):
       return str(node)
-    TWOPLACES = decimal.Decimal(10) ** -2
-    return str(node.quantize(TWOPLACES).normalize())
+    return str(node.normalize())
 
   def toString(self, node):
 #    print "toString: " + toXmlConvertor.visit(node)
