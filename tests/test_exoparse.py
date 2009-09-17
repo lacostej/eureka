@@ -45,7 +45,7 @@ s \\sign1
 
 
 def test_fullLoad():
-  f = open('oppgaver4.txt', 'r')
+  f = open('data/oppgaver4.txt', 'r')
   lines = f.read()
   exercises = mathparse.parseFile(lines)
   mathparse.parseExos(exercises)
