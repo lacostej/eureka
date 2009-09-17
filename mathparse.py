@@ -108,10 +108,10 @@ def parseFile(text):
 def parseExos(exercises):
   import exoparse
   for r in exercises:
+    print "---"
     print r
 #    print "---"
 #    print r.text
-    print "---"
     exercise = exoparse.parseExo(r.text+"\n")
     if not exercise:
       print "ERROR: couldn't parse exercise. Skipping"

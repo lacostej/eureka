@@ -236,6 +236,8 @@ class Exercice:
     print "Generating: " + str(self.description)
     for s in self.statements:
       print str(s)
+    print "Formula: " + self.formula
+    print "Result: " + self.result
 #    print "Formula: " + self.dirty_replace(self.formula)
 #    print "Result: " + self.dirty_replace(self.result)
 #    print "Formula: " + self.toPrettyXml(self.parse(self.formula))
