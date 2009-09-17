@@ -157,6 +157,9 @@ class NodeResultEvaluator:
       node = n2
     return node
 
+#  def power(self, i, j):
+    
+
   def evaluate(self, node, evaluate):
 #    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
     r = self.theevaluate(node, evaluate)
@@ -177,6 +180,8 @@ class NodeResultEvaluator:
     if (evaluate):
       if (node.type == 'paren' and isNumber(node.children[0])):
         return node.children[0]
+#      if (node.type == '^' and isNumber(node.children[0]) and isNumber(node.children[1])):
+#        return power(node.children[0], node.children[1]))
       if (node.type == '-' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] - node.children[1]
       if (node.type == '+' and isNumber(node.children[0]) and isNumber(node.children[1])):
@@ -201,26 +206,22 @@ class NodeFormulaSimpleOuptutGenerator:
     return result
 
   def formatNumber(self, node):
-    if (isinstance(node, Decimal)):
-      nbDecimales = 2
-      x = int(node)
-      y = abs(int((node - x)*(10**nbDecimales)))
-      while True:
-        if (y == 0):
-          break;
-        if (y % 10 == 0):
-          y = y/10
-        else:
-          break
-      s = "" + str(x)
-      if (y):
-        s += "." + str(y)
-      print s
-      return s
-    return "" + str(node)
+    import decimal
+    if (isinstance(node, int)):
+      return str(node)
+    TWOPLACES = Decimal(10) ** -2
+    return self.stripDecimalTrailingZeros(str(node.quantize(TWOPLACES)))
   
+  def stripDecimalTrailingZeros(self, x):
+    stripCount = 0
+    if (x.endswith(".00")):
+      stripCount = 3
+    if (x.endswith("0") and x.index('.') > -1):
+      stripCount = 1
+    return x[0:(len(x)-stripCount)]
+
   def toString(self, node):
-    print "toString: " + toXmlConvertor.visit(node)
+#    print "toString: " + toXmlConvertor.visit(node)
     if (node == None):
       raise MyException("Node is None !")
     if (isNumber(node)):

@@ -7,6 +7,8 @@ import calc
 #import os
 #from email import message_from_string, message_from_file
 
+from decimal import*
+
 TEST_DATA_DIR = "./tests/data/"
 
 nodeResultEvaluator = calc.NodeResultEvaluator()
@@ -93,3 +95,7 @@ def testEvaluate():
   assert formulaTextOutput.visit(evaluation) == "-10.8"
 #e.generate()
 
+def testFormatNumber():
+  s = formulaTextOutput.formatNumber(Decimal("-10.800000000000"))
+  print s
+  assert s == "-10.8"
