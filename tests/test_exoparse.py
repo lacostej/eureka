@@ -1,5 +1,6 @@
 import exoparse
 import mathparse
+import calc
 
 #import urlparse
 #import httplib2
@@ -55,4 +56,11 @@ def testCurrentlyFailingExercice():
   f = open('failing.txt', 'r')
   text = f.read()
   e = exoparse.parseExo(text)
-#  e.generate()
+  e.generate()
+
+def testMultipleSolutions():
+  f = open('data/multiple_solutions.txt', 'r')
+  text = f.read()
+  e = exoparse.parseExo(text)
+  e.generate()
+  assert False

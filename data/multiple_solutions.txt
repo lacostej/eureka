@@ -1,0 +1,6 @@
+"Nivå 21: løs andregradslikning ved regning"
+x (x)
+a,b,c,d   (1;9)
+\solve a* x * (x + b) = c + d * x
+\solution x1=\frac{d-a*b+((a*b-d)^2+4*a*c)^0.5}{2*a} eller x2=\frac{d-a*b-((a*b-d)^2+4*a*c)^0.5}{2*a}
+

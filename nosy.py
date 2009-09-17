@@ -9,6 +9,9 @@ def checkSum():
     ''' Return a long which can be used to know if any .py files have changed.
     Only looks in the current directory. '''
     val = 0
+    for f in glob.glob ('*.txt') + glob.glob ('data/*.txt'):
+        stats = os.stat (f)
+        val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
     for f in glob.glob ('*.py'):
         stats = os.stat (f)
         val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]

@@ -197,20 +197,30 @@ class NodeFormulaSimpleOuptutGenerator:
 
   def toString(self, node):
 #    print "toString: " + toXmlConvertor.visit(node)
+    if (node == None):
+      raise MyException("Node is None !")
     if (isNumber(node)):
       return "" + str(node)
     if (isinstance(node, str)):
       return node
     if (node.type == "int"):
       return self.toString(node.children[0])
-    if (node.type == "var"):
+    if (node.type == "decimal"):
       return self.toString(node.children[0])
+    if (node.type == "var"):
+      result = self.toString(node.children[0])
+      if (len(node.children) > 1):
+        result += "=" + self.toString(node.children[1])
+      return result
     if (node.type == "sqrt"):
       return "sqrt(" + self.toString(node.children[0]) + "," + self.toString(node.children[1]) + ")"
+    if (node.type == "eller"):
+      return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
     if (node.type == "stdform"):
       return "stdform(" + self.toString(node.children[0]) + ")"
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
+    # FIXME no need of str...
     if (node.type == "equals"):
       return str(self.toString(node.children[0])) + " = " + str(self.toString(node.children[1]))
     if (node.type in self.binaryOperators):
@@ -233,11 +243,12 @@ class NodeFormulaSimpleOuptutGenerator:
 class Calc(FormulaParser):
 
     tokens = (
-        'NUMBER',
+        'NUMBER', 'DECIMAL',
         'PLUS','MINUS','POWER','TIMES','DIVIDE','EQUALS', #,'EXP'
         'LPAREN','RPAREN',
         'LBRACE','RBRACE',
-        'VARNAME', 'RESULTSYMBOL', 'FRACSYMBOL', 'SQRTSYMBOL', 'STDFORMSYMBOL'
+        'VARNAME', 'RESULTSYMBOL', 'FRACSYMBOL', 'SQRTSYMBOL', 'STDFORMSYMBOL','OR_SYMBOL'
+#,'TEXT'
         )
 
     # Tokens
@@ -248,7 +259,7 @@ class Calc(FormulaParser):
     t_TIMES   = r'\*'
     t_POWER   = r'\^'
     t_DIVIDE  = r':'
-    t_EQUALS  = r'='
+    t_EQUALS  = r'\='
     t_LPAREN  = r'\('
     t_RPAREN  = r'\)'
     t_LBRACE  = r'\{'
@@ -258,6 +269,18 @@ class Calc(FormulaParser):
     t_FRACSYMBOL = r'\\frac'
     t_SQRTSYMBOL = r'\\sqrt'
     t_STDFORMSYMBOL = r'\\stdform'
+    t_OR_SYMBOL = r'eller'
+
+    def t_DECIMAL(self, t):
+        r'\d+\.\d+'
+#        try:
+        t.value = Decimal(t.value)
+#        except ValueError:
+#          
+#            print("Decimal value too large %s" % t.value)
+#            t.value = 0
+        #print "parsed number %s" % repr(t.value)
+        return t
 
     def t_NUMBER(self, t):
         r'\d+'
@@ -268,6 +291,11 @@ class Calc(FormulaParser):
             t.value = 0
         #print "parsed number %s" % repr(t.value)
         return t
+
+#    def t_TEXT(sefl, t):
+#        r'.+'
+#        return t
+
 
     t_ignore = " \t"
 
@@ -286,6 +314,7 @@ class Calc(FormulaParser):
         ('left','TIMES','DIVIDE'),
         ('left', 'POWER'),
         ('right','UMINUS'),
+        ('right', 'EQUALS'),
         )
 
     def find_var(self, x):
@@ -293,20 +322,31 @@ class Calc(FormulaParser):
         return self.names[x]
       except LookupError:
         print("Undefined name '%s'" % x)
-        raise e
+        raise
+
+    def p_expression_multiple_expressions(self, p):
+        'expression : VARNAME NUMBER EQUALS expression OR_SYMBOL VARNAME NUMBER EQUALS expression'
+        p[0] = Node("eller", [Node("var", [p[1]+str(p[2]), p[4]]), Node("var", [p[6]+str(p[7]), p[9]])])
+
+#    def p_expression_equals(self, p):
+#        'expression : expression EQUALS expression'
+#        p[0] = Node("equals", [p[1], p[3]])
 
     def p_expression_binop(self, p):
         """
-        expression : expression PLUS expression
-                  | expression MINUS expression
-                  | expression TIMES expression
-                  | expression DIVIDE expression
-                  | expression POWER expression
-                  | expression VARNAME expression
+        expression : expression EQUALS expression
+                   | expression PLUS expression
+                   | expression MINUS expression
+                   | expression TIMES expression
+                   | expression DIVIDE expression
+                   | expression POWER expression
+                   | expression VARNAME expression
         """
         #print [repr(p[i]) for i in range(0,4)]
         ops = [ '+', '-', '*', ':', '^']
-        if not p[2] in ops:
+        if (p[2] == "="):
+          p[2] = "equals"
+        elif not p[2] in ops:
           p[2] = self.find_var(p[2])
 
         p[0] = Node(p[2], [p[1], p[3]])
@@ -322,6 +362,10 @@ class Calc(FormulaParser):
     def p_expression_number(self, p):
         'expression : NUMBER'
         p[0] = Node("int", [p[1]])
+
+    def p_expression_decimal(self, p):
+        'expression : DECIMAL'
+        p[0] = Node("decimal", [p[1]])
 
     def p_expression_var(self, p):
         'expression : VARNAME'
@@ -349,10 +393,6 @@ class Calc(FormulaParser):
     def p_expression_sqrt(self, p):
         'expression : SQRTSYMBOL LBRACE expression RBRACE LBRACE expression RBRACE'
         p[0] = Node("sqrt", [p[3], p[6]])
-
-    def p_expression_equals(self, p):
-        'expression : expression EQUALS expression'
-        p[0] = Node("equals", [p[1], p[3]])
 
     def p_expression_stdform(self, p):
         'expression : STDFORMSYMBOL LBRACE expression RBRACE'
