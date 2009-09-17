@@ -1,4 +1,5 @@
 import exoparse
+import mathparse
 
 #import urlparse
 #import httplib2
@@ -37,6 +38,21 @@ s \\sign1
   assert e.formula == "a s (b)"
   assert e.result == "\\res {a s (b)}"
 
+  e.generate()
 #def testXxxy():
 #  assert False
 
+
+def test_fullLoad():
+  f = open('oppgaver4.txt', 'r')
+  lines = f.read()
+  exercises = mathparse.parseFile(lines)
+  mathparse.parseExos(exercises)
+
+
+def testCurrentlyFailingExercice():
+  ''' usefull during development, place the failing exercice in failing.txt and uncomment'''
+  f = open('failing.txt', 'r')
+  text = f.read()
+  e = exoparse.parseExo(text)
+#  e.generate()

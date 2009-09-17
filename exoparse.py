@@ -12,6 +12,8 @@ import calc
 from utils import *
 
 nodeXmlConvertor = calc.NodeXmlConvertor()
+nodeResultEvaluator = calc.NodeResultEvaluator()
+formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
 
 class MyException(Exception):
   def __init__(self, value):
@@ -176,7 +178,7 @@ class Exercice:
       formulaParser.names[s.name] = s.value()
 
     result = formulaParser.parse(text)
-    print "====== parsing: " + text + " into " + str(type(result)) + " " + str(result)
+#    print "====== parsing: " + text + " into " + str(type(result)) + " " + str(result)
     return result
  
   def findStartStopBraces(self, text, idx):
@@ -234,17 +236,24 @@ class Exercice:
     print "Generating: " + str(self.description)
     for s in self.statements:
       print str(s)
-    print "Formula: " + self.dirty_replace(self.formula)
-    print "Result: " + self.dirty_replace(self.result)
-    print "Formula: " + self.toPrettyXml(self.parse(self.formula))
-    print "Result: " + self.toPrettyXml(self.parse(self.result))
+#    print "Formula: " + self.dirty_replace(self.formula)
+#    print "Result: " + self.dirty_replace(self.result)
+#    print "Formula: " + self.toPrettyXml(self.parse(self.formula))
+#    print "Result: " + self.toPrettyXml(self.parse(self.result))
+#    print "Evaluated Formula: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.formula)))
+#    print "Evaluated Result: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.result)))
+    print "Evaluated Formula: " + self.toText(nodeResultEvaluator.visit(self.parse(self.formula)))
+    print "Evaluated Result: " + self.toText(nodeResultEvaluator.visit(self.parse(self.result)))
 
   def toPrettyXml(self, node):
     return prettyPrintXMLTxt(nodeXmlConvertor.visit(node))
 
+  def toText(self, node):
+    return formulaTextOutput.visit(node)
+
 def p_exercise(p):
   'exercise : description statements formula result'
-  print "exo"
+#  print "exo"
   p[0] = Exercice(p[1], p[2], p[3], p[4])
 
 def unquoteTEXT(text):

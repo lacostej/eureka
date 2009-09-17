@@ -6,7 +6,7 @@ from mathlex import *
 # Build the lexer
 import ply.lex as lex
 import re
-lex.lex(reflags=re.UNICODE)
+fileLexer = lex.lex(reflags=re.UNICODE)
 
 from utils import *
 
@@ -102,8 +102,8 @@ def parseFile(text):
   import ply.yacc as yacc
   parser = yacc.yacc(tabmodule="mathparse_parsetab")
 
-  #print "\n" + lines
-  return parser.parse(lines)
+  #print "\n" + text
+  return parser.parse(text, lexer=fileLexer)
 
 def parseExos(exercises):
   import exoparse

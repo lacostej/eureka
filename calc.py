@@ -18,6 +18,13 @@ import sys
 import ply.lex as lex
 import ply.yacc as yacc
 import os
+from decimal import Decimal
+
+class MyException(Exception):
+  def __init__(self, value):
+    self.value = value
+  def __str__(self):
+    return repr(self.value)
 
 class FormulaParser:
     """
@@ -65,18 +72,28 @@ class Node:
       self.children = [ ]
     self.leaf = leaf
 
-class NodeXmlConvertor:
-#  def __init__(self):
-#    pass
+  def __str__(self):
+     ch = ""
+     for c in self.children:
+       if (ch != ""):
+         ch += ","
+       ch += str(c)
+     return "Node: " + self.type + ",(" + ch + ")," + str(self.leaf)
 
+class NodeXmlConvertor:
   def visit(self, node):
     'convert the node to an XML representation'
-    return self.nodeToXml(node)
+    if (node == None):
+      raise MyException("Node is None !!!")
+    result = self.nodeToXml(node)
+    return result
 
   def nodeToXml(self, node):
     'recursive XML representation of the node'
+    if (isNumber(node)):
+      return "<" + instanceClassName(node) + ">" + str(node) + "</" + instanceClassName(node) + ">"
+
     ch = ""
-#    print self.children
     for c in node.children:
       if (isinstance(c, Node)):
 #        print "____ instance " + str(type(c))
@@ -91,7 +108,127 @@ class NodeXmlConvertor:
     leafstr = ""
     if node.leaf:
       leafstr = "<leaf>" + self.nodeToXml(node.leaf) + "</leaf>"
-    return "<node><type>" + str(node.type) +  "</type><children>" + ch + "</children>" + leafstr + "</node>"
+    result = "<node><type>" + str(node.type) +  "</type><children>" + ch + "</children>" + leafstr + "</node>"
+#    print result
+    return result
+
+
+def instanceClassName(x):
+  return type(x).__module__ + "." + type(x).__name__
+
+toXmlConvertor = NodeXmlConvertor()
+
+class NodeResultEvaluator:
+  def visit(self, node):
+    'conver result expressions into their values whenever possible'
+#    print "EVALUATING " + toXmlConvertor.visit(node)
+    r = self.evaluateResult(node)
+#    print "EVALUATED " + toXmlConvertor.visit(r)
+    return r
+
+  def evaluateResult(self, node, evaluate=False):
+    if (not isinstance(node, Node)):
+      return node
+
+    if (node.type == "result"):
+      return self.evaluateResult(node.children[0], True)
+
+    # FIXME
+    n = self.evaluate(node, evaluate)
+    if (n != None):
+      return n
+
+    newtype = node.type
+    children = []
+    newleaf = None
+
+    for child in node.children:
+      children.append(self.evaluateResult(child, evaluate))
+    if (node.leaf):
+      newleaf = self.evaluateResult(node.leaf, evaluate)
+    node = Node(newtype, children, newleaf)
+    n2 = self.evaluate(node, evaluate)
+    if (n2 != None):
+      node = n2
+    return node
+
+  def evaluate(self, node, evaluate):
+#    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
+    r = self.theevaluate(node, evaluate)
+#    if (r):
+#      print "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
+    return r
+     
+  def theevaluate(self, node, evaluate):
+#    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node) + " " +node.type + " " + str(type(node.type)) + " "
+#    print type(node.children)
+#    print type(node.children[0])
+
+    # vars are always evaluated
+    if (node.type == 'var' and isinstance(node.children[0], int)):
+#      print "EVALUATING var " + str(node.children)
+      return node.children[0]
+
+    if (evaluate):
+      if (node.type == 'paren' and isinstance(node.children[0], int)):
+        return node.children[0]
+      if (node.type == '-' and isinstance(node.children[0], int) and isinstance(node.children[1], int)):
+        return node.children[0] - node.children[1]
+      if (node.type == '+' and isinstance(node.children[0], int) and isinstance(node.children[1], int)):
+        return node.children[0] + node.children[1]
+      if (node.type == '*' and isinstance(node.children[0], int) and isinstance(node.children[1], int)):
+        return node.children[0] * node.children[1]
+      if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
+        # FIXME this can lead to problems if x / y with y > x and both ints
+        return Decimal(node.children[0]) / node.children[1]
+
+def isNumber(x):
+  import decimal
+  return isinstance(x, int) or isinstance(x, decimal.Decimal)
+
+class NodeFormulaSimpleOuptutGenerator:
+  binaryOperators = [ '+', '-', ':', '*']
+
+  def visit(self, node):
+    'conver result expressions into a String we can read'
+    result = self.toString(node)
+#    print "RESULT " + str(result)
+    return result
+
+  def toString(self, node):
+#    print "toString: " + toXmlConvertor.visit(node)
+    if (isNumber(node)):
+      return "" + str(node)
+    if (isinstance(node, str)):
+      return node
+    if (node.type == "int"):
+      return self.toString(node.children[0])
+    if (node.type == "var"):
+      return self.toString(node.children[0])
+    if (node.type == "sqrt"):
+      return "sqrt(" + self.toString(node.children[0]) + "," + self.toString(node.children[1]) + ")"
+    if (node.type == "stdform"):
+      return "stdform(" + self.toString(node.children[0]) + ")"
+    if (node.type == "neg"):
+      return "-" + self.toString(node.children[0])
+    if (node.type == "equals"):
+      return str(self.toString(node.children[0])) + " = " + str(self.toString(node.children[1]))
+    if (node.type in self.binaryOperators):
+      return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
+    if (node.type == "paren"):
+      return "(" + self.toString(node.children[0]) + ")"
+    if (node.type == "frac"):
+#      return "(" + self.toString(node.children[0]) + "/" + self.toString(node.children[1]) + ")"
+      return self.toString(node.children[0]) + "/" + self.toString(node.children[1])
+    if (node.type == "^"):
+      return self.toString(node.children[0]) + "^" + self.toString(node.children[1])
+
+#    if (node.type == "paren"):
+#      return "(" + self.toString(node.children[0]) + ")"
+    if (not isinstance(node, str)):
+      raise MyException("Node isn't yet converted to String: " + str(node))
+    return node
+
 
 class Calc(FormulaParser):
 
@@ -219,7 +356,7 @@ class Calc(FormulaParser):
 
     def p_expression_stdform(self, p):
         'expression : STDFORMSYMBOL LBRACE expression RBRACE'
-        p[0] = Node("stdform", [p[2]])
+        p[0] = Node("stdform", [p[3]])
 
     def p_error(self, p):
         if p:

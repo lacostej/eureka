@@ -1,0 +1,5 @@
+"Nivå 1 ter: regn ut"
+a   (2;5)
+b   (2;8)
+\solve \sqrt {a} {\res {b^a}}
+\solution b
