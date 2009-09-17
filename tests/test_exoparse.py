@@ -63,7 +63,7 @@ def testCurrentlyFailingExercice():
   e = exoparse.parseExo(text)
   e.generate()
 
-def testMultipleSolutions():
+def atestMultipleSolutions():
   f = open('data/multiple_solutions.txt', 'r')
   text = f.read()
   e = exoparse.parseExo(text)
@@ -99,3 +99,10 @@ def testFormatNumber():
   s = formulaTextOutput.formatNumber(Decimal("-10.800000000000"))
   print s
   assert s == "-10.8"
+
+def testDecimalPower():
+  import decimal
+  print "-------------------"
+  print decimal.getcontext().power(decimal.Decimal("3.8"), decimal.Decimal("2.4") )
+  print decimal.getcontext().power(decimal.Decimal(3), decimal.Decimal(4) )
+  assert False

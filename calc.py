@@ -18,7 +18,7 @@ import sys
 import ply.lex as lex
 import ply.yacc as yacc
 import os
-from decimal import Decimal
+import decimal
 
 class MyException(Exception):
   def __init__(self, value):
@@ -159,7 +159,6 @@ class NodeResultEvaluator:
 
 #  def power(self, i, j):
     
-
   def evaluate(self, node, evaluate):
 #    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
     r = self.theevaluate(node, evaluate)
@@ -180,8 +179,8 @@ class NodeResultEvaluator:
     if (evaluate):
       if (node.type == 'paren' and isNumber(node.children[0])):
         return node.children[0]
-#      if (node.type == '^' and isNumber(node.children[0]) and isNumber(node.children[1])):
-#        return power(node.children[0], node.children[1]))
+      if (node.type == '^' and isNumber(node.children[0]) and isNumber(node.children[1])):
+        return decimal.getcontext().power(decimal.Decimal(node.children[0]), decimal.Decimal(node.children[1]))
       if (node.type == '-' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] - node.children[1]
       if (node.type == '+' and isNumber(node.children[0]) and isNumber(node.children[1])):
@@ -190,10 +189,9 @@ class NodeResultEvaluator:
         return node.children[0] * node.children[1]
       if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
         # FIXME this can lead to problems if x / y with y > x and both ints
-        return Decimal(node.children[0]) / node.children[1]
+        return decimal.Decimal(node.children[0]) / node.children[1]
 
 def isNumber(x):
-  import decimal
   return isinstance(x, int) or isinstance(x, decimal.Decimal)
 
 class NodeFormulaSimpleOuptutGenerator:
@@ -206,10 +204,9 @@ class NodeFormulaSimpleOuptutGenerator:
     return result
 
   def formatNumber(self, node):
-    import decimal
     if (isinstance(node, int)):
       return str(node)
-    TWOPLACES = Decimal(10) ** -2
+    TWOPLACES = decimal.Decimal(10) ** -2
     return self.stripDecimalTrailingZeros(str(node.quantize(TWOPLACES)))
   
   def stripDecimalTrailingZeros(self, x):
@@ -319,7 +316,7 @@ class Calc(FormulaParser):
     def t_DECIMAL(self, t):
         r'\d+\.\d+'
 #        try:
-        t.value = Decimal(t.value)
+        t.value = decimal.Decimal(t.value)
 #        except ValueError:
 #          
 #            print("Decimal value too large %s" % t.value)
