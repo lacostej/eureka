@@ -376,37 +376,58 @@ a,b,c,d,e   (1;9)
 \solution t=\frac {s}{v}
 ---
 "Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for å beregne antall celsiusgrader"
+x (x)
 y (y)
 \solve y=1.8*x+32
 \solution x=\frac {y-32}{1.8}
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med høyden h, delt på 2. F n en formel for å beregne høyden"
-\solve A=\frac {gh} {2}
+g (g)
+h (h)
+A (A)
+\solve A=\frac {g*h} {2}
 \solution h=\frac {2*A}{g}
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med høyden h, delt på 2. F n en formel for å beregne grunnl ja"
-\solve A=\frac {gh} {2}
+g (g)
+h (h)
+A (A)
+\solve A=\frac {g*h} {2}
 \solution g=\frac {2*A}{h}
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med høyden h i andre. Massen måles i kilogram og høyden i meter. F n en formel for å beregne massen"
+m (m)
+I (I)
+h (h)
 \solve m=I*h^2
-\solution FIXME
+#\solution FIXME
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med høyden h i andre. Massen måles i kilogram og høyden i meter. F n en formel for å beregne høyden"
+I (I)
+m (m)
+h (h)
 \solve I=\frac {m} {h^2}
 \solution h=\sqrt {2}{\frac {m} {I}}
 ---
 "Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=\frac {Gh}{3}. F n høyden  uttrykt ved V og G"
-\solve V=\frac {Gh}{3}
+V (V)
+G (G)
+h (h)
+\solve V=\frac {G*h}{3}
 \solution h=\frac{3*V}{G}
 ---
 "Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=\frac {Gh}{3}. F n grunnflate uttrykt ved V og h"
-\solve V=\frac {Gh}{3}
+V (V)
+G (G)
+h (h)
+\solve V=\frac {G*h}{3}
 \solution G=\frac{3*V}{h}
 ---
 "Skelettvekten: S=0,0567*K^1,093 gir en god modell for sammenhengen mellom kroppsvekten K og skjelettvekten S for pattedyr. S og \solve K målt i kilogram. F n K uttrykt ved S"
-\solve S=0,0567*K^1,093
-\solution K=(\frac {S}{0,0567})^\frac{1}{1,093}
+S (S)
+K (K)
+\solve S=0.0567*K^1.093
+\solution K=(\frac {S}{0.0567})^\frac{1}{1.093}
 ---
 \cat "potenser"
 ---

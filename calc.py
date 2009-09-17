@@ -247,7 +247,7 @@ class Calc(FormulaParser):
         'PLUS','MINUS','POWER','TIMES','DIVIDE','EQUALS', #,'EXP'
         'LPAREN','RPAREN',
         'LBRACE','RBRACE',
-        'VARNAME', 'RESULTSYMBOL', 'FRACSYMBOL', 'SQRTSYMBOL', 'STDFORMSYMBOL','OR_SYMBOL'
+        'VARNAME', 'SYMBOL','OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL'
 #,'TEXT'
         )
 
@@ -264,12 +264,32 @@ class Calc(FormulaParser):
     t_RPAREN  = r'\)'
     t_LBRACE  = r'\{'
     t_RBRACE  = r'\}'
-    t_VARNAME = r'[a-z]'
-    t_RESULTSYMBOL = r'\\res'
-    t_FRACSYMBOL = r'\\frac'
-    t_SQRTSYMBOL = r'\\sqrt'
-    t_STDFORMSYMBOL = r'\\stdform'
-    t_OR_SYMBOL = r'eller'
+#    t_VARNAME = r'[a-zA-Z]'
+#    t_RESULTSYMBOL = r'\\res'
+#    t_FRACSYMBOL = r'\\frac'
+#    t_SQRTSYMBOL = r'\\sqrt'
+#    t_STDFORMSYMBOL = r'\\stdform'
+#    t_OR_SYMBOL = r'eller'
+
+    symbols = { 
+      '\\res' : "RESULTSYMBOL",
+      '\\frac' : "FRACSYMBOL",
+      '\\sqrt' : "SQRTSYMBOL",
+      '\\stdform' : "STDFORMSYMBOL",
+    }
+
+    def t_SYMBOL(self, t):
+        r'\\[a-z]+'
+        t.type = self.symbols[t.value]
+        return t
+
+    def t_OR_SYMBOL(self, t):
+        r'eller'
+        return t
+
+    def t_VARNAME(self, t):
+        r'[a-zA-Z]'
+        return t
 
     def t_DECIMAL(self, t):
         r'\d+\.\d+'

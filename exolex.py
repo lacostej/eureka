@@ -34,7 +34,7 @@ t_COMMA=r','
 t_SEMICOLON=r';'
 t_LPAREN='\('
 t_RPAREN='\)'
-t_VAR=r'[a-z]'
+t_VAR=r'[a-zA-Z]'
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
