@@ -9,6 +9,9 @@ import calc
 
 TEST_DATA_DIR = "./tests/data/"
 
+nodeResultEvaluator = calc.NodeResultEvaluator()
+formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
+
 def setUp(self):
   pass
 
@@ -63,4 +66,30 @@ def testMultipleSolutions():
   text = f.read()
   e = exoparse.parseExo(text)
   e.generate()
+
+def testEvaluate():
+#  f = open('data/multiple_solutions.txt', 'r')
+#  text = f.read()
+  v = { "a": 6,
+       "b": 9,
+       "e": -5,
+       "f": -10,
+       "g": -10,
+       "s": ':',
+       "t": ':',
+       "u": '*',
+       "v": ':'
+     }
+
+  formulaParser = calc.Calc()
+  for s in v:
+    formulaParser.names[s] = v[s]
+
+  result = formulaParser.parse("\\res { a s (e) t b u (f) v (g)}")
+  print result
+
+  evaluation = nodeResultEvaluator.visit(result)
+  print evaluation
+  assert formulaTextOutput.visit(evaluation) == "-10.8"
+#e.generate()
 

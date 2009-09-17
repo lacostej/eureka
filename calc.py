@@ -93,6 +93,8 @@ class NodeXmlConvertor:
 
   def nodeToXml(self, node):
     'recursive XML representation of the node'
+    if (isinstance(node, str)):
+      return node
     if (isNumber(node)):
       return "<" + instanceClassName(node) + ">" + str(node) + "</" + instanceClassName(node) + ">"
 
@@ -173,13 +175,13 @@ class NodeResultEvaluator:
       return node.children[0]
 
     if (evaluate):
-      if (node.type == 'paren' and isinstance(node.children[0], int)):
+      if (node.type == 'paren' and isNumber(node.children[0])):
         return node.children[0]
-      if (node.type == '-' and isinstance(node.children[0], int) and isinstance(node.children[1], int)):
+      if (node.type == '-' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] - node.children[1]
-      if (node.type == '+' and isinstance(node.children[0], int) and isinstance(node.children[1], int)):
+      if (node.type == '+' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] + node.children[1]
-      if (node.type == '*' and isinstance(node.children[0], int) and isinstance(node.children[1], int)):
+      if (node.type == '*' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] * node.children[1]
       if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
         # FIXME this can lead to problems if x / y with y > x and both ints
@@ -198,12 +200,31 @@ class NodeFormulaSimpleOuptutGenerator:
 #    print "RESULT " + str(result)
     return result
 
+  def formatNumber(self, node):
+    if (isinstance(node, Decimal)):
+      nbDecimales = 2
+      x = int(node)
+      y = abs(int((node - x)*(10**nbDecimales)))
+      while True:
+        if (y == 0):
+          break;
+        if (y % 10 == 0):
+          y = y/10
+        else:
+          break
+      s = "" + str(x)
+      if (y):
+        s += "." + str(y)
+      print s
+      return s
+    return "" + str(node)
+  
   def toString(self, node):
-#    print "toString: " + toXmlConvertor.visit(node)
+    print "toString: " + toXmlConvertor.visit(node)
     if (node == None):
       raise MyException("Node is None !")
     if (isNumber(node)):
-      return "" + str(node)
+      return self.formatNumber(node)
     if (isinstance(node, str)):
       return node
     if (node.type == "int"):
