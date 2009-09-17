@@ -192,7 +192,7 @@ c (c)
 #u, v \sign
 #\solve a*b^c*(b u b) *b* (b v h*b)
 #\solution a,b^c,(b u b),b,(b v h*b)
-#---
+---
 "Hvor mange ledd er det her?"
 a, c, h (1;9)
 b (a,b)
@@ -332,13 +332,13 @@ x (x)
 b   (1;5)
 a,c   (3;9)
 \solve a*x^2+b*x+c=0
-# FIXME "no solution" not implemented
 #\solution "Ingen løsning"
 ---
 "NIvå 18: løs andregradslikning ved regning"
 x (x)
 a,b,c   (1;9)
 \solve a*x^2+\res {a*(b+c)} *x+\res {a*b*c}=0
+
 #\solution FIXME
 ---
 "Nivå 19: løs andregradslikning ved regning"
@@ -357,55 +357,55 @@ a,b,c   (1;6)
 x (x)
 a,b,c,d   (1;9)
 \solve a* x* (x + b) = c + d*x
-#\solution FIXME
+\solution x1=\frac{d-a*b+((a*b-d)^2+4*a*c)^0.5}{2*a} eller x2=\frac{d-a*b-((a*b-d)^2+4*a*c)^0.5}{2*a}
 ---
 "Nivå 22: "løs andregradslikning ved regning"
 x (x)
 a,b,c,d,e   (1;9)
 \solve \frac {a}{x} + \frac {b}{c*x}=e+d*x
-#\solution FIXME
+\solution x1=\frac {-e+(e^2+4*d*(a+b:c))^(0.5)}{2*d} eller x2=\frac {-e-(e^2+4*d*(a+b:c))^0.5}{2*d}
 ---
 \cat "formler"
 ---
 "Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for å beregne strekning"
 \solve v=\frac {s}{t}
-#\solution FIXME
+\solution s=v*t
 ---
 "Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for å beregne tiden"
 \solve v=\frac {s}{t}
-#\solution FIXME
+\solution t=\frac {s}{v}
 ---
 "Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for å beregne antall celsiusgrader"
 \solve y=1,8*x+32
-#\solution FIXME
+\solution x=\frac {y-32}{1,8}
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med høyden h, delt på 2. F n en formel for å beregne høyden"
 \solve A=\frac {gh} {2}
-#\solution FIXME
+\solution h=\frac {2*A}{g}
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med høyden h, delt på 2. F n en formel for å beregne grunnl ja"
 \solve A=\frac {gh} {2}
-#\solution FIXME
+\solution g=\frac {2*A}{h}
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med høyden h i andre. Massen måles i kilogram og høyden i meter. F n en formel for å beregne massen"
-\solve I=\frac {m} {h^2}
-#\solution FIXME
+\solve m=I*h^2
+\solution FIXME
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med høyden h i andre. Massen måles i kilogram og høyden i meter. F n en formel for å beregne høyden"
 \solve I=\frac {m} {h^2}
-#\solution FIXME
+\solution h=\sqrt {2}{\frac {m} {I}}
 ---
 "Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=\frac {Gh}{3}. F n høyden  uttrykt ved V og G"
 \solve V=\frac {Gh}{3}
-#\solution FIXME
+\solution h=\frac{3*V}{G}
 ---
 "Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=\frac {Gh}{3}. F n grunnflate uttrykt ved V og h"
 \solve V=\frac {Gh}{3}
-#\solution FIXME
+\solution G=\frac{3*V}{h}
 ---
 "Skelettvekten: S=0,0567*K^1,093 gir en god modell for sammenhengen mellom kroppsvekten K og skjelettvekten S for pattedyr. S og \solve K målt i kilogram. F n K uttrykt ved S"
-\solve FIXME
-#\solution FIXME
+\solve S=0,0567*K^1,093
+\solution K=(\frac {S}{0,0567})^\frac{1}{1,093}
 ---
 \cat "potenser"
 ---
