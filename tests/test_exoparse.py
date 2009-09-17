@@ -69,9 +69,7 @@ def atestMultipleSolutions():
   e = exoparse.parseExo(text)
   e.generate()
 
-def testEvaluate():
-#  f = open('data/multiple_solutions.txt', 'r')
-#  text = f.read()
+def testEvaluateSimpleOperators():
   v = { "a": 6,
        "b": 9,
        "e": -5,
@@ -82,27 +80,42 @@ def testEvaluate():
        "u": '*',
        "v": ':'
      }
+  evaluation = evaluate(v, "\\res { a s (e) t b u (f) v (g)}")
+  assert formulaTextOutput.visit(evaluation) == "-10.8"
 
+def testEvaluatePowersAndStandardForm():
+  v = { "a": Decimal("7.02"),
+       "b": -7,
+       "c": Decimal("8.54"),
+       "d": -4,
+       "s": ':'
+     }
+  evaluation = evaluate(v, "\\stdform {\\res { a*10^b s c*10^d}}")
+  assert formulaTextOutput.visit(evaluation) == "0.0008220140515222482435597189696"
+
+def evaluate(variables, formula):
   formulaParser = calc.Calc()
-  for s in v:
-    formulaParser.names[s] = v[s]
+  for s in variables:
+    formulaParser.names[s] = variables[s]
 
-  result = formulaParser.parse("\\res { a s (e) t b u (f) v (g)}")
+  result = formulaParser.parse(formula)
   print result
-
   evaluation = nodeResultEvaluator.visit(result)
   print evaluation
-  assert formulaTextOutput.visit(evaluation) == "-10.8"
-#e.generate()
+  return evaluation
+
 
 def testFormatNumber():
   s = formulaTextOutput.formatNumber(Decimal("-10.800000000000"))
   print s
   assert s == "-10.8"
 
-def testDecimalPower():
-  import decimal
-  print "-------------------"
-  print decimal.getcontext().power(decimal.Decimal("3.8"), decimal.Decimal("2.4") )
-  print decimal.getcontext().power(decimal.Decimal(3), decimal.Decimal(4) )
-  assert False
+
+#def testDecimalPower():
+#  import decimal
+#  print "-------------------"
+#  print decimal.getcontext().power(decimal.Decimal("3.8"), decimal.Decimal("2.4") )
+#  print decimal.getcontext().power(decimal.Decimal(3), decimal.Decimal(4) )
+
+#def testXxx():
+#  decimal.

@@ -160,6 +160,7 @@ class NodeResultEvaluator:
 #  def power(self, i, j):
     
   def evaluate(self, node, evaluate):
+#
 #    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
     r = self.theevaluate(node, evaluate)
 #    if (r):
@@ -167,13 +168,20 @@ class NodeResultEvaluator:
     return r
      
   def theevaluate(self, node, evaluate):
-#    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node) + " " +node.type + " " + str(type(node.type)) + " "
+#    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node) + " " + node.type + " " + str(type(node.children[0])) + " "
 #    print type(node.children)
 #    print type(node.children[0])
 
     # vars are always evaluated
-    if (node.type == 'var' and isinstance(node.children[0], int)):
+    if (node.type == 'int' and isNumber(node.children[0])):
 #      print "EVALUATING var " + str(node.children)
+      return node.children[0]
+    if (node.type == 'var' and isNumber(node.children[0])):
+#      print "EVALUATING var " + str(node.children)
+      return node.children[0]
+
+    if (node.type == 'stdform' and isNumber(node.children[0])):
+      # FIXME what precision ??
       return node.children[0]
 
     if (evaluate):
@@ -207,15 +215,7 @@ class NodeFormulaSimpleOuptutGenerator:
     if (isinstance(node, int)):
       return str(node)
     TWOPLACES = decimal.Decimal(10) ** -2
-    return self.stripDecimalTrailingZeros(str(node.quantize(TWOPLACES)))
-  
-  def stripDecimalTrailingZeros(self, x):
-    stripCount = 0
-    if (x.endswith(".00")):
-      stripCount = 3
-    if (x.endswith("0") and x.index('.') > -1):
-      stripCount = 1
-    return x[0:(len(x)-stripCount)]
+    return str(node.quantize(TWOPLACES).normalize())
 
   def toString(self, node):
 #    print "toString: " + toXmlConvertor.visit(node)
