@@ -70,9 +70,20 @@ if __name__ == "__main__":
   # Build the lexer
   lexer = lex.lex(reflags=re.UNICODE)
 
-  # Test it out
-  f = open('exo1.txt', 'r')
-  data=f.read()
+  import sys
+  if (len(sys.argv) > 1):
+    # Test it out
+    f = open(sys.argv[1], 'r')
+    data=f.read()
+  else:
+    data = ""
+    while 1:
+      try:
+        s = raw_input('calc > ')
+      except EOFError:
+        break
+      if not s: continue
+      data += s + "\n"
 
   # Give the lexer some input
   lexer.input(data)
