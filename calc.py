@@ -234,8 +234,42 @@ def bottomIntOrFracInt(intOrFrac):
   return intOrFrac.children[1]
 
 def reduceFrac(top, bottom):
-  # FIXME implement
-  return top, bottom
+
+  if (bottom == 0):
+    return top, bottom
+
+  sign = 1
+  if (top * bottom < 0):
+    sign = -1
+
+  top = abs(top)
+  bottom = abs(bottom)
+
+  a = split(top)
+  b = split(bottom)
+  for i in a:
+    if (i in b):
+      a.remove(i)
+      b.remove(i)
+      top = top / i
+      bottom = bottom / i
+  return sign*top, bottom
+
+def split(a):
+  '''return the list of prime divisors'''
+  import math
+  if (a == 1):
+    return [1]
+  else:
+    array = []
+    i = 2
+    while (i < math.sqrt(a) + 1):
+      if (a % i == 0):
+        array.append(i)
+        a = a / i
+      else:
+        i += 1
+    return array
 
 def isIntOrFracInt(x):
   return isinstance(x, int) or (isinstance(x, Node) and x.type == "frac" and isinstance(x.children[0], int) and isinstance(x.children[1], int))

@@ -154,3 +154,17 @@ def testFormatNumber():
 
 #def testXxx():
 #  decimal.
+
+def testReduceFrac():
+  a, b = calc.reduceFrac(2, 4)
+  assert a == 1
+  assert b == 2
+
+  a, b = calc.reduceFrac(2, 5)
+  assert a == 2
+  assert b == 5
+
+  a, b = calc.reduceFrac(2*2*2*3*7, 2*3*5*11)
+  assert a == 28
+  assert b == 55
+
