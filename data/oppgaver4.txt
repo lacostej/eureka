@@ -376,8 +376,9 @@ a,b,c,d,e   (1;9)
 \solution t=\frac {s}{v}
 ---
 "Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for å beregne antall celsiusgrader"
-\solve y=1,8*x+32
-\solution x=\frac {y-32}{1,8}
+y (y)
+\solve y=1.8*x+32
+\solution x=\frac {y-32}{1.8}
 ---
 "Trekantareal: Formelen sier at arealet A av en trekant er grunnl ja g ganget med høyden h, delt på 2. F n en formel for å beregne høyden"
 \solve A=\frac {gh} {2}
