@@ -396,7 +396,7 @@ class NodeLatexConvertor():
         result += "=" + self.toString(node.children[1])
       return result
     if (node.type == "sqrt"):
-      return "$$sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$$"
+      return "$$\\sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$$"
     if (node.type == "eller"):
       return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
     if (node.type == "stdform"):
@@ -532,7 +532,7 @@ class Calc(FormulaParser):
     # FIXME only top level expression can be text, right ?
     def p_expression_text(self, p):
        'expression : TEXT'
-       print "*** TEXT"
+#       print "*** TEXT"
        p[0] = Node("text", p[1])
 
     def p_expression_multiple_expressions(self, p):
