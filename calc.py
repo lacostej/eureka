@@ -336,8 +336,7 @@ class NodeFormulaSimpleOuptutGenerator:
     if (node.type == "stdform"):
       if (isNumber(node.children[0])):
         return stdform(node.children[0])
-      print "FIXME not a number for stdform " + self.toString(node.children[0])
-      return "stdform(" + self.toString(node.children[0]) + ")"
+      raise MyException("The following node cannot be converted through stdform. Evaluation error ? Node: " + self.toString(node.children[0]))
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
     if (node.type == "equals"):
