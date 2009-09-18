@@ -93,7 +93,7 @@ def testEvaluatePowersAndStandardForm():
   evaluation = evaluate(v, "\\stdform {\\res { a*10^b s c*10^d}}")
   s = formulaTextOutput.visit(evaluation)
   print s
-  assert s == "0.0008220140515222482435597189696"
+  assert s == "8.22E-4"
 
 def testOperationsFractions():
   v = {
@@ -167,4 +167,34 @@ def testReduceFrac():
   a, b = calc.reduceFrac(2*2*2*3*7, 2*3*5*11)
   assert a == 28
   assert b == 55
+
+def testStdformNegative():
+  assertEquals ("8.22E-4", calc.stdform(Decimal("0.0008221")))
+
+def testStdformNegativeWithRounding():
+  assertEquals ("8.23E-4", calc.stdform(Decimal("0.0008226")))
+
+def testStdformPositive():
+  assertEquals ("8.22E4", calc.stdform(Decimal("82215.6")))
+
+def testStdformInteger():
+  assertEquals ("8.22E4", calc.stdform(82214))
+
+def testStdformIntegerRounding():
+  assertEquals ("8.23E4", calc.stdform(82263))
+
+def testStdformIntegerNoExponent():
+  assertEquals ("8", calc.stdform(8))
+
+def testStdformDecimalNoExponent():
+  assertEquals ("8.22", calc.stdform(Decimal("8.22")))
+
+def testStdformDecimalNoExponentRounding():
+  assertEquals ("8.23", calc.stdform(Decimal("8.226")))
+
+def assertEquals(a, b):
+  print a
+  print b
+  assert a == b
+
 

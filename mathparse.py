@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import sys
+
 # Get the token map from the lexer.  This is required.
 from mathlex import *
 
@@ -84,7 +86,7 @@ def p_comment(p):
 
 # Error rule for syntax errors
 def p_error(p):
-  print "Syntax error in input! " + str(p)
+  sys.stderr.write("Syntax error in input! '%s'\n" % str(p))
 #  tok = yacc.token()             # Get the next token
 #  yacc.errok()
 
@@ -118,6 +120,45 @@ def parseExos(exercises):
     else:
       exercise.generate()
 
+def parseExosLatex(exercises):
+  header = '''
+\\documentclass[12pt, norsk, a4paper]{article}
+\\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
+\\usepackage[pdftex]{graphicx}
+\\usepackage[latin1]{inputenc}
+\\addtolength{\\parskip}{\\baselineskip}
+\\theoremstyle{definition}
+\\newtheorem{oppgave}{Oppgave}
+\\renewcommand{\\labelenumi}{\\alph{enumi})}
+\\setlength\\topmargin{0cm}
+
+\\newcommand{\\vek}[2]{\\overrightarrow{#1#2}}
+\\newcommand{\\vecc}[1]{\\vec{\\bf #1}}
+
+\\begin{document}
+
+\\begin{flushleft}
+\\textsc{Tid:} 90 minutter\\\\[0.8cm]
+\\textsc{Hjelpemidler:} Egenproduserte rammenotater\\\\[0.8cm]
+\\textsc{Alle svar maa begrunnes}\\\\[1.5cm]
+\\end{flushleft}
+'''
+  footer = '''
+\\noindent SLUTT
+
+\\end{document}
+'''
+
+  print header
+  import exoparse
+  for r in exercises:
+    exercise = exoparse.parseExo(r.text+"\n")
+    if not exercise:
+      sys.stderr.write("ERROR: couldn't parse exercise. Skipping\n")
+    else:
+      print exercise.generateLatex()
+  print footer
+
 if __name__ == "__main__":
   lines = ""
   while True:
@@ -130,4 +171,4 @@ if __name__ == "__main__":
     lines += line + "\n"
 
   exercises = parseFile(lines)
-  parseExos(exercises)
+  parseExosLatex(exercises)

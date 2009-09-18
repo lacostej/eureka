@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import sys
 # Get the token map from the lexer.  This is required.
 from exolex import *
 
@@ -14,6 +15,7 @@ from utils import *
 nodeXmlConvertor = calc.NodeXmlConvertor()
 nodeResultEvaluator = calc.NodeResultEvaluator()
 formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
+nodeLatexConvertor = calc.NodeLatexConvertor()
 
 class MyException(Exception):
   def __init__(self, value):
@@ -247,6 +249,16 @@ class Exercice:
     print "Evaluated Formula: " + self.toText(nodeResultEvaluator.visit(self.parse(self.formula)))
     print "Evaluated Result: " + self.toText(nodeResultEvaluator.visit(self.parse(self.result)))
 
+  def generateLatex(self):
+    s = ""
+    s += "\\begin{oppgave} " + str(self.description)
+    s += "\\["
+    s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula)))
+    s += "\\]"
+    s += "\\vspace{3mm}"
+    s += "\end{oppgave}"
+    return s
+
   def toPrettyXml(self, node):
     return prettyPrintXMLTxt(nodeXmlConvertor.visit(node))
 
@@ -381,7 +393,7 @@ def p_result(p):
 
 # Error rule for syntax errors
 def p_error(p):
-  print "Syntax error in input! " + str(p)
+  sys.stderr.write("Syntax error in input! '%s'\n" % str(p))
 #  tok = yacc.token()             # Get the next token
 #  yacc.errok()
 

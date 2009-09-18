@@ -181,8 +181,7 @@ class NodeResultEvaluator:
       return node.children[0]
 
     if (node.type == 'stdform' and isNumber(node.children[0])):
-      # FIXME what precision ??
-      return node.children[0]
+      return stdform(node.children[0])
 
     if (evaluate):
       if (node.type == 'paren' and isNumber(node.children[0])):
@@ -216,6 +215,14 @@ class NodeResultEvaluator:
         bottom = bottomIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1])
         top, bottom = reduceFrac(top, bottom)
         return Node("frac", [top, bottom])
+
+def stdform(d):
+  if (isinstance(d, int)):
+    d = decimal.Decimal(d)
+  s = str((d*decimal.Decimal(str(10**(-d.adjusted())))).normalize().quantize(decimal.Decimal("0.00")).normalize())
+  if (d.adjusted() != 0):
+    s += "E" + str(d.adjusted())
+  return s
 
 def topIntOrFracInt(intOrFrac):
   if (not isIntOrFracInt(intOrFrac)):
@@ -335,6 +342,64 @@ class NodeFormulaSimpleOuptutGenerator:
       raise MyException("Node isn't yet converted to String: " + str(node))
     return node
 
+class NodeLatexConvertor():
+  binaryOperators = [ '+', '-', ':', '*']
+
+  def visit(self, node):
+    'conver result expressions into a String that LaTeX can understand'
+    result = self.toString(node)
+#    print "RESULT " + str(result)
+    return result
+
+  def formatNumber(self, node):
+    if (isinstance(node, int)):
+      return str(node)
+    return str(node.normalize())
+
+  def toString(self, node):
+    if (node == None):
+      raise MyException("Node is None !")
+
+#    print "DEBUG: toString: " + toXmlConvertor.visit(node)
+
+    if (isNumber(node)):
+      return self.formatNumber(node)
+    if (isinstance(node, str)):
+      return node
+    if (node.type == "int"):
+      return self.toString(node.children[0])
+    if (node.type == "decimal"):
+      return self.toString(node.children[0])
+    if (node.type == "var"):
+      result = self.toString(node.children[0])
+      if (len(node.children) > 1):
+        result += "=" + self.toString(node.children[1])
+      return result
+    if (node.type == "sqrt"):
+      return "$\sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$"
+    if (node.type == "eller"):
+      return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
+    if (node.type == "stdform"):
+      return stdform(node.children[0])
+    if (node.type == "neg"):
+      return "-" + self.toString(node.children[0])
+    # FIXME no need of str...
+    if (node.type == "equals"):
+      return str(self.toString(node.children[0])) + " = " + str(self.toString(node.children[1]))
+    if (node.type in self.binaryOperators):
+      return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
+    if (node.type == "paren"):
+      return "(" + self.toString(node.children[0]) + ")"
+    if (node.type == "frac"):
+      return "\\frac{" + self.toString(node.children[0]) + "}{" + self.toString(node.children[1]) + "}" 
+    if (node.type == "^"):
+      return self.toString(node.children[0]) + "^{" + self.toString(node.children[1]) + "}"
+
+#    if (node.type == "paren"):
+#      return "(" + self.toString(node.children[0]) + ")"
+    if (not isinstance(node, str)):
+      raise MyException("Node isn't yet converted to String: " + str(node))
+    return node
 
 class Calc(FormulaParser):
 
@@ -437,7 +502,7 @@ class Calc(FormulaParser):
       try:      
         return self.names[x]
       except LookupError:
-        print("Undefined name '%s'" % x)
+        sys.stderr.write("Undefined name '%s'\n" % x)
         raise
 
     def p_expression_multiple_expressions(self, p):
@@ -495,7 +560,7 @@ class Calc(FormulaParser):
 #              p[0] = Node("var", v)
 
         except LookupError:
-            print("Undefined name '%s'" % p[1])
+            sys.stderr.write("Undefined name '%s'\n" % p[1])
             p[0] = 0
 
     def p_expression_frac(self, p):
@@ -516,9 +581,9 @@ class Calc(FormulaParser):
 
     def p_error(self, p):
         if p:
-            print("Syntax error at '%s'" % p.value)
+            sys.stderr.write("Syntax error at '%s'\n" % p.value)
         else:
-            print("Syntax error at EOF")
+            sys.stderr.write("Syntax error at EOF\n")
 
 if __name__ == '__main__':
     calc = Calc()
