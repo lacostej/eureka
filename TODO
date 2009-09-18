@@ -1,8 +1,12 @@
-* finish implementing parsing
+PARSING / CONVERSION
+* [J] finish parsing
 ** decide how to solve random unary operators (u a) -> (u1)*a
 ** decide how to implement list -> ( , , ,) ??
-* verify formulas
-** some are broken
-* separate description from exercice directives
-** use comments ???
+* [JB] add new exercices
+* [JB] verify formulas. some are probably broken
+* consider separating description from exercice directives
 
+USER EXO MAPPING
+* [JB] GROUP exercises per knowledge area
+* define interface for teacher
+* define workflow (e.g. emails ? pull/push)
