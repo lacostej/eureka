@@ -86,7 +86,12 @@ def p_comment(p):
 
 # Error rule for syntax errors
 def p_error(p):
-  sys.stderr.write("Syntax error in input! '%s'\n" % str(p))
+  if p:
+    sys.stderr.write("Syntax error at '%s'\n" % p.value)
+    raise MyException("Syntax error at '%s'" % p.value)
+  else:
+    sys.stderr.write("Syntax error at EOF\n")
+    raise MyException("Syntax error at EOF")
 #  tok = yacc.token()             # Get the next token
 #  yacc.errok()
 

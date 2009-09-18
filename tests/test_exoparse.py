@@ -62,6 +62,7 @@ def testCurrentlyFailingExercice():
   text = f.read()
   e = exoparse.parseExo(text)
   e.generate()
+#  assert False
 
 def atestMultipleSolutions():
   f = open('data/multiple_solutions.txt', 'r')

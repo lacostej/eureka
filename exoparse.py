@@ -315,7 +315,6 @@ def p_statement(p):
 def p_statement_decl(p):
   '''statement_decl : statement_decl COMMA VAR
               | VAR'''
-  
   if (type(p[1]) == list):
     p[0] = p[1] + [ Variable(p[3]) ]
   else:
@@ -403,9 +402,12 @@ def p_result(p):
 
 # Error rule for syntax errors
 def p_error(p):
-  sys.stderr.write("Syntax error in input! '%s'\n" % str(p))
-#  tok = yacc.token()             # Get the next token
-#  yacc.errok()
+  if p:
+    sys.stderr.write("Syntax error at '%s'\n" % p.value)
+    raise MyException("Syntax error at '%s'" % p.value)
+  else:
+    sys.stderr.write("Syntax error at EOF\n")
+    raise MyException("Syntax error at EOF")
 
 def parseExo(lines):
   # Build the parser

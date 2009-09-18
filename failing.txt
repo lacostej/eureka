@@ -1,4 +1,5 @@
 "Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for å beregne antall celsiusgrader"
+x (x)
 y (y)
 \solve y=1.8*x+32
 \solution x=\frac {y-32}{1.8}

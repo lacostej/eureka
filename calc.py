@@ -184,6 +184,8 @@ class NodeResultEvaluator:
       return stdform(node.children[0])
 
     if (evaluate):
+      if (node.type == 'frac' and isInt(node.children[0]) and isInt(node.children[1])):
+        return node
       if (node.type == 'frac' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return decimal.Decimal(node.children[0]) / decimal.Decimal(node.children[1])
       if (node.type == 'paren' and isNumber(node.children[0])):
@@ -287,8 +289,14 @@ def split(a):
 def isIntOrFracInt(x):
   return isinstance(x, int) or (isinstance(x, Node) and x.type == "frac" and isinstance(x.children[0], int) and isinstance(x.children[1], int))
 
+def isInt(x):
+  return isinstance(x, int)
+
+def isDecimal(x):
+  return isinstance(x, decimal.Decimal)
+
 def isNumber(x):
-  return isinstance(x, int) or isinstance(x, decimal.Decimal)
+  return isInt(x) or isDecimal(x)
 
 class NodeFormulaSimpleOuptutGenerator:
   binaryOperators = [ '+', '-', ':', '*']
@@ -328,7 +336,7 @@ class NodeFormulaSimpleOuptutGenerator:
     if (node.type == "stdform"):
       if (isNumber(node.children[0])):
         return stdform(node.children[0])
-      print "FIXME not a number for stdform " + toString(node.children[0])
+      print "FIXME not a number for stdform " + self.toString(node.children[0])
       return "stdform(" + self.toString(node.children[0]) + ")"
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
@@ -344,6 +352,9 @@ class NodeFormulaSimpleOuptutGenerator:
       return self.toString(node.children[0]) + "/" + self.toString(node.children[1])
     if (node.type == "^"):
       return self.toString(node.children[0]) + "^" + self.toString(node.children[1])
+
+    if (node.type == "text"):
+      return node.children[0]
 
 #    if (node.type == "paren"):
 #      return "(" + self.toString(node.children[0]) + ")"
@@ -404,6 +415,9 @@ class NodeLatexConvertor():
     if (node.type == "^"):
       return self.toString(node.children[0]) + "^{" + self.toString(node.children[1]) + "}"
 
+    if (node.type == "text"):
+      return node.children[0]
+
 #    if (node.type == "paren"):
 #      return "(" + self.toString(node.children[0]) + ")"
     if (not isinstance(node, str)):
@@ -417,8 +431,8 @@ class Calc(FormulaParser):
         'PLUS','MINUS','POWER','TIMES','DIVIDE','EQUALS', #,'EXP'
         'LPAREN','RPAREN',
         'LBRACE','RBRACE',
-        'VARNAME', 'SYMBOL','OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL'
-#,'TEXT'
+        'VARNAME', 'SYMBOL','OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL',
+        'TEXT'
         )
 
     # Tokens
@@ -440,6 +454,7 @@ class Calc(FormulaParser):
 #    t_SQRTSYMBOL = r'\\sqrt'
 #    t_STDFORMSYMBOL = r'\\stdform'
 #    t_OR_SYMBOL = r'eller'
+    t_TEXT = r'".+"'
 
     symbols = { 
       '\\res' : "RESULTSYMBOL",
@@ -514,6 +529,12 @@ class Calc(FormulaParser):
         sys.stderr.write("Undefined name '%s'\n" % x)
         raise
 
+    # FIXME only top level expression can be text, right ?
+    def p_expression_text(self, p):
+       'expression : TEXT'
+       print "*** TEXT"
+       p[0] = Node("text", p[1])
+
     def p_expression_multiple_expressions(self, p):
         'expression : VARNAME NUMBER EQUALS expression OR_SYMBOL VARNAME NUMBER EQUALS expression'
         p[0] = Node("eller", [Node("var", [p[1]+str(p[2]), p[4]]), Node("var", [p[6]+str(p[7]), p[9]])])
@@ -560,17 +581,8 @@ class Calc(FormulaParser):
     def p_expression_var(self, p):
         'expression : VARNAME'
 #        print "HANDLING " + p[1]
-        try:
-            v = self.names[p[1]]
-            p[0] = Node("var", [v])
-#            if (isinstance(v) == int):
-#              p[0] = Node("int", v)
-#            else:
-#              p[0] = Node("var", v)
-
-        except LookupError:
-            sys.stderr.write("Undefined name '%s'\n" % p[1])
-            p[0] = 0
+        v = self.find_var(p[1])
+        p[0] = Node("var", [v])
 
     def p_expression_frac(self, p):
         'expression : FRACSYMBOL LBRACE expression RBRACE LBRACE expression RBRACE'
@@ -591,8 +603,10 @@ class Calc(FormulaParser):
     def p_error(self, p):
         if p:
             sys.stderr.write("Syntax error at '%s'\n" % p.value)
+            raise MyException("Syntax error at '%s'" % p.value)
         else:
             sys.stderr.write("Syntax error at EOF\n")
+            raise MyException("Syntax error at EOF")
 
 if __name__ == '__main__':
     calc = Calc()

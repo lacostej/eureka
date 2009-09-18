@@ -202,6 +202,8 @@ v,w,z \sign2
 \solution 3
 ---
 "Regn ut verdien av uttrykkene når a=2 og b=-4"
+a (a)
+b (b)
 c, h,k (2;9)
 \solve a + b^c * (a - h) * a - (b - k*b)
 \solution \res{2+(-4)^c*(2-h)*2-(-4-k*(-4))}
@@ -209,9 +211,9 @@ c, h,k (2;9)
 "regn ut"
 a, c, h (1;9)
 b (a)
-u , v, w, x, y, z \sign
+u, v, w, x, y, z \sign
 \solve a u b^c v (b w b) x b y (b z h*b)
-#\solution FIXME
+\solution "FIXME"
 ---
 \cat "likninger"
 ---
@@ -272,36 +274,35 @@ a,b,c,d,e,f,g,h,i,j,k,l (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d} * (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {i}{x} y \frac {k}{l})
-#\solution FIXME
+\solution "FIXME"
 ---
 "Nivå 9: løs likningene ved regn g. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,j,k,l (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d}* (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {i}{x} y \frac {k}{l})
-#\solution FIXME
+\solution "FIXME"
 ---
 "Nivå 10: løs likningene ved regn g. Sett prøve på svarene"
 a, b, c, d (1;9)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {x}{a} u b=c*x v d
-# FIXME broken syntax
-#\solution \frac {\res {((v1)*d-(u1)*b)*a)} {1-c*a)}
+\solution "FIXME \frac {\res {((v1)*d-(u1)*b)*a)} {1-c*a)}"
 ---
 "Nivå 11: løs likningene ved regn g. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d} * (\frac {x}{e} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {x}{i} y \frac {k}{l}) z \frac {m}{n}* (\frac {x}{o} r \frac {p}{q})
-#\solution FIXME
+\solution "FIXME"
 ---
 "Nivå 12: løs likningene ved regn g. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d}* (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h} * (\frac {i}{x} y \frac {k}{l}) z \frac {m}{n} * (\frac {o}{x} r \frac {p}{q})
-#\solution FIXME
+\solution "FIXME"
 ---
 "Nivå 13: løs potens likningene ved regn g"
 x (x)
@@ -332,14 +333,13 @@ x (x)
 b   (1;5)
 a,c   (3;9)
 \solve a*x^2+b*x+c=0
-#\solution "Ingen løsning"
+\solution "Ingen løsning"
 ---
 "NIvå 18: løs andregradslikning ved regning"
 x (x)
 a,b,c   (1;9)
 \solve a*x^2+\res {a*(b+c)} *x+\res {a*b*c}=0
-
-#\solution FIXME
+\solution "FIXME"
 ---
 "Nivå 19: løs andregradslikning ved regning"
 x (x)
@@ -351,7 +351,7 @@ a,b   (1;9)
 x (x)
 a,b,c   (1;6)
 \solve a*x^2+b*x+c=0
-#\solution FIXME
+\solution "FIXME"
 ---
 "Nivå 21: løs andregradslikning ved regning"
 x (x)
@@ -368,10 +368,16 @@ a,b,c,d,e   (1;9)
 \cat "formler"
 ---
 "Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for å beregne strekning"
+v (v)
+s (s)
+t (t)
 \solve v=\frac {s}{t}
 \solution s=v*t
 ---
 "Farten: Formelen sier at gjennomsnittsfarten v er tilbakelagt strekn g s dividert med tiden t.  F n en formel for å beregne tiden"
+v (v)
+s (s)
+t (t)
 \solve v=\frac {s}{t}
 \solution t=\frac {s}{v}
 ---
@@ -400,7 +406,7 @@ m (m)
 I (I)
 h (h)
 \solve m=I*h^2
-#\solution FIXME
+\solution "FIXME"
 ---
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med høyden h i andre. Massen måles i kilogram og høyden i meter. F n en formel for å beregne høyden"
 I (I)
@@ -474,7 +480,7 @@ a (a)
 \solution a^\res {b+c+d+e+f}
 ---
 "Nivå 4: regn ut og angi potensformen"
-c,d,e,f (1;9)
+b,c,d,e,f (1;9)
 x (x)
 y (y)
 \solve x^b*y^c*x^d*y^e*x^f
@@ -586,7 +592,7 @@ a (a)
 \solution a^\res{b+c+d+e+f}
 ---
 "Nivå 4bis: regn ut og angi potensformen"
-c,d,e,f (-9;9)
+b,c,d,e,f (-9;9)
 x (x)
 y (y)
 \solve x^b*y^c*x^d*y^e*x^f
