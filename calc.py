@@ -138,7 +138,6 @@ class NodeResultEvaluator:
     if (node.type == "result"):
       return self.evaluateResult(node.children[0], True)
 
-    # FIXME
     n = self.evaluate(node, evaluate)
     if (n != None):
       return n
