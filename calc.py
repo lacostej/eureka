@@ -340,9 +340,8 @@ class NodeFormulaSimpleOuptutGenerator:
       return "stdform(" + self.toString(node.children[0]) + ")"
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
-    # FIXME no need of str...
     if (node.type == "equals"):
-      return str(self.toString(node.children[0])) + " = " + str(self.toString(node.children[1]))
+      return self.toString(node.children[0]) + " = " + self.toString(node.children[1])
     if (node.type in self.binaryOperators):
       return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
     if (node.type == "paren"):
@@ -403,9 +402,8 @@ class NodeLatexConvertor():
       return stdform(node.children[0])
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
-    # FIXME no need of str...
     if (node.type == "equals"):
-      return str(self.toString(node.children[0])) + " = " + str(self.toString(node.children[1]))
+      return self.toString(node.children[0]) + " = " + self.toString(node.children[1])
     if (node.type in self.binaryOperators):
       return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
     if (node.type == "paren"):
