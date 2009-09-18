@@ -59,7 +59,7 @@ def test_fullLoad():
 
 def testCurrentlyFailingExercice():
   ''' usefull during development, place the failing exercice in failing.txt and uncomment'''
-  f = open('failing.txt', 'r')
+  f = open('data/failing.txt', 'r')
   text = f.read()
   e = exoparse.parseExo(text)
   e.generate()
