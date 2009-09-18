@@ -4,6 +4,7 @@ import ply.lex as lex
 import re
 
 tokens=(
+  'ID',
   'TEXT',
   'FUNC_SIGNALL',
   'FUNC_SIGN1',
@@ -21,6 +22,7 @@ tokens=(
   'VAR'
 )
 
+
 t_TEXT=r'".+"'
 t_FUNC_SIGNALL=r'\\sign'
 t_FUNC_SIGN1=r'\\sign1'
@@ -35,6 +37,11 @@ t_SEMICOLON=r';'
 t_LPAREN='\('
 t_RPAREN='\)'
 t_VAR=r'[a-zA-Z]'
+
+
+def t_ID(t):
+    r'id\d+'
+    return t
 
 # A regular expression rule with some action code
 def t_NUMBER(t):

@@ -1,3 +1,4 @@
+id2
 "Nivå 21: løs andregradslikning ved regning"
 x (x)
 a,b,c,d   (1;9)

@@ -148,7 +148,8 @@ class Variable:
     return "var " + self.name + ":" + str(self.value())
 
 class Exercice:
-  def __init__(self, description, statements, formula, result):
+  def __init__(self, id, description, statements, formula, result):
+    self.id = id
     self.description = description
     self.statements = statements
     self.formula = formula
@@ -235,7 +236,7 @@ class Exercice:
     return v
 
   def generate(self):
-    print "Generating: " + str(self.description)
+    print "Generating: [" + self.id + "]: " + str(self.description)
     for s in self.statements:
       print str(s)
     print "Formula: " + self.formula
@@ -251,7 +252,7 @@ class Exercice:
 
   def generateLatex(self):
     s = ""
-    s += "\\begin{oppgave} " + str(self.description)
+    s += "\\begin{oppgave} " + self.id + " " + str(self.description)
     s += "\\["
     s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula)))
     s += "\\]"
@@ -280,9 +281,13 @@ class Exercice:
     return formulaTextOutput.visit(node)
 
 def p_exercise(p):
-  'exercise : description statements formula result'
+  'exercise : id description statements formula result'
 #  print "exo"
-  p[0] = Exercice(p[1], p[2], p[3], p[4])
+  p[0] = Exercice(p[1], p[2], p[3], p[4], p[5])
+
+def p_exercise_id(p):
+  'id : ID'
+  p[0] = p[1]
 
 def unquoteTEXT(text):
   pattern = re.compile(r'"(.*)"')

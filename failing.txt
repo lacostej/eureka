@@ -1,3 +1,4 @@
+id3
 "Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for å beregne antall celsiusgrader"
 x (x)
 y (y)

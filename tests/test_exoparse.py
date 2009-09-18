@@ -22,6 +22,7 @@ def tearDown(self):
 
 def testReadOneExercise():
   text = '''
+id0
 "l1: addisjon og substraksjon med negative tall. Regn ut"
 a (-1;10)
 b (-10,-1,-2)

@@ -1,3 +1,4 @@
+id5
 " l2: addisjon og substraksjon med negative tall. Regn ut"
 a (-10;10)\0
 b (1;10)
