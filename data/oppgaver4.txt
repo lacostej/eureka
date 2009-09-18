@@ -288,7 +288,8 @@ a, b, c, d (1;9)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {x}{a} u b=c*x v d
-\solution "FIXME \frac {\res {((v1)*d-(u1)*b)*a)} {1-c*a)}"
+\solution "FIXME"
+#\frac {\res {((v1)*d-(u1)*b)*a)} {1-c*a)}"
 ---
 "Nivå 11: løs likningene ved regn g. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
@@ -335,7 +336,7 @@ a,c   (3;9)
 \solve a*x^2+b*x+c=0
 \solution "Ingen løsning"
 ---
-"NIvå 18: løs andregradslikning ved regning"
+"Nivå 18: løs andregradslikning ved regning"
 x (x)
 a,b,c   (1;9)
 \solve a*x^2+\res {a*(b+c)} *x+\res {a*b*c}=0

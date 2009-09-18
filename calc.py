@@ -416,6 +416,7 @@ class NodeLatexConvertor():
       return self.toString(node.children[0]) + "^{" + self.toString(node.children[1]) + "}"
 
     if (node.type == "text"):
+#      print "text: " + node.children
       return node.children[0]
 
 #    if (node.type == "paren"):
@@ -533,7 +534,7 @@ class Calc(FormulaParser):
     def p_expression_text(self, p):
        'expression : TEXT'
 #       print "*** TEXT"
-       p[0] = Node("text", p[1])
+       p[0] = Node("text", [p[1]])
 
     def p_expression_multiple_expressions(self, p):
         'expression : VARNAME NUMBER EQUALS expression OR_SYMBOL VARNAME NUMBER EQUALS expression'

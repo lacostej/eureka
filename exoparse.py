@@ -262,9 +262,13 @@ class Exercice:
   def generateLatexResult(self):
     s = ""
     s += "\\begin{result} "
-    s += "\\["
-    s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.result)))
-    s += "\\]"
+    result = nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.result)))
+    if (result[0] == '"'):
+      s += unquoteTEXT(result)
+    else:
+      s += "\\["
+      s += result
+      s += "\\]"
     s += "\\vspace{3mm}"
     s += "\end{result}"
     return s

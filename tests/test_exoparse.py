@@ -64,7 +64,7 @@ def testCurrentlyFailingExercice():
   e.generate()
 #  assert False
 
-def atestMultipleSolutions():
+def testMultipleSolutions():
   f = open('data/multiple_solutions.txt', 'r')
   text = f.read()
   e = exoparse.parseExo(text)
@@ -193,9 +193,17 @@ def testStdformDecimalNoExponent():
 def testStdformDecimalNoExponentRounding():
   assertEquals ("8.23", calc.stdform(Decimal("8.226")))
 
+def testTextSolution():
+  f = open('data/example_with_text_solution.txt', 'r')
+  text = f.read()
+  e = exoparse.parseExo(text)
+  s = e.generateLatexResult()
+  assertEquals("\\begin{result} FIXME\\vspace{3mm}\end{result}", s)
+
 def assertEquals(a, b):
-  print a
-  print b
-  assert a == b
+  result = (a == b)
+  if (not result):
+    print str(a) + " not equals to\n" + b
+    assert False
 
 
