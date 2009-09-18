@@ -259,6 +259,16 @@ class Exercice:
     s += "\end{oppgave}"
     return s
 
+  def generateLatexResult(self):
+    s = ""
+    s += "\\begin{result} "
+    s += "\\["
+    s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.result)))
+    s += "\\]"
+    s += "\\vspace{3mm}"
+    s += "\end{result}"
+    return s
+
   def toPrettyXml(self, node):
     return prettyPrintXMLTxt(nodeXmlConvertor.visit(node))
 

@@ -125,8 +125,7 @@ def parseExosLatex(exercises):
 \\documentclass[12pt, norsk, a4paper]{article}
 \\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
 \\usepackage[pdftex]{graphicx}
-\\usepackage[latin1]{inputenc}
-\\addtolength{\\parskip}{\\baselineskip}
+\\usepackage[utf8]{inputenc}
 \\theoremstyle{definition}
 \\newtheorem{oppgave}{Oppgave}
 \\renewcommand{\\labelenumi}{\\alph{enumi})}
@@ -143,20 +142,32 @@ def parseExosLatex(exercises):
 \\textsc{Alle svar maa begrunnes}\\\\[1.5cm]
 \\end{flushleft}
 '''
+  middle = '''
+\\newtheorem{result}{Resultat}
+'''
+
   footer = '''
 \\noindent SLUTT
 
 \\end{document}
 '''
 
-  print header
+  exos = []
   import exoparse
   for r in exercises:
     exercise = exoparse.parseExo(r.text+"\n")
     if not exercise:
       sys.stderr.write("ERROR: couldn't parse exercise. Skipping\n")
     else:
-      print exercise.generateLatex()
+#      print "generated " + exercise
+      exos.append(exercise)
+
+  print header
+  for e in exos:
+    print e.generateLatex()
+  print middle
+  for e in exos:
+    print e.generateLatexResult()
   print footer
 
 if __name__ == "__main__":

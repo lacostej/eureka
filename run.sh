@@ -1,3 +1,5 @@
 cat exo1.txt | python ./exoparse.py
-cat data/oppgaver4.txt | python ./mathparse.py > oppgaver4.log 2>&1 
+
+mkdir -p gen
+cat data/oppgaver4.txt | python ./mathparse.py > gen/oppgaver4.log 2>&1 
 

@@ -409,21 +409,21 @@ h (h)
 \solve I=\frac {m} {h^2}
 \solution h=\sqrt {2}{\frac {m} {I}}
 ---
-"Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=\frac {Gh}{3}. F n høyden  uttrykt ved V og G"
+"Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=$\frac {Gh}{3}$. F n høyden  uttrykt ved V og G"
 V (V)
 G (G)
 h (h)
 \solve V=\frac {G*h}{3}
 \solution h=\frac{3*V}{G}
 ---
-"Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=\frac {Gh}{3}. F n grunnflate uttrykt ved V og h"
+"Pyramidevolum: Volumet V av en pyramide med grunnflate G og høyde h er V=$\frac {Gh}{3}$. F n grunnflate uttrykt ved V og h"
 V (V)
 G (G)
 h (h)
 \solve V=\frac {G*h}{3}
 \solution G=\frac{3*V}{h}
 ---
-"Skelettvekten: S=0,0567*K^1,093 gir en god modell for sammenhengen mellom kroppsvekten K og skjelettvekten S for pattedyr. S og \solve K målt i kilogram. F n K uttrykt ved S"
+"Skelettvekten: \[S=0,0567*K^1,093\] gir en god modell for sammenhengen mellom kroppsvekten K og skjelettvekten S for pattedyr. S og \$solve K målt i kilogram. F n K uttrykt ved S"
 S (S)
 K (K)
 \solve S=0.0567*K^1.093

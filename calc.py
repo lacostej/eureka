@@ -184,6 +184,8 @@ class NodeResultEvaluator:
       return stdform(node.children[0])
 
     if (evaluate):
+      if (node.type == 'frac' and isNumber(node.children[0]) and isNumber(node.children[1])):
+        return decimal.Decimal(node.children[0]) / decimal.Decimal(node.children[1])
       if (node.type == 'paren' and isNumber(node.children[0])):
         return node.children[0]
       if (node.type == '^' and isNumber(node.children[0]) and isNumber(node.children[1])):
@@ -219,6 +221,10 @@ class NodeResultEvaluator:
 def stdform(d):
   if (isinstance(d, int)):
     d = decimal.Decimal(d)
+  if (not isinstance(d, decimal.Decimal)):
+    print "ERROR :" + str(type(d)) + " " + str(d)
+   
+    #print str(10**(-d.adjusted()))
   s = str((d*decimal.Decimal(str(10**(-d.adjusted())))).normalize().quantize(decimal.Decimal("0.00")).normalize())
   if (d.adjusted() != 0):
     s += "E" + str(d.adjusted())
@@ -320,6 +326,9 @@ class NodeFormulaSimpleOuptutGenerator:
     if (node.type == "eller"):
       return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
     if (node.type == "stdform"):
+      if (isNumber(node.children[0])):
+        return stdform(node.children[0])
+      print "FIXME not a number for stdform " + toString(node.children[0])
       return "stdform(" + self.toString(node.children[0]) + ")"
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
@@ -376,7 +385,7 @@ class NodeLatexConvertor():
         result += "=" + self.toString(node.children[1])
       return result
     if (node.type == "sqrt"):
-      return "$\sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$"
+      return "$$sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$$"
     if (node.type == "eller"):
       return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
     if (node.type == "stdform"):
