@@ -1,4 +1,6 @@
 PARSING / CONVERSION
+* [J] fix latex conversion
+** cleanup latex warnings
 * [J] finish parsing
 ** decide how to solve random unary operators (u a) -> (u1)*a
 ** decide how to implement list -> ( , , ,) ??
