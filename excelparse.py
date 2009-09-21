@@ -61,10 +61,10 @@ def parse(fileName):
   startStudentColumnIdx = 4
   startExerciseRowId = 3
 
-  shouldGenerate = False
-  comment = None
-
   for cx in range(startStudentColumnIdx, exercisesSheet.ncols, 2):
+    shouldGenerate = False
+    comment = None
+
     exerciseStatuses = {}
     studentId = exercisesSheet.cell(2, cx).value
     studentId = studentId.encode("iso-8859-1")
