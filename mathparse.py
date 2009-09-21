@@ -166,8 +166,15 @@ def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, st
 #      print "generated " + exercise
       exos.append(exercise)
 
-  # FIXME use studentData.comment
   output.write(header + "\n")
+
+  if (studentData.comment != None and len(studentData.comment) > 0):
+    comment = studentData.comment.encode("iso-8859-15")
+    # FIXME encode Norwegian characters appropriately
+    output.write("\\begin{flushleft}\n")
+    output.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
+    output.write("\\end{flushleft}\n")
+
   for exoId in studentData.exerciseStatuses.iterkeys():
 #    print exoId
     exoData = studentData.exerciseStatuses[exoId]
