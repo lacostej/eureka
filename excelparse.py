@@ -6,6 +6,9 @@ class ClassStatus:
   def __init__(self, students, studentExercicesStatus):
     self.students = students
     self.studentExercicesStatus = studentExercicesStatus
+
+  def getStudentData(self, shortName):
+    return find(self.studentExercicesStatus, lambda ses : ses.studentId == shortName)
     
 class Student:
   def __init__(self, shortName, fullName, email):
@@ -13,6 +16,8 @@ class Student:
     self.fullName = fullName
     self.email = email
 
+  def __str__(self):
+    return self.shortName + " (\"" + str(self.fullName) + "\" <" + str(self.email) + ">)"
 
 class StudentExercicesStatus:
   def __init__(self, studentId, comment, shouldGenerate, exerciseStatuses):
@@ -94,7 +99,6 @@ def parse(fileName):
       exerciseStatuses[exoId] = exerciseStatus
     studentsExercisesStatus.append(StudentExercicesStatus(studentId, comment, shouldGenerate, exerciseStatuses))
   return ClassStatus(students, studentsExercisesStatus)
-
 
 
 if __name__ == "__main__":

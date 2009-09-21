@@ -125,6 +125,68 @@ def parseExos(exercises):
     else:
       exercise.generate()
 
+def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, studentData):
+  header = '''
+\\documentclass[12pt, norsk, a4paper]{article}
+\\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
+\\usepackage[pdftex]{graphicx}
+\\usepackage[utf8]{inputenc}
+\\theoremstyle{definition}
+\\newtheorem{oppgave}{Oppgave}
+\\renewcommand{\\labelenumi}{\\alph{enumi})}
+\\setlength\\topmargin{0cm}
+
+\\newcommand{\\vek}[2]{\\overrightarrow{#1#2}}
+\\newcommand{\\vecc}[1]{\\vec{\\bf #1}}
+
+\\begin{document}
+
+\\begin{flushleft}
+\\textsc{Tid:} 90 minutter\\\\[0.8cm]
+\\textsc{Hjelpemidler:} Egenproduserte rammenotater\\\\[0.8cm]
+\\textsc{Alle svar maa begrunnes}\\\\[1.5cm]
+\\end{flushleft}
+'''
+  middle = '''
+\\newtheorem{result}{Resultat}
+'''
+
+  footer = '''
+\\noindent SLUTT
+
+\\end{document}
+'''
+
+  output = open(outputFileName, "w")
+
+  exos = []
+  import exoparse
+  for r in exercises:
+    exercise = exoparse.parseExo(r.text+"\n")
+    if not exercise:
+      sys.stderr.write("ERROR: couldn't parse exercise. Skipping\n")
+    else:
+#      print "generated " + exercise
+      exos.append(exercise)
+
+  # FIXME use studentData.comment
+  output.write(header + "\n")
+  for exoId in studentData.exerciseStatuses.iterkeys():
+#    print exoId
+    exoData = studentData.exerciseStatuses[exoId]
+    if (exoData == None):
+      raise MyException("no data for " + exoId + " for student " + student.shortName)
+    if (exoData.toGenerate > 0):
+      exo = find(exos, lambda e: e.id == exoId)
+      if (exo == None):
+        continue
+#        raise MyException("Unknown exercise: " + exoId)
+      for i in range(exoData.toGenerate):
+        exo.clean()
+        output.write(exo.generateLatex() + "\n")
+
+  output.write(footer + "\n")  
+
 def parseExosLatex(exercises):
   header = '''
 \\documentclass[12pt, norsk, a4paper]{article}
