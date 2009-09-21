@@ -1,0 +1,6 @@
+id1
+"Nivå 18: løs andregradslikning ved regning"
+x (x)
+a,b,c   (1;9)
+\solve a*x^2+\res {a*(b+c)} *x+\res {a*b*c}=0
+\solution "FIXME"
