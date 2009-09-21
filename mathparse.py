@@ -136,9 +136,6 @@ def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, st
 \\renewcommand{\\labelenumi}{\\alph{enumi})}
 \\setlength\\topmargin{0cm}
 
-\\newcommand{\\vek}[2]{\\overrightarrow{#1#2}}
-\\newcommand{\\vecc}[1]{\\vec{\\bf #1}}
-
 \\begin{document}
 
 \\begin{flushleft}
@@ -182,7 +179,6 @@ def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, st
         continue
 #        raise MyException("Unknown exercise: " + exoId)
       for i in range(exoData.toGenerate):
-        exo.clean()
         output.write(exo.generateLatex() + "\n")
 
   output.write(footer + "\n")  
@@ -197,9 +193,6 @@ def parseExosLatex(exercises):
 \\newtheorem{oppgave}{Oppgave}
 \\renewcommand{\\labelenumi}{\\alph{enumi})}
 \\setlength\\topmargin{0cm}
-
-\\newcommand{\\vek}[2]{\\overrightarrow{#1#2}}
-\\newcommand{\\vecc}[1]{\\vec{\\bf #1}}
 
 \\begin{document}
 
