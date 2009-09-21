@@ -45,7 +45,7 @@ def parse(fileName):
     if (rx == 0):
       continue # skip header
     row = studentSheet.row(rx)
-    students.append(Student(row[0].value, row[0].value, row[0].value))
+    students.append(Student(row[0].value.strip(), row[1].value.strip(), row[2].value.strip()))
 
   studentsExercisesStatus = []
   exercisesSheet = book.sheet_by_index(1)
