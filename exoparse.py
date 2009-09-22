@@ -45,7 +45,7 @@ class List(Func):
 
   def randomize(self):
     self.val = randomFrom(self.values)
-    print "randomized: List val: " + str(self.val) + " from " + str(self.values)
+#    print "randomized: List val: " + str(self.val) + " from " + str(self.values)
     return self.val
 
   def value(self):
@@ -69,7 +69,7 @@ class Range(Func):
       theRange.remove(self.exclude)
     r = randomFrom(theRange)
     self.val = r
-    print "randomize: Range val: " + str(self.val)
+#    print "randomize: Range val: " + str(self.val)
     return self.val
 
   def value(self):
@@ -90,7 +90,6 @@ class DecimalRange(Func):
       raise MyException("Exclude support not yet implemented for DecimalRange")
 
   def randomize(self):
-    print "randomize: DecimalRange"
     import random
     import decimal
     intr = 0
@@ -257,7 +256,7 @@ class Exercice:
 
 
   def randomize(self):
-    print "randomize: Exercise"
+#    print "randomize: Exercise"
     for s in self.statements:
       s.randomize()
 
@@ -329,7 +328,6 @@ def p_statement(p):
   for var in p[1]:
     var.function = p[2]
     var.randomize()
-    print var
 #    print type(var)
   variables += p[1]
   p[0] = variables
