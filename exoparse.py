@@ -12,18 +12,14 @@ exoLexer = lex.lex(reflags=re.UNICODE)
 import calc
 from utils import *
 
+# various formula tree visitors
 nodeXmlConvertor = calc.NodeXmlConvertor()
 nodeResultEvaluator = calc.NodeResultEvaluator()
 formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
 nodeLatexConvertor = calc.NodeLatexConvertor()
 
-class MyException(Exception):
-  def __init__(self, value):
-    self.value = value
-  def __str__(self):
-    return repr(self.value)
-
 class Executor:
+  '''A simple Command pattern implementation'''
   def __init__(self, function, param):
     self.function = function
     self.param = param
@@ -35,74 +31,81 @@ class Func:
   pass
 
 def randomFrom(array):
+  '''Return an element randomly from the specified array'''
   import random
   return array[random.randint(0, len(array) -1 )]
 
 class List(Func):
+  '''A function whose value is picked from the specified values list'''
+
   val = None
 
   def __init__(self, values):
     self.values = values
 
-  def execute(self):
-    return randomFrom(self.values)
+  def randomize(self):
+    self.val = randomFrom(self.values)
+    print "randomized: List val: " + str(self.val) + " from " + str(self.values)
+    return self.val
 
   def value(self):
-    if (self.val == None):
-      self.val = str(self.execute())
     return self.val
 
   def __str__(self):
     return str(self.value())
 
 class Range(Func):
+  '''A function whose value is picked a specified range'''
   val = None
+
   def __init__(self, start, stop, exclude=None):
     self.start = start
     self.stop = stop
     self.exclude = exclude
 
-  def execute(self):
+  def randomize(self):
     theRange = range(self.start, self.stop)
     if (self.exclude != None):
       theRange.remove(self.exclude)
     r = randomFrom(theRange)
-    return r
+    self.val = r
+    print "randomize: Range val: " + str(self.val)
+    return self.val
 
   def value(self):
-    if (self.val == None):
-      self.val = str(self.execute())
     return self.val
 
   def __str__(self):
-#    return "Range("+str(self.start)+","+str(self.stop)+")"
-    return "Range(" + self.value() + ")"
+    return "Range(" + str(self.value()) + " in " + str(self.start)+","+str(self.stop) + ")"
 
 class DecimalRange(Func):
+  '''A function whose value is picked a specified range'''
   val = None
 
   def __init__(self, start, stop, exclude=None):
     self.start = start
     self.stop = stop
     self.exclude = exclude
+    if (exclude != None):
+      raise MyException("Exclude support not yet implemented for DecimalRange")
 
-  def execute(self):
+  def randomize(self):
+    print "randomize: DecimalRange"
     import random
     import decimal
     intr = 0
     while (intr == 0):
       intr = random.randint(self.start * 100, self.stop * 100)
     value=decimal.Decimal(intr)/100
-    return value
+    self.val = value
+#    print "randomized: DecimalRange val: " + str(self.val)
+    return self.val
 
   def value(self):
-    if (self.val == None):
-      self.val = str(self.execute())
     return self.val
 
   def __str__(self):
-#    return "Range("+str(self.start)+","+str(self.stop)+")"
-    return str(self.value())
+    return "DecimalRange(" + str(self.value()) + " in " + str(self.start)+","+str(self.stop) + ")"
 
 signOps=['+','-',':','*']
 sign1Ops=['+', '-']
@@ -110,7 +113,6 @@ sign2Ops=['*', ':']
 #sign3Ops=['', '-']
 
 class PredefinedFunction(Func):
-  val = None
   def __init__(self, func_symbol):
     self.functions = { #Built in Function table
       '\sign' : Executor(randomFrom, signOps),
@@ -119,17 +121,18 @@ class PredefinedFunction(Func):
 #      '\sign3' : Executor(randomFrom, sign3Ops)
     }
     self.function = self.functions[func_symbol]
+    self.randomize()
 
-  def execute(self):
-    return self.function.execute()
+  def randomize(self):
+    self.val = self.function.execute()
+#    print "randomized: PredefinedFunction val: " + str(self.val)
+    return self.val
 
   def value(self):
-    if (self.val == None):
-      self.val = str(self.execute())
     return self.val
 
   def __str__(self):
-    return "Range("+self.value()+")"
+    return "PredefinedFunction("+str(self.value())+")"
 
 class Variable:
   function = None
@@ -138,8 +141,9 @@ class Variable:
   def __init__(self, name):
     self.name = name
 
-  def compute(self):
-    self.val = self.function.execute()
+  def randomize(self):
+    self.val = self.function.randomize()
+#    print "randomized: Variable " + self.name + " val: " + str(self.val) + " from " + str(self.function)
 
   def value(self):
     return self.val
@@ -155,6 +159,7 @@ class Exercice:
     self.formula = formula
     self.result = result
 
+  # FIXME remove
   def dirty_replace(self, text):
     '''temporary function until we implement formual and solution parsing'''
     for s in self.statements:
@@ -250,6 +255,13 @@ class Exercice:
     print "Evaluated Formula: " + self.toText(nodeResultEvaluator.visit(self.parse(self.formula)))
     print "Evaluated Result: " + self.toText(nodeResultEvaluator.visit(self.parse(self.result)))
 
+
+  def randomize(self):
+    print "randomize: Exercise"
+    for s in self.statements:
+      s.randomize()
+
+
   def generateLatex(self):
     s = ""
     s += "\\begin{oppgave} " + self.id + " " + str(self.description)
@@ -316,7 +328,8 @@ def p_statement(p):
   variables = []
   for var in p[1]:
     var.function = p[2]
-    var.compute()
+    var.randomize()
+    print var
 #    print type(var)
   variables += p[1]
   p[0] = variables

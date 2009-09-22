@@ -186,6 +186,7 @@ def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, st
         continue
 #        raise MyException("Unknown exercise: " + exoId)
       for i in range(exoData.toGenerate):
+        exo.randomize()
         output.write(exo.generateLatex() + "\n")
 
   output.write(footer + "\n")  

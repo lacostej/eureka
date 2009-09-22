@@ -49,6 +49,25 @@ s \\sign1
 #def testXxxy():
 #  assert False
 
+def testReRandomizeWorks():
+  text = '''
+id0
+"l1: addisjon og substraksjon med negative tall. Regn ut"
+a (-1000;1000)
+b (-1000;1000)
+s \\sign1
+\\solve a s (b)
+\\solution \\res {a s (b)}
+'''
+  print text
+
+  e = exoparse.parseExo(text)
+  #e.generate()
+  a1 = e.statements[0].value()
+  e.randomize()
+  a2 = e.statements[0].value()
+  #e.generate()
+  assertNotEquals(a1, a2)
 
 def test_fullLoad():
   f = open('data/oppgaver4.txt', 'r')
@@ -207,4 +226,8 @@ def assertEquals(a, b):
     print str(a) + " not equals to\n" + b
     assert False
 
-
+def assertNotEquals(a, b):
+  result = (a != b)
+  if (not result):
+    print str(a) + " equals to\n" + b
+    assert False

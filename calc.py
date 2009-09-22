@@ -64,6 +64,7 @@ class FormulaParser:
       return self.parser.parse(s, lexer=self.formulaLexer)
 
 class Node:
+  '''A simple tree implementation'''
   def __init__(self,type,children=None,leaf=None):
     self.type = type
     if children:
@@ -84,6 +85,7 @@ class Node:
      return r
 
 class NodeXmlConvertor:
+  '''A visitor that converts a tree to its XML reprensentation, usefull for debugging the conversion from formulat to Tree'''
   def visit(self, node):
     'convert the node to an XML representation'
     if (node == None):
@@ -119,11 +121,13 @@ class NodeXmlConvertor:
 
 
 def instanceClassName(x):
+  '''Returns a String representation of a instance's class name'''
   return type(x).__module__ + "." + type(x).__name__
 
 toXmlConvertor = NodeXmlConvertor()
 
 class NodeResultEvaluator:
+  '''A visitor that go through the tree and computes the values of the sub-tree wrapped inside a 'result' node'''
   def visit(self, node):
     'conver result expressions into their values whenever possible'
 #    print "EVALUATING " + toXmlConvertor.visit(node)
@@ -220,6 +224,7 @@ class NodeResultEvaluator:
         return Node("frac", [top, bottom])
 
 def stdform(d):
+  '''Returns the standard form representation of a number as a string'''
   if (isinstance(d, int)):
     d = decimal.Decimal(d)
   if (not isinstance(d, decimal.Decimal)):
@@ -232,6 +237,7 @@ def stdform(d):
   return s
 
 def topIntOrFracInt(intOrFrac):
+  '''Returns the top of a fraction of integers or the integer value. Used to compute fracOrInt operations'''
   if (not isIntOrFracInt(intOrFrac)):
     raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
 #  print toXmlConvertor.visit(intOrFrac)
@@ -240,6 +246,7 @@ def topIntOrFracInt(intOrFrac):
   return intOrFrac.children[0]
 
 def bottomIntOrFracInt(intOrFrac):
+  '''Returns the bottom of a fraction of integers or the integer value. Used to compute fracOrInt operations'''
   if (not isIntOrFracInt(intOrFrac)):
     raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
 #  print toXmlConvertor.visit(intOrFrac)
@@ -248,6 +255,7 @@ def bottomIntOrFracInt(intOrFrac):
   return intOrFrac.children[1]
 
 def reduceFrac(top, bottom):
+  '''Reduces a fraction of integers. E.g. 30,35 -> 6,7. Returns a new couple of integers representing the fraction. top can be positive.'''
 
   if (bottom == 0):
     return top, bottom
@@ -286,18 +294,24 @@ def split(a):
     return array
 
 def isIntOrFracInt(x):
+  '''Returns True if the parameter is an int or fraction of integers.'''
   return isinstance(x, int) or (isinstance(x, Node) and x.type == "frac" and isinstance(x.children[0], int) and isinstance(x.children[1], int))
 
 def isInt(x):
+  '''Returns True if the parameter is an int.'''
   return isinstance(x, int)
 
 def isDecimal(x):
+  '''Returns True if the parameter is an decimal.'''
   return isinstance(x, decimal.Decimal)
 
 def isNumber(x):
+  '''Returns True if the parameter is an int or decimal.'''
   return isInt(x) or isDecimal(x)
 
 class NodeFormulaSimpleOuptutGenerator:
+  '''A tree visitor that converts the formula to String. Simplified.'''
+
   binaryOperators = [ '+', '-', ':', '*']
 
   def visit(self, node):
@@ -360,6 +374,8 @@ class NodeFormulaSimpleOuptutGenerator:
     return node
 
 class NodeLatexConvertor():
+  '''A tree visitor that converts the formula to its LaTex representation.'''
+
   binaryOperators = [ '+', '-', ':', '*']
 
   def visit(self, node):
@@ -422,6 +438,7 @@ class NodeLatexConvertor():
     return node
 
 class Calc(FormulaParser):
+    '''The PLY parser that converts the textual formula/result into a Tree.'''
 
     tokens = (
         'NUMBER', 'DECIMAL',
