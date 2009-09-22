@@ -5,8 +5,11 @@ import mathparse
 import time
 import os
 
+def fileBaseName(student):
+  return student.shortName.replace(" ", "_")
+
 def generateOuputLatexFileName(student, date):
-  return student.shortName + ".latex"
+  return fileBaseName(student) + ".latex"
 
 if __name__ == "__main__":
   interfaceFile = sys.argv[1]
@@ -20,7 +23,13 @@ if __name__ == "__main__":
   exercisesData = f.read()
   exercises = mathparse.parseFile(exercisesData)
 
+  if (not os.access("gen", os.F_OK)):
+    os.mkdir("gen")
+
   os.chdir('gen')
+
+  os.system('rm full_gen.log')
+  os.system('touch full_gen.log')
 
   for student in classStatus.students:
     print "Handling student : " + student.fullName
@@ -34,5 +43,22 @@ if __name__ == "__main__":
     outputFileName = generateOuputLatexFileName(student, time.time())
     mathparse.generateLatexExercisesForStudent(exercises, "gen", outputFileName, student, data)
     print "Generated " + outputFileName
-    os.system('latex -interaction nonstopmode ' + outputFileName)
+
+    if (not os.access(outputFileName, os.F_OK)):
+      print "ERROR: couldn't find the Latex file. Check the logs"
+      continue
+
+    os.system('latex -interaction nonstopmode ' + outputFileName + " 2>&1 >> full_gen.log")
+
+    userPdfDir = "pdfs/" + fileBaseName(student)
+
+    userPdfFile = fileBaseName(student) + ".pdf"
+    if (not os.access(userPdfFile, os.F_OK)):
+      print "ERROR: couldn't generate the PDF. Check the logs"
+      continue
+    if (not os.access("pdfs", os.F_OK)):
+      os.mkdir("pdfs")
+    if (not os.access(userPdfDir, os.F_OK)):
+      os.mkdir(userPdfDir)
+    os.rename(userPdfFile, userPdfDir + "/" + userPdfFile)
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
