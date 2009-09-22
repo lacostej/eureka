@@ -5,17 +5,11 @@ PARSING / CONVERSION
 ** decide how to solve random unary operators (u a) -> (u1)*a
 	jb will change formulas to remove random operators momentarly
 ** decide how to implement list -> ( , , ,) ??
-* [JB] add new exercices
-	done so far
 * [JB] verify formulas. some are probably broken
 * consider separating description from exercice directives
 	the best description is to see the excercice, when u browse the 	questions
 
 USER EXO MAPPING
-* [JB] GROUP exercises per knowledge area
-	jb does it in worksheet
-* define interface for teacher
-	done so far
 * define workflow (e.g. emails ? pull/push)
 	could be very nice to:
 	- send a mail to users with pdf file and a comment/feedbacck, 
