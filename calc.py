@@ -421,7 +421,7 @@ class NodeLatexConvertor():
     if (node.type in self.binaryOperators):
       return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
     if (node.type == "paren"):
-      return "(" + self.toString(node.children[0]) + ")"
+      return "\\left(" + self.toString(node.children[0]) + "\\right)"
     if (node.type == "frac"):
       return "\\frac{" + self.toString(node.children[0]) + "}{" + self.toString(node.children[1]) + "}" 
     if (node.type == "^"):
