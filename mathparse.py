@@ -126,6 +126,10 @@ def parseExos(exercises):
       exercise.generate()
 
 def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, studentData):
+  with open(outputFileName, "w") as output:
+    generateLatexExercisesForStudentFile(exercises, dir, output, student, studentData)
+
+def generateLatexExercisesForStudentFile(exercises, dir, output, student, studentData):
   header = '''
 \\documentclass[12pt, norsk, a4paper]{article}
 \\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
@@ -153,8 +157,6 @@ def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, st
 
 \\end{document}
 '''
-
-  output = open(outputFileName, "w")
 
   exos = []
   import exoparse
