@@ -379,7 +379,6 @@ class NodeFormulaSimpleOuptutGenerator:
     if (node.type == "paren"):
       return "(" + self.toString(node.children[0]) + ")"
     if (node.type == "frac"):
-#      return "(" + self.toString(node.children[0]) + "/" + self.toString(node.children[1]) + ")"
       return self.toString(node.children[0]) + "/" + self.toString(node.children[1])
     if (node.type == "^"):
       return self.toString(node.children[0]) + "^" + self.toString(node.children[1])
@@ -439,9 +438,8 @@ class NodeLatexConvertor():
     if (node.type == "equals"):
       return self.toString(node.children[0]) + " = " + self.toString(node.children[1])
     if (node.type in self.binaryOperators):
-      # FIXME no need of str here.
       # FIXME map operations to latex representation
-      return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
+      return self.toString(node.children[0]) + " " + node.type + " " + self.toString(node.children[1])
     if (node.type == "paren"):
       return "\\left(" + self.toString(node.children[0]) + "\\right)"
     if (node.type == "frac"):
