@@ -75,7 +75,6 @@ def test_fullLoad():
   exercises = mathparse.parseFile(lines)
   mathparse.parseExos(exercises)
 
-
 def testCurrentlyFailingExercice():
   ''' usefull during development, place the failing exercice in failing.txt and uncomment'''
   f = open('data/failing.txt', 'r')
@@ -85,12 +84,16 @@ def testCurrentlyFailingExercice():
 #  assert False
 
 def testMultipleSolutions():
+  '''Here we just fully convert all our exercises to see if we don't have a big error'''
   f = open('data/multiple_solutions.txt', 'r')
   text = f.read()
   e = exoparse.parseExo(text)
   e.generate()
 
-def testEvaluateSimpleOperators():
+def test_id4_1():
+  assertEvaluationRenders({}, "\\res {(1 - (-10) * 3) * -8 + (-8) : (-5)}", "-246.4")
+
+def testEvaluateSimpleOperators_id4_2():
   v = { "a": 6,
        "b": 9,
        "e": -5,
@@ -103,10 +106,7 @@ def testEvaluateSimpleOperators():
      }
   assertEvaluationRenders(v, "\\res { a s (e) t b u (f) v (g)}", "-10.8")
 
-def testXxx():
-  assertEvaluationRenders({}, "\\res {(1 - (-10) * 3) * -8 + (-8) : (-5)}", "-246.4")
-
-def testXxx():
+def test_id5_1():
   assertEvaluationRenders({}, "\\res { (2 : (-4) + 2)*-5 : ((-6) + (-2))^2 + -9}", "-9.12")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWithoutParentheses():
@@ -128,10 +128,7 @@ def testEvaluatePowersAndStandardForm():
        "d": -4,
        "s": ':'
      }
-  evaluation = evaluate(v, "\\stdform {\\res { a*10^b s c*10^d}}")
-  s = formulaTextOutput.visit(evaluation)
-  print s
-  assert s == "8.22E-4"
+  assertEvaluationRenders(v, "\\stdform {\\res { a*10^b s c*10^d}}", "8.22E-4")
 
 def testOperationsFractions():
   v = {
@@ -144,10 +141,7 @@ def testOperationsFractions():
     "u": '+',
     "v": '-'
   }
-  evaluation = evaluate(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}")
-  s = formulaTextOutput.visit(evaluation)
-  print s
-  assert s  == "-9/28"
+  assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "-9/28")
 
 def testOperationsFractions():
   v = {
@@ -160,23 +154,7 @@ def testOperationsFractions():
     "u": '*',
     "v": ':'
   }
-  evaluation = evaluate(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}")
-  s = formulaTextOutput.visit(evaluation)
-  print s
-  assert s  == "15/28"
-
-
-def evaluate(variables, formula):
-  formulaParser = calc.Calc()
-  for s in variables:
-    formulaParser.names[s] = variables[s]
-
-  result = formulaParser.parse(formula)
-  print result
-  evaluation = nodeResultEvaluator.visit(result)
-  print "eval " + str(evaluation)
-  return evaluation
-
+  assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "15/28")
 
 def testFormatNumber1():
   assertEquals(formulaTextOutput.formatNumber(Decimal("-10.800000000000")), "-10.8")
@@ -194,17 +172,11 @@ def testFormatNumber2():
 #  decimal.
 
 def testReduceFrac():
-  a, b = calc.reduceFrac(2, 4)
-  assert a == 1
-  assert b == 2
+  assertFracReduction([2,4], [1,2])
 
-  a, b = calc.reduceFrac(2, 5)
-  assert a == 2
-  assert b == 5
+  assertFracReduction([2,5], [2,5])
 
-  a, b = calc.reduceFrac(2*2*2*3*7, 2*3*5*11)
-  assert a == 28
-  assert b == 55
+  assertFracReduction([2*2*2*3*7, 2*3*5*11], [28, 55])
 
 def testStdformNegative():
   assertEquals ("8.22E-4", calc.stdform(Decimal("0.0008221")))
@@ -237,9 +209,29 @@ def testTextSolution():
   s = e.generateLatexResult()
   assertEquals("\\begin{result} FIXME\\vspace{3mm}\end{result}", s)
 
+########################################################################
+### HELPER FUNCTIONS
+########################################################################
+
+def evaluate(variables, formula):
+  formulaParser = calc.Calc()
+  for s in variables:
+    formulaParser.names[s] = variables[s]
+
+  result = formulaParser.parse(formula)
+  print result
+  evaluation = nodeResultEvaluator.visit(result)
+  print "eval " + str(evaluation)
+  return evaluation
+
 def assertEvaluationRenders(variables, formula, expectedTextResult):
   evaluation = evaluate(variables, formula)
   assertEquals( formulaTextOutput.visit(evaluation), expectedTextResult)
+
+def assertFracReduction(frac1, expectedFrac):
+  a, b = calc.reduceFrac(frac1[0], frac1[1])
+  assertEquals(a, expectedFrac[0])
+  assertEquals(b, expectedFrac[1])
 
 def assertEquals(a, b):
   result = (a == b)
