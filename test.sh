@@ -1,0 +1,2 @@
+cd playground
+./test.sh
