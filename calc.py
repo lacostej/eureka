@@ -396,6 +396,12 @@ class NodeLatexConvertor():
   '''A tree visitor that converts the formula to its LaTex representation.'''
 
   binaryOperators = [ '+', '-', ':', '*']
+  latexBinaryOperators = {
+    '+': " + ",
+    '-': " - ",
+    ':': " \\cdiv ",
+    '*': " \\cdot ",
+  }
 
   def visit(self, node):
     'conver result expressions into a String that LaTeX can understand'
@@ -412,7 +418,7 @@ class NodeLatexConvertor():
     if (node == None):
       raise MyException("Node is None !")
 
-#    print "DEBUG: toString: " + toXmlConvertor.visit(node)
+    print "DEBUG: toString: " + toXmlConvertor.visit(node)
 
     if (isNumber(node)):
       return self.formatNumber(node)
@@ -438,8 +444,8 @@ class NodeLatexConvertor():
     if (node.type == "equals"):
       return self.toString(node.children[0]) + " = " + self.toString(node.children[1])
     if (node.type in self.binaryOperators):
-      # FIXME map operations to latex representation
-      return self.toString(node.children[0]) + " " + node.type + " " + self.toString(node.children[1])
+      print "HI HI"
+      return self.toString(node.children[0]) + self.latexBinaryOperators[node.type] + self.toString(node.children[1])
     if (node.type == "paren"):
       return "\\left(" + self.toString(node.children[0]) + "\\right)"
     if (node.type == "frac"):

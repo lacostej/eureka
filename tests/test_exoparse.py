@@ -13,6 +13,7 @@ TEST_DATA_DIR = "./tests/data/"
 
 nodeResultEvaluator = calc.NodeResultEvaluator()
 formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
+nodeLatexConvertor = calc.NodeLatexConvertor()
 
 def setUp(self):
   pass
@@ -123,6 +124,12 @@ def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses_id2_1():
 
 def test_id16():
   assertEvaluationRenders({ }, "10^\\res{2*3*4}", "10^24")
+
+def test_operations_latex():
+  v = {
+    "a": "a",
+  }
+  assertEvaluationLatexRenders(v, "3 * a", "3 \cdot a")
 
 def testEvaluatePowersAndStandardForm():
   v = { "a": Decimal("7.02"),
@@ -236,6 +243,10 @@ def evaluate(variables, formula):
 def assertEvaluationRenders(variables, formula, expectedTextResult):
   evaluation = evaluate(variables, formula)
   assertEquals( formulaTextOutput.visit(evaluation), expectedTextResult)
+
+def assertEvaluationLatexRenders(variables, formula, expectedTextResult):
+  evaluation = evaluate(variables, formula)
+  assertEquals( nodeLatexConvertor.visit(evaluation), expectedTextResult)
 
 def assertFracReduction(frac1, expectedFrac):
   a, b = calc.reduceFrac(frac1[0], frac1[1])
