@@ -1,6 +1,7 @@
-id3
-"Temperatur: formelen sier at antall fahrenheitgrader (y) er 1,8 ganger antall celsiusgrader (x), pluss 32. F n en formel for å beregne antall celsiusgrader"
+id36
+"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+a, b, c, d, e, f, g, h,i,j,k,l,m (1;9)
 x (x)
-y (y)
-\solve y=1.8*x+32
-\solution x=\frac {y-32}{1.8}
+u , v, w, y, z, r, t,s \sign1
+\solve a + g* (b*x - c) + g*(i*x + j)=d - h* (e*x + f)- k* (l*x + m)
+\solution \res{\frac{d-a+g*c-g*j-h*f-k*m}{g*b+g*i+h*e+k*l}}

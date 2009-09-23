@@ -147,6 +147,17 @@ def testEqualIsATopLevelFormulaElement():
   e = evaluate(v, "3^4=a")
   assertEquals(str(e), "Node: equals,(Node: ^,(3,4),Node: var,(a))")  
 
+def test_id31():
+  v = {
+    "a": 5,
+    "b": 4,
+    "c": 8,
+    "x": "x",
+  }
+  e = evaluate(v, "a*x - b = c")
+  assertEvaluationRenders(v, "a*x - b = c", "5 * x - 4 = 8")
+  assertEvaluationRenders(v, "\\res{(c+b):a}", "2.4")
+
 def test_id109():
   v = {
    "a": 2,
@@ -241,7 +252,7 @@ def testTextSolution():
   text = f.read()
   e = exoparse.parseExo(text)
   s = e.generateLatexResult()
-  assertEquals("\\begin{result} FIXME\\vspace{3mm}\end{result}", s)
+  assertEquals("\\begin{result} id1 FIXME\\vspace{3mm}\end{result}", s)
 
 ########################################################################
 ### HELPER FUNCTIONS

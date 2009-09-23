@@ -273,7 +273,7 @@ class Exercice:
 
   def generateLatexResult(self):
     s = ""
-    s += "\\begin{result} "
+    s += "\\begin{result} " + self.id + " " 
     result = nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.result)))
     if (result[0] == '"'):
       s += unquoteTEXT(result)

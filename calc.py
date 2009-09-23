@@ -186,6 +186,9 @@ class NodeResultEvaluator:
     if (node.type == 'stdform' and isNumber(node.children[0])):
       return node
 
+    if (node.type == 'list'):
+      return Node("list", [self.evaluate(elem, evaluate) for elem in node.children])
+
     if (evaluate):
       if (node.type == 'equals'):
         return Node("equals", [self.evaluate(top, evaluate), self.evaluate(bottom, evaluate)])
@@ -354,6 +357,9 @@ class NodeFormulaSimpleOuptutGenerator:
       return formatNumber(node)
     if (isinstance(node, str)):
       return node
+    if (node.type == 'list'):
+      l = [self.toString(elem) for elem in node.children]
+      return "(" + ",".join(l) + ")"
     if (node.type == "int"):
       return self.toString(node.children[0])
     if (node.type == "decimal"):
@@ -420,6 +426,9 @@ class NodeLatexConvertor():
       return formatNumber(node)
     if (isinstance(node, str)):
       return node
+    if (node.type == 'list'):
+      l = [self.toString(elem) for elem in node.children]
+      return "(" + ",".join(l) + ")"
     if (node.type == "int"):
       return self.toString(node.children[0])
     if (node.type == "decimal"):
@@ -465,7 +474,7 @@ class Calc(FormulaParser):
     tokens = (
         'NUMBER', 'DECIMAL',
         'PLUS','MINUS','POWER','TIMES','DIVIDE','EQUALS', #,'EXP'
-        'LPAREN','RPAREN',
+        'LPAREN','RPAREN', 'COMMA',
         'LBRACE','RBRACE',
         'VARNAME', 'SYMBOL','OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL',
         'TEXT'
@@ -482,6 +491,7 @@ class Calc(FormulaParser):
     t_EQUALS  = r'\='
     t_LPAREN  = r'\('
     t_RPAREN  = r'\)'
+    t_COMMA   = r','
     t_LBRACE  = r'\{'
     t_RBRACE  = r'\}'
 #    t_VARNAME = r'[a-zA-Z]'
@@ -570,6 +580,7 @@ class Calc(FormulaParser):
       '''top : text
              | multiple_expressions
              | equals
+             | list
              | expression'''
       p[0] = p[1]
 
@@ -578,18 +589,26 @@ class Calc(FormulaParser):
 #       print "*** TEXT"
        p[0] = Node("text", [p[1]])
 
+    def p_expression_list(self, p):
+       'list : LPAREN list_inside RPAREN'
+       p[0] = Node("list", [p[2]])
+
+    def p_expression_list_inside(self, p):
+      '''list_inside : list_inside COMMA expression
+                     | expression'''
+      if (type(p[1]) == list and len(p) > 2):
+        p[0] = p[1] + p[3]
+      else:
+        p[0] = p[1]
+
     def p_expression_equals(self, p):
        'equals : expression EQUALS expression'
-       print "*** EQUALS " + str(p)
+#       print "*** EQUALS " + str(p[1]) + " = " + str(p[3])
        p[0] = Node("equals", [p[1], p[3]])
 
     def p_expression_multiple_expressions(self, p):
         'multiple_expressions : VARNAME NUMBER EQUALS expression OR_SYMBOL VARNAME NUMBER EQUALS expression'
         p[0] = Node("eller", [Node("var", [p[1]+str(p[2]), p[4]]), Node("var", [p[6]+str(p[7]), p[9]])])
-
-#    def p_expression_equals(self, p):
-#        'expression : expression EQUALS expression'
-#        p[0] = Node("equals", [p[1], p[3]])
 
     def p_expression_binop(self, p):
         """
@@ -600,11 +619,11 @@ class Calc(FormulaParser):
                    | expression POWER expression
                    | expression VARNAME expression
         """
-        #print [repr(p[i]) for i in range(0,4)]
         ops = [ '+', '-', '*', ':', '^']
         if not p[2] in ops:
           p[2] = self.find_var(p[2])
 
+#        print "*** " + p[2] + " " + str(p[1]) + ", " + str(p[3])
         p[0] = Node(p[2], [p[1], p[3]])
 
     def p_expression_uminus(self, p):
