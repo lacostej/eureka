@@ -184,7 +184,7 @@ class NodeResultEvaluator:
       return node.children[0]
 
     if (node.type == 'stdform' and isNumber(node.children[0])):
-      return stdform(node.children[0])
+      return node
 
     if (evaluate):
       if (node.type == 'frac' and isInt(node.children[0]) and isInt(node.children[1])):
@@ -239,7 +239,17 @@ def stdform(d):
     s += " * 10^" + str(d.adjusted())
   return s
 
-# FIXME need a stdform for Latex... in that case, stop using stdform() in the evaluator. Only use it in the outputs
+def stdformLatex(d):
+  '''Returns the standard form representation of a number as a string'''
+  if (isinstance(d, int)):
+    d = decimal.Decimal(d)
+  if (not isinstance(d, decimal.Decimal)):
+    print "ERROR :" + str(type(d)) + " " + str(d)
+    #print str(10**(-d.adjusted()))
+  s = str((d*decimal.Decimal(str(10**(-d.adjusted())))).normalize().quantize(decimal.Decimal("0.00")).normalize())
+  if (d.adjusted() != 0):
+    s += " \cdot 10^{" + str(d.adjusted()) + "}"
+  return s
 
 def topIntOrFracInt(intOrFrac):
   '''Returns the top of a fraction of integers or the integer value. Used to compute fracOrInt operations'''
@@ -423,12 +433,14 @@ class NodeLatexConvertor():
     if (node.type == "eller"):
       return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
     if (node.type == "stdform"):
-      return stdform(node.children[0])
+      return stdformLatex(node.children[0])
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
     if (node.type == "equals"):
       return self.toString(node.children[0]) + " = " + self.toString(node.children[1])
     if (node.type in self.binaryOperators):
+      # FIXME no need of str here.
+      # FIXME map operations to latex representation
       return str(self.toString(node.children[0])) + " " + node.type + " " + str(self.toString(node.children[1]))
     if (node.type == "paren"):
       return "\\left(" + self.toString(node.children[0]) + "\\right)"

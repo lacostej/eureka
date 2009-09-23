@@ -196,6 +196,9 @@ def testStdformPositive():
 def testStdformInteger():
   assertEquals ("8.22 * 10^4", calc.stdform(82214))
 
+def testStdformLatexInteger():
+  assertEquals ("8.22 \cdot 10^{4}", calc.stdformLatex(82214))
+
 def testStdformIntegerRounding():
   assertEquals ("8.23 * 10^4", calc.stdform(82263))
 
