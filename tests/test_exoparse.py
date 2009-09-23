@@ -104,6 +104,21 @@ def testEvaluateSimpleOperators():
   evaluation = evaluate(v, "\\res { a s (e) t b u (f) v (g)}")
   assert formulaTextOutput.visit(evaluation) == "-10.8"
 
+def testEvaluatePrecedenceOfMultiplicationAndDivisionWithoutParentheses():
+  v = { }
+  evaluation = evaluate(v, "\\res { 2 : -1 * -2 }")
+  assertEquals( formulaTextOutput.visit(evaluation), "4")
+
+def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses1():
+  v = { }
+  evaluation = evaluate(v, "\\res { (-2) : 1 * (-2) }")
+  assertEquals( formulaTextOutput.visit(evaluation), "4")
+
+def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses2():
+  v = { }
+  evaluation = evaluate(v, "\\res { 2 : (-1) * (-2) }")
+  assertEquals( formulaTextOutput.visit(evaluation), "4")
+
 def testEvaluatePowersAndStandardForm():
   v = { "a": Decimal("7.02"),
        "b": -7,

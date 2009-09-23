@@ -189,6 +189,8 @@ class NodeResultEvaluator:
     if (evaluate):
       if (node.type == 'frac' and isInt(node.children[0]) and isInt(node.children[1])):
         return node
+      if (node.type == "neg" and isNumber(node.children[0])):
+        return -1 * node.children[0]
       if (node.type == 'frac' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return decimal.Decimal(node.children[0]) / decimal.Decimal(node.children[1])
       if (node.type == 'paren' and isNumber(node.children[0])):
