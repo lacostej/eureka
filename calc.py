@@ -311,6 +311,10 @@ def isNumber(x):
   '''Returns True if the parameter is an int or decimal.'''
   return isInt(x) or isDecimal(x)
 
+def remove_exponent(d):
+    return d.quantize(decimal.Decimal(1)) if d == d.to_integral() else d.normalize()
+
+
 class NodeFormulaSimpleOuptutGenerator:
   '''A tree visitor that converts the formula to String. Simplified.'''
 
@@ -326,7 +330,7 @@ class NodeFormulaSimpleOuptutGenerator:
     if (isinstance(node, int)):
       return str(node)
     TWOPLACES = decimal.Decimal('0.01')
-    return str(node.quantize(TWOPLACES).normalize())
+    return str(remove_exponent(node.quantize(TWOPLACES)))
 
   def toString(self, node):
 #    print "toString: " + toXmlConvertor.visit(node)

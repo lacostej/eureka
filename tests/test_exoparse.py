@@ -162,6 +162,9 @@ def testFormatNumber1():
 def testFormatNumber2():
   assertEquals(formulaTextOutput.formatNumber(Decimal("-9.1171875")), "-9.12")
 
+def testFormatNumber3():
+  assertEquals(formulaTextOutput.formatNumber(Decimal("-10.0000")), "-10")
+
 #def testDecimalPower():
 #  import decimal
 #  print "-------------------"
