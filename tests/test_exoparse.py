@@ -101,8 +101,7 @@ def testEvaluateSimpleOperators():
        "u": '*',
        "v": ':'
      }
-  evaluation = evaluate(v, "\\res { a s (e) t b u (f) v (g)}")
-  assert formulaTextOutput.visit(evaluation) == "-10.8"
+  assertEvaluationReaders(v, "\\res { a s (e) t b u (f) v (g)}", "-10.8")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWithoutParentheses():
   assertEvaluationReaders({ }, "\\res { 2 : -1 * -2 }", "4")
