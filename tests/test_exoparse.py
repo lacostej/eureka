@@ -119,6 +119,11 @@ def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses2():
   evaluation = evaluate(v, "\\res { 2 : (-1) * (-2) }")
   assertEquals( formulaTextOutput.visit(evaluation), "4")
 
+def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses_id2_1():
+  v = { }
+  evaluation = evaluate(v, "\\res { 6 * (-3) * 7 : (-5) * (-8)}")
+  assertEquals( formulaTextOutput.visit(evaluation), "-201.6")
+
 def testEvaluatePowersAndStandardForm():
   v = { "a": Decimal("7.02"),
        "b": -7,
