@@ -140,6 +140,13 @@ def testEvaluatePowersAndStandardForm():
      }
   assertEvaluationRenders(v, "\\stdform {\\res { a*10^b s c*10^d}}", "8.22 * 10^-4")
 
+def testEqualIsATopLevelFormulaElement():
+  v = {
+    "a": "a",
+  }
+  e = evaluate(v, "3^4=a")
+  assertEquals(str(e), "Node: equals,(Node: ^,(3,4),Node: var,(a))")  
+
 def testOperationsFractions():
   v = {
     "a": 3,

@@ -187,6 +187,8 @@ class NodeResultEvaluator:
       return node
 
     if (evaluate):
+      if (node.type == 'equals'):
+        return Node("equals", [self.evaluate(top, evaluate), self.evaluate(bottom, evaluate)])
       if (node.type == 'frac' and isInt(node.children[0]) and isInt(node.children[1])):
         return node
       if (node.type == "neg" and isNumber(node.children[0])):
@@ -559,7 +561,6 @@ class Calc(FormulaParser):
         ('left','TIMES','DIVIDE'),
         ('left', 'POWER'),
         ('right','UMINUS'),
-        ('right', 'EQUALS'),
         )
 
     def find_var(self, x):
@@ -569,14 +570,27 @@ class Calc(FormulaParser):
         sys.stderr.write("Undefined name '%s'\n" % x)
         raise
 
-    # FIXME only top level expression can be text, right ?
+    start = 'top'
+
+    def p_start(self, p):
+      '''top : text
+             | multiple_expressions
+             | equals
+             | expression'''
+      p[0] = p[1]
+
     def p_expression_text(self, p):
-       'expression : TEXT'
+       'text : TEXT'
 #       print "*** TEXT"
        p[0] = Node("text", [p[1]])
 
+    def p_expression_equals(self, p):
+       'equals : expression EQUALS expression'
+       print "*** EQUALS " + str(p)
+       p[0] = Node("equals", [p[1], p[3]])
+
     def p_expression_multiple_expressions(self, p):
-        'expression : VARNAME NUMBER EQUALS expression OR_SYMBOL VARNAME NUMBER EQUALS expression'
+        'multiple_expressions : VARNAME NUMBER EQUALS expression OR_SYMBOL VARNAME NUMBER EQUALS expression'
         p[0] = Node("eller", [Node("var", [p[1]+str(p[2]), p[4]]), Node("var", [p[6]+str(p[7]), p[9]])])
 
 #    def p_expression_equals(self, p):
@@ -585,8 +599,7 @@ class Calc(FormulaParser):
 
     def p_expression_binop(self, p):
         """
-        expression : expression EQUALS expression
-                   | expression PLUS expression
+        expression : expression PLUS expression
                    | expression MINUS expression
                    | expression TIMES expression
                    | expression DIVIDE expression
@@ -595,9 +608,7 @@ class Calc(FormulaParser):
         """
         #print [repr(p[i]) for i in range(0,4)]
         ops = [ '+', '-', '*', ':', '^']
-        if (p[2] == "="):
-          p[2] = "equals"
-        elif not p[2] in ops:
+        if not p[2] in ops:
           p[2] = self.find_var(p[2])
 
         p[0] = Node(p[2], [p[1], p[3]])
