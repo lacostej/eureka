@@ -846,7 +846,7 @@ id110
 a   (2;9)
 b   (2;4)
 c   (5;9)
-\solve \res {a^\frac {c}{b}} ^ \frac {b}{c}
+\solve \res {(a^\frac {c}{b}) ^ \frac {b}{c}}
 \solution a
 ---
 id111
