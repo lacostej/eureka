@@ -103,6 +103,12 @@ def testEvaluateSimpleOperators():
      }
   assertEvaluationRenders(v, "\\res { a s (e) t b u (f) v (g)}", "-10.8")
 
+def testXxx():
+  assertEvaluationRenders({}, "\\res {(1 - (-10) * 3) * -8 + (-8) : (-5)}", "-246.4")
+
+def testXxx():
+  assertEvaluationRenders({}, "\\res { (2 : (-4) + 2)*-5 : ((-6) + (-2))^2 + -9}", "-9.12")
+
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWithoutParentheses():
   assertEvaluationRenders({ }, "\\res { 2 : -1 * -2 }", "4")
 
@@ -172,11 +178,11 @@ def evaluate(variables, formula):
   return evaluation
 
 
-def testFormatNumber():
-  s = formulaTextOutput.formatNumber(Decimal("-10.800000000000"))
-  print s
-  assert s == "-10.8"
+def testFormatNumber1():
+  assertEquals(formulaTextOutput.formatNumber(Decimal("-10.800000000000")), "-10.8")
 
+def testFormatNumber2():
+  assertEquals(formulaTextOutput.formatNumber(Decimal("-9.1171875")), "-9.12")
 
 #def testDecimalPower():
 #  import decimal

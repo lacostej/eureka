@@ -325,7 +325,8 @@ class NodeFormulaSimpleOuptutGenerator:
   def formatNumber(self, node):
     if (isinstance(node, int)):
       return str(node)
-    return str(node.normalize())
+    TWOPLACES = decimal.Decimal('0.01')
+    return str(node.quantize(TWOPLACES).normalize())
 
   def toString(self, node):
 #    print "toString: " + toXmlConvertor.visit(node)
