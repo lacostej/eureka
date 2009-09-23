@@ -105,24 +105,16 @@ def testEvaluateSimpleOperators():
   assert formulaTextOutput.visit(evaluation) == "-10.8"
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWithoutParentheses():
-  v = { }
-  evaluation = evaluate(v, "\\res { 2 : -1 * -2 }")
-  assertEquals( formulaTextOutput.visit(evaluation), "4")
+  assertEvaluationReaders({ }, "\\res { 2 : -1 * -2 }", "4")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses1():
-  v = { }
-  evaluation = evaluate(v, "\\res { (-2) : 1 * (-2) }")
-  assertEquals( formulaTextOutput.visit(evaluation), "4")
+  assertEvaluationReaders({ }, "\\res { (-2) : 1 * (-2) }", "4")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses2():
-  v = { }
-  evaluation = evaluate(v, "\\res { 2 : (-1) * (-2) }")
-  assertEquals( formulaTextOutput.visit(evaluation), "4")
+  assertEvaluationReaders({ }, "\\res { 2 : (-1) * (-2) }", "4")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses_id2_1():
-  v = { }
-  evaluation = evaluate(v, "\\res { 6 * (-3) * 7 : (-5) * (-8)}")
-  assertEquals( formulaTextOutput.visit(evaluation), "-201.6")
+  assertEvaluationReaders({ }, "\\res { 6 * (-3) * 7 : (-5) * (-8)}", "-201.6")
 
 def testEvaluatePowersAndStandardForm():
   v = { "a": Decimal("7.02"),
@@ -239,6 +231,10 @@ def testTextSolution():
   e = exoparse.parseExo(text)
   s = e.generateLatexResult()
   assertEquals("\\begin{result} FIXME\\vspace{3mm}\end{result}", s)
+
+def assertEvaluationReaders(variables, formula, expectedTextResult):
+  evaluation = evaluate(variables, formula)
+  assertEquals( formulaTextOutput.visit(evaluation), expectedTextResult)
 
 def assertEquals(a, b):
   result = (a == b)
