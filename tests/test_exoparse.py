@@ -101,19 +101,19 @@ def testEvaluateSimpleOperators():
        "u": '*',
        "v": ':'
      }
-  assertEvaluationReaders(v, "\\res { a s (e) t b u (f) v (g)}", "-10.8")
+  assertEvaluationRenders(v, "\\res { a s (e) t b u (f) v (g)}", "-10.8")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWithoutParentheses():
-  assertEvaluationReaders({ }, "\\res { 2 : -1 * -2 }", "4")
+  assertEvaluationRenders({ }, "\\res { 2 : -1 * -2 }", "4")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses1():
-  assertEvaluationReaders({ }, "\\res { (-2) : 1 * (-2) }", "4")
+  assertEvaluationRenders({ }, "\\res { (-2) : 1 * (-2) }", "4")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses2():
-  assertEvaluationReaders({ }, "\\res { 2 : (-1) * (-2) }", "4")
+  assertEvaluationRenders({ }, "\\res { 2 : (-1) * (-2) }", "4")
 
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses_id2_1():
-  assertEvaluationReaders({ }, "\\res { 6 * (-3) * 7 : (-5) * (-8)}", "-201.6")
+  assertEvaluationRenders({ }, "\\res { 6 * (-3) * 7 : (-5) * (-8)}", "-201.6")
 
 def testEvaluatePowersAndStandardForm():
   v = { "a": Decimal("7.02"),
@@ -231,7 +231,7 @@ def testTextSolution():
   s = e.generateLatexResult()
   assertEquals("\\begin{result} FIXME\\vspace{3mm}\end{result}", s)
 
-def assertEvaluationReaders(variables, formula, expectedTextResult):
+def assertEvaluationRenders(variables, formula, expectedTextResult):
   evaluation = evaluate(variables, formula)
   assertEquals( formulaTextOutput.visit(evaluation), expectedTextResult)
 
