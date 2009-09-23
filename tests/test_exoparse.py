@@ -147,6 +147,17 @@ def testEqualIsATopLevelFormulaElement():
   e = evaluate(v, "3^4=a")
   assertEquals(str(e), "Node: equals,(Node: ^,(3,4),Node: var,(a))")  
 
+def test_id109():
+  v = {
+   "a": 2,
+   "c": 2,
+   "d": 2,
+   "e": 2,
+   "b": 10
+  }
+  e = evaluate(v, "\\frac {\\sqrt {a}  {\\res {b^a}} * \\sqrt {c}  {\\res {b^a} ^d}} { \\res {b^a}^e * \\sqrt {c}  {\\res {b^a} ^e}}")
+  assertEquals(str(nodeLatexConvertor.visit(e)), "\\frac{\\sqrt[2]{100} \\cdot \\sqrt[2]{100^{2}}}{100^{2} \\cdot \\sqrt[2]{100^{2}}}")
+
 def testOperationsFractions():
   v = {
     "a": 3,
@@ -174,13 +185,13 @@ def testOperationsFractions():
   assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "15/28")
 
 def testFormatNumber1():
-  assertEquals(formulaTextOutput.formatNumber(Decimal("-10.800000000000")), "-10.8")
+  assertEquals(calc.formatNumber(Decimal("-10.800000000000")), "-10.8")
 
 def testFormatNumber2():
-  assertEquals(formulaTextOutput.formatNumber(Decimal("-9.1171875")), "-9.12")
+  assertEquals(calc.formatNumber(Decimal("-9.1171875")), "-9.12")
 
 def testFormatNumber3():
-  assertEquals(formulaTextOutput.formatNumber(Decimal("-10.0000")), "-10")
+  assertEquals(calc.formatNumber(Decimal("-10.0000")), "-10")
 
 #def testDecimalPower():
 #  import decimal

@@ -264,11 +264,11 @@ class Exercice:
   def generateLatex(self):
     s = ""
     s += "\\begin{oppgave} " + self.id + " " + str(self.description)
-    s += "\\["
+    s += " \\[ "
     s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula)))
-    s += "\\]"
+    s += " \\] "
     s += "\\vspace{3mm}"
-    s += "\end{oppgave}"
+    s += "\\end{oppgave}"
     return s
 
   def generateLatexResult(self):
@@ -282,7 +282,7 @@ class Exercice:
       s += result
       s += "\\]"
     s += "\\vspace{3mm}"
-    s += "\end{result}"
+    s += "\\end{result}"
     return s
 
   def toPrettyXml(self, node):

@@ -329,6 +329,11 @@ def isNumber(x):
 def remove_exponent(d):
     return d.quantize(decimal.Decimal(1)) if d == d.to_integral() else d.normalize()
 
+def formatNumber(node):
+  if (isinstance(node, int)):
+    return str(node)
+  TWOPLACES = decimal.Decimal('0.01')
+  return str(remove_exponent(node.quantize(TWOPLACES)))
 
 class NodeFormulaSimpleOuptutGenerator:
   '''A tree visitor that converts the formula to String. Simplified.'''
@@ -341,18 +346,12 @@ class NodeFormulaSimpleOuptutGenerator:
 #    print "RESULT " + str(result)
     return result
 
-  def formatNumber(self, node):
-    if (isinstance(node, int)):
-      return str(node)
-    TWOPLACES = decimal.Decimal('0.01')
-    return str(remove_exponent(node.quantize(TWOPLACES)))
-
   def toString(self, node):
 #    print "toString: " + toXmlConvertor.visit(node)
     if (node == None):
       raise MyException("Node is None !")
     if (isNumber(node)):
-      return self.formatNumber(node)
+      return formatNumber(node)
     if (isinstance(node, str)):
       return node
     if (node.type == "int"):
@@ -401,7 +400,7 @@ class NodeLatexConvertor():
   latexBinaryOperators = {
     '+': " + ",
     '-': " - ",
-    ':': " \\cdiv ",
+    ':': " \\div ",
     '*': " \\cdot ",
   }
 
@@ -411,19 +410,14 @@ class NodeLatexConvertor():
 #    print "RESULT " + str(result)
     return result
 
-  def formatNumber(self, node):
-    if (isinstance(node, int)):
-      return str(node)
-    return str(node.normalize())
-
   def toString(self, node):
     if (node == None):
       raise MyException("Node is None !")
 
-    print "DEBUG: toString: " + toXmlConvertor.visit(node)
+#    print "DEBUG: toString: " + toXmlConvertor.visit(node)
 
     if (isNumber(node)):
-      return self.formatNumber(node)
+      return formatNumber(node)
     if (isinstance(node, str)):
       return node
     if (node.type == "int"):
@@ -436,17 +430,17 @@ class NodeLatexConvertor():
         result += "=" + self.toString(node.children[1])
       return result
     if (node.type == "sqrt"):
-      return "$$\\sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$$"
+      return "\\sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}"
     if (node.type == "eller"):
-      return self.toString(node.children[0]) + " eller " + self.toString(node.children[1])
+      return self.visit(node.children[0]) + " eller " + self.visit(node.children[1])
     if (node.type == "stdform"):
       return stdformLatex(node.children[0])
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
     if (node.type == "equals"):
-      return self.toString(node.children[0]) + " = " + self.toString(node.children[1])
+      return self.visit(node.children[0]) + " = " + self.visit(node.children[1])
     if (node.type in self.binaryOperators):
-      print "HI HI"
+#      print "HI HI"
       return self.toString(node.children[0]) + self.latexBinaryOperators[node.type] + self.toString(node.children[1])
     if (node.type == "paren"):
       return "\\left(" + self.toString(node.children[0]) + "\\right)"
