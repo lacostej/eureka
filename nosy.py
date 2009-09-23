@@ -1,6 +1,7 @@
 # By Jeff Winkler, http://jeffwinkler.net
 
-import glob,os,stat,time
+import glob,os,stat,time,os.path
+import pynotify
 
 '''
 Watch for changes in all .py files. If changes, run nosetests. 
@@ -24,9 +25,42 @@ def checkSum():
 
     return val
 
+
+def notifyFailure():
+    if not pynotify.init("Markup"):
+        return
+    pwd = os.path.abspath(".")
+    n = pynotify.Notification(os.path.basename(pwd) + " build failed.",
+        pwd + ": nosetests failed")
+
+    if not n.show():
+        print "Failed to send notification"
+
+def notifySuccess():
+    if not pynotify.init("Markup"):
+        return
+    pwd = os.path.abspath(".")
+    n = pynotify.Notification(os.path.basename(pwd) + " build successfull.",
+        pwd + ": nosetests success")
+
+    if not n.show():
+        print "Failed to send notification"
+  
 val=0
+oldRes = 0
+firstBuild = True
 while (True):
+    keepOnNotifyingFailures = True
     if checkSum() != val:
         val=checkSum()
-        os.system ('nosetests')
+        res = os.system ('nosetests')
+        print "res:" + str(res)
+        if (res != 0):
+          if (oldRes == 0 or keepOnNotifyingFailures):
+            notifyFailure()
+        else:
+          if (oldRes != 0 or firstBuild):
+            notifySuccess()
+        firstBuild = False
     time.sleep(1)
+    oldRes = res
