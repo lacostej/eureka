@@ -235,8 +235,11 @@ def stdform(d):
     #print str(10**(-d.adjusted()))
   s = str((d*decimal.Decimal(str(10**(-d.adjusted())))).normalize().quantize(decimal.Decimal("0.00")).normalize())
   if (d.adjusted() != 0):
-    s += "E" + str(d.adjusted())
+#    s += "E" + str(d.adjusted())
+    s += " * 10^" + str(d.adjusted())
   return s
+
+# FIXME need a stdform for Latex... in that case, stop using stdform() in the evaluator. Only use it in the outputs
 
 def topIntOrFracInt(intOrFrac):
   '''Returns the top of a fraction of integers or the integer value. Used to compute fracOrInt operations'''

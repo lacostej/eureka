@@ -121,6 +121,9 @@ def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses2():
 def testEvaluatePrecedenceOfMultiplicationAndDivisionWhenParentheses_id2_1():
   assertEvaluationRenders({ }, "\\res { 6 * (-3) * 7 : (-5) * (-8)}", "-201.6")
 
+def test_id16():
+  assertEvaluationRenders({ }, "10^\\res{2*3*4}", "10^24")
+
 def testEvaluatePowersAndStandardForm():
   v = { "a": Decimal("7.02"),
        "b": -7,
@@ -128,7 +131,7 @@ def testEvaluatePowersAndStandardForm():
        "d": -4,
        "s": ':'
      }
-  assertEvaluationRenders(v, "\\stdform {\\res { a*10^b s c*10^d}}", "8.22E-4")
+  assertEvaluationRenders(v, "\\stdform {\\res { a*10^b s c*10^d}}", "8.22 * 10^-4")
 
 def testOperationsFractions():
   v = {
@@ -182,19 +185,19 @@ def testReduceFrac():
   assertFracReduction([2*2*2*3*7, 2*3*5*11], [28, 55])
 
 def testStdformNegative():
-  assertEquals ("8.22E-4", calc.stdform(Decimal("0.0008221")))
+  assertEquals ("8.22 * 10^-4", calc.stdform(Decimal("0.0008221")))
 
 def testStdformNegativeWithRounding():
-  assertEquals ("8.23E-4", calc.stdform(Decimal("0.0008226")))
+  assertEquals ("8.23 * 10^-4", calc.stdform(Decimal("0.0008226")))
 
 def testStdformPositive():
-  assertEquals ("8.22E4", calc.stdform(Decimal("82215.6")))
+  assertEquals ("8.22 * 10^4", calc.stdform(Decimal("82215.6")))
 
 def testStdformInteger():
-  assertEquals ("8.22E4", calc.stdform(82214))
+  assertEquals ("8.22 * 10^4", calc.stdform(82214))
 
 def testStdformIntegerRounding():
-  assertEquals ("8.23E4", calc.stdform(82263))
+  assertEquals ("8.23 * 10^4", calc.stdform(82263))
 
 def testStdformIntegerNoExponent():
   assertEquals ("8", calc.stdform(8))
