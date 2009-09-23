@@ -430,7 +430,7 @@ class NodeLatexConvertor():
     if (node.type == "sqrt"):
       return "$$\\sqrt[" + self.toString(node.children[0]) + "]{" + self.toString(node.children[1]) + "}$$"
     if (node.type == "eller"):
-      return self.toString(node.children[0]) + " eller " + str(self.toString(node.children[1]))
+      return self.toString(node.children[0]) + " eller " + self.toString(node.children[1])
     if (node.type == "stdform"):
       return stdformLatex(node.children[0])
     if (node.type == "neg"):
