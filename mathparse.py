@@ -130,32 +130,8 @@ def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, st
     generateLatexExercisesForStudentFile(exercises, dir, output, student, studentData)
 
 def generateLatexExercisesForStudentFile(exercises, dir, output, student, studentData):
-  header = '''
-\\documentclass[12pt, norsk, a4paper]{article}
-\\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
-\\usepackage[pdftex]{graphicx}
-\\usepackage[utf8]{inputenc}
-\\theoremstyle{definition}
-\\newtheorem{oppgave}{Oppgave}
-\\renewcommand{\\labelenumi}{\\alph{enumi})}
-\\setlength\\topmargin{0cm}
-
-\\begin{document}
-
-\\begin{flushleft}
-\\textsc{Tid:} 90 minutter\\\\[0.8cm]
-\\textsc{Hjelpemidler:} Egenproduserte rammenotater\\\\[0.8cm]
-\\textsc{Alle svar maa begrunnes}\\\\[1.5cm]
-\\end{flushleft}
-'''
   middle = '''
 \\newtheorem{result}{Resultat}
-'''
-
-  footer = '''
-\\noindent SLUTT
-
-\\end{document}
 '''
 
   exos = []
@@ -168,7 +144,7 @@ def generateLatexExercisesForStudentFile(exercises, dir, output, student, studen
 #      print "generated " + exercise
       exos.append(exercise)
 
-  output.write(header + "\n")
+  output.write(latexHeader() + "\n")
 
   if (studentData.comment != None and len(studentData.comment) > 0):
     comment = studentData.comment.encode("iso-8859-15")
@@ -189,9 +165,31 @@ def generateLatexExercisesForStudentFile(exercises, dir, output, student, studen
         exo.randomize()
         output.write(exo.generateLatex() + "\n")
 
-  output.write(footer + "\n")  
+  output.write(latexFooter() + "\n")
 
 def parseExosLatex(exercises):
+  middle = '''
+\\newtheorem{result}{Resultat}
+'''
+  exos = []
+  import exoparse
+  for r in exercises:
+    exercise = exoparse.parseExo(r.text+"\n")
+    if not exercise:
+      sys.stderr.write("ERROR: couldn't parse exercise. Skipping\n")
+    else:
+#      print "generated " + exercise
+      exos.append(exercise)
+
+  print latexHeader()
+  for e in exos:
+    print e.generateLatex()
+  print middle
+  for e in exos:
+    print e.generateLatexResult()
+  print latexFooter()
+
+def latexHeader():
   header = '''
 \\documentclass[12pt, norsk, a4paper]{article}
 \\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
@@ -210,33 +208,16 @@ def parseExosLatex(exercises):
 \\textsc{Alle svar maa begrunnes}\\\\[1.5cm]
 \\end{flushleft}
 '''
-  middle = '''
-\\newtheorem{result}{Resultat}
-'''
+  return header
 
+def latexFooter():
   footer = '''
 \\noindent SLUTT
 
 \\end{document}
 '''
+  return footer
 
-  exos = []
-  import exoparse
-  for r in exercises:
-    exercise = exoparse.parseExo(r.text+"\n")
-    if not exercise:
-      sys.stderr.write("ERROR: couldn't parse exercise. Skipping\n")
-    else:
-#      print "generated " + exercise
-      exos.append(exercise)
-
-  print header
-  for e in exos:
-    print e.generateLatex()
-  print middle
-  for e in exos:
-    print e.generateLatexResult()
-  print footer
 
 if __name__ == "__main__":
   lines = ""
