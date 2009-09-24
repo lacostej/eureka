@@ -125,11 +125,12 @@ def parseExos(exercises):
     else:
       exercise.generate()
 
-def generateLatexExercisesForStudent(exercises, dir, outputFileName, student, studentData):
-  with open(outputFileName, "w") as output:
-    generateLatexExercisesForStudentFile(exercises, dir, output, student, studentData)
+def generateLatexExercisesAndResultsForStudent(exercises, dir, exercicesOutputFileName, resultsOutputFileName, student, studentData):
+  with open(exercicesOutputFileName, "w") as exosOutput:
+    with open(resultsOutputFileName, "w") as resultsOutput:
+      _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, resultsOutput, student, studentData)
 
-def generateLatexExercisesForStudentFile(exercises, dir, output, student, studentData):
+def _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, resultsOutput, student, studentData):
   middle = '''
 \\newtheorem{result}{Resultat}
 '''
@@ -144,14 +145,19 @@ def generateLatexExercisesForStudentFile(exercises, dir, output, student, studen
 #      print "generated " + exercise
       exos.append(exercise)
 
-  output.write(latexHeader() + "\n")
+  exosOutput.write(latexHeader() + "\n")
+  resultsOutput.write(latexHeader() + "\n")
+
 
   if (studentData.comment != None and len(studentData.comment) > 0):
     comment = studentData.comment.encode("iso-8859-15")
     # FIXME encode Norwegian characters appropriately
-    output.write("\\begin{flushleft}\n")
-    output.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
-    output.write("\\end{flushleft}\n")
+    exosOutput.write("\\begin{flushleft}\n")
+    exosOutput.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
+    exosOutput.write("\\end{flushleft}\n")
+    resultsOutput.write("\\begin{flushleft}\n")
+    resultsOutput.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
+    resultsOutput.write("\\end{flushleft}\n")
 
   for exo in exos:
     if (not exo.id in studentData.exerciseStatuses.iterkeys()):
@@ -163,9 +169,11 @@ def generateLatexExercisesForStudentFile(exercises, dir, output, student, studen
 #        raise MyException("Unknown exercise: " + exoId)
       for i in range(exoData.toGenerate):
         exo.randomize()
-        output.write(exo.generateLatex() + "\n")
+        exosOutput.write(exo.generateLatex() + "\n")
+        resultsOutput.write(exo.generateLatexResult() + "\n")
 
-  output.write(latexFooter() + "\n")
+  exosOutput.write(latexFooter() + "\n")
+  resultsOutput.write(latexFooter() + "\n")
 
 def parseExosLatex(exercises):
   middle = '''
