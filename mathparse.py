@@ -177,15 +177,13 @@ def generateLatexExercisesForStudentFile(exercises, dir, output, student, studen
     output.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
     output.write("\\end{flushleft}\n")
 
-  for exoId in studentData.exerciseStatuses.iterkeys():
-#    print exoId
-    exoData = studentData.exerciseStatuses[exoId]
+  for exo in exos:
+    if (not exo.id in studentData.exerciseStatuses.iterkeys()):
+      continue
+    exoData = studentData.exerciseStatuses[exo.id]
     if (exoData == None):
-      raise MyException("no data for " + exoId + " for student " + student.shortName)
+      raise MyException("no data for " + exo.id + " for student " + student.shortName)
     if (exoData.toGenerate > 0):
-      exo = find(exos, lambda e: e.id == exoId)
-      if (exo == None):
-        continue
 #        raise MyException("Unknown exercise: " + exoId)
       for i in range(exoData.toGenerate):
         exo.randomize()
