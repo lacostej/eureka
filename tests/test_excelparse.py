@@ -26,3 +26,6 @@ def testReadExcelInterfaceFile():
   print classStatus.studentExercicesStatus[10].exerciseStatuses['id2']
   assert classStatus.studentExercicesStatus[10].exerciseStatuses['id2'].status == 1
   assert classStatus.studentExercicesStatus[10].exerciseStatuses['id2'].toGenerate == 4
+
+  assert classStatus.studentExercicesStatus[1].studentId == "anders"
+  assert classStatus.studentExercicesStatus[1].shouldGenerate == False
