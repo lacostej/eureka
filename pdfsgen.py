@@ -26,7 +26,7 @@ def main(interfaceFile, exercisesFile):
   os.system('touch full_gen.log')
 
   for student in classStatus.students:
-    print "Handling student : " + student.fullName
+    print "Handling student : " + student.fullName.encode("iso-8859-1")
     data = classStatus.getStudentData(student.shortName)
     if (not data):
       print "WARNING: missing data for student: " + str(student)

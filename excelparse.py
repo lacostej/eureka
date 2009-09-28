@@ -17,7 +17,7 @@ class Student:
     self.email = email
 
   def __str__(self):
-    return self.shortName + " (\"" + str(self.fullName) + "\" <" + str(self.email) + ">)"
+    return self.shortName.encode("iso-8859-1") + " (\"" + str(self.fullName.encode("iso-8859-1")) + "\" <" + str(self.email.encode("iso-8859-1")) + ">)"
 
 class StudentExercicesStatus:
   def __init__(self, studentId, comment, shouldGenerate, exerciseStatuses):
