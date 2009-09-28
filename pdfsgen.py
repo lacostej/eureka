@@ -8,13 +8,7 @@ import os
 def fileBaseName(student):
   return student.shortName.replace(" ", "_")
 
-def generateOuputLatexFileName(student, date):
-  return fileBaseName(student) + ".latex"
-
-if __name__ == "__main__":
-  interfaceFile = sys.argv[1]
-  exercisesFile = sys.argv[2]
-
+def main(interfaceFile, exercisesFile):
   print "Parsing %s" % interfaceFile
   classStatus = excelparse.parse(interfaceFile)
   print str(len(classStatus.students)) + " student(s)"
@@ -40,25 +34,43 @@ if __name__ == "__main__":
     if (not data.shouldGenerate):
       print "INFO: student will not have data generated: " + str(student)
       continue
-    outputFileName = generateOuputLatexFileName(student, time.time())
-    mathparse.generateLatexExercisesForStudent(exercises, "gen", outputFileName, student, data)
-    print "Generated " + outputFileName
+
+    outputFileName = fileBaseName(student) + ".latex"
+    resultOutputFileName = fileBaseName(student) + "_result.latex"
+
+    mathparse.generateLatexExercisesAndResultsForStudent(exercises, "gen", outputFileName, resultOutputFileName, student, data)
+    print "Generated " + outputFileName + " and " + resultOutputFileName
 
     if (not os.access(outputFileName, os.F_OK)):
-      print "ERROR: couldn't find the Latex file. Check the logs"
+      print "ERROR: couldn't find the Exercise Latex file. Check the logs"
+      continue
+    if (not os.access(resultOutputFileName, os.F_OK)):
+      print "ERROR: couldn't find the Results Latex file. Check the logs"
       continue
 
     os.system('latex -interaction nonstopmode ' + outputFileName + " 2>&1 >> full_gen.log")
+    os.system('latex -interaction nonstopmode ' + resultOutputFileName + " 2>&1 >> full_gen.log")
 
     userPdfDir = "pdfs/" + fileBaseName(student)
 
-    userPdfFile = fileBaseName(student) + ".pdf"
-    if (not os.access(userPdfFile, os.F_OK)):
-      print "ERROR: couldn't generate the PDF. Check the logs"
+    userExosPdfFile = fileBaseName(student) + ".pdf"
+    userResultsPdfFile = fileBaseName(student) + "_result.pdf"
+    if (not os.access(userExosPdfFile, os.F_OK)):
+      print "ERROR: couldn't generate the Exercise PDF. Check the logs"
+      continue
+    if (not os.access(userResultsPdfFile, os.F_OK)):
+      print "ERROR: couldn't generate the Result PDF. Check the logs"
       continue
     if (not os.access("pdfs", os.F_OK)):
       os.mkdir("pdfs")
     if (not os.access(userPdfDir, os.F_OK)):
       os.mkdir(userPdfDir)
-    os.rename(userPdfFile, userPdfDir + "/" + userPdfFile)
+    os.rename(userExosPdfFile, userPdfDir + "/" + userExosPdfFile)
+    os.rename(userResultsPdfFile, userPdfDir + "/" + userResultsPdfFile)
+
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
+if __name__ == "__main__":
+  interfaceFile = sys.argv[1]
+  exercisesFile = sys.argv[2]
+
+  main(interfaceFile, exercisesFile)
