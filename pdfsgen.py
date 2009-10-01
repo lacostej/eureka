@@ -5,10 +5,12 @@ import mathparse
 import time
 import os
 
+import mailer
+
 def fileBaseName(student):
   return student.shortName.replace(" ", "_")
 
-def main(interfaceFile, exercisesFile):
+def main(interfaceFile, exercisesFile, sendMails=False):
   print "Parsing %s" % interfaceFile
   classStatus = excelparse.parse(interfaceFile)
   print str(len(classStatus.students)) + " student(s)"
@@ -67,6 +69,12 @@ def main(interfaceFile, exercisesFile):
       os.mkdir(userPdfDir)
     os.rename(userExosPdfFile, userPdfDir + "/" + userExosPdfFile)
     os.rename(userResultsPdfFile, userPdfDir + "/" + userResultsPdfFile)
+
+    if (sendMails and student.shortName == "jerome"):
+      f = (userPdfDir + "/" + userExosPdfFile).encode("iso-8859-1")
+      open(f, "rb").read()
+      print f
+      mailer.send_mail("eureka@vgsn.no", [student.email], "Latest exercises from vgsn", "Bla bla bla", [f], "smtp.gmail.com", "jbhkp.eureka", "jVsmpdg1*")
 
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
 if __name__ == "__main__":

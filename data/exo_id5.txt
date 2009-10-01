@@ -1,0 +1,4 @@
+id5
+"Fails beacuse of Divide By Zero"
+Formula: (2 : (-2) + 2)* (-3) - ((-3) + (-3))^2 * (-3)
+Result: \res { (2 : (-2) + 2)*(-3) - ((-3) + (-3))^2 * (-3)}
