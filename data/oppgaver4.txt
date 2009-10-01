@@ -953,3 +953,46 @@ u,v \sign2
 \solve a u \frac {c}{d}
 \solution \res {a u \frac {c}{d} }
 ---
+id125
+" divisjon med brøker "
+a,b,c,d,e,f (1;10)
+\solve \frac {a}{b} : \frac {c}{d}
+\solution \frac {\res {a*d}}{\res {b*c}}
+---
+id126
+" l6: mixup med negative tall og potens. Regn ut"
+a,b,f,g (1;5)
+\solve a-b*(f^2 - g^2)^2
+\solution \res { a-b*(f^2 - g^2)^2}
+---
+id127
+"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
+x (x)
+u , v, w, y, z, r, t,s \sign1
+\solve a + g* (-b*x - c) =d
+\solution \frac{\res{a-g*c-d}}{\res{g*b}}
+---
+id128
+"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
+x (x)
+u , v, w, y, z, r, t,s \sign1
+\solve \frac {a*x}{b} = c-\frac {d*x-e}{f}
+\solution \frac{\res{a*c*b*f+b*e}}{\res{a*f+b*d}}
+---
+id129
+"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
+x (x)
+u , v, w, y, z, r, t,s \sign1
+\solve \frac {a}{x} = \frac {e}{f}
+\solution \frac{\res{e*a}}{f}
+---
+id130
+"Nivå 3 ter: skriv enkelt som mulig"
+a,c,d,e,f,g,h,i,j,k   (2;5)
+b (b)
+\solve \frac {\sqrt {a}  {b} * ( \sqrt {c}  {b}) ^d * b^\frac {d}{e}} { (f*b^\frac {g}{h})^i *\sqrt {j}{b^k}}
+\solution \frac {b^\res{(1:a)+(d:c)+(d:e)-(g*i:h)-k:j}}{\res {f^i}}
+---
