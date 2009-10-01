@@ -666,7 +666,7 @@ class Calc(FormulaParser):
         if not p[2] in ops:
           p[2] = self.find_var(p[2])
 
-        print "*** " + p[2] + " " + str(p[1]) + ", " + str(p[3])
+#        print "*** " + p[2] + " " + str(p[1]) + ", " + str(p[3])
         p[0] = Node(p[2], [p[1], p[3]])
 
     def p_expression_uminus(self, p):
