@@ -61,7 +61,42 @@ class FormulaParser:
             self.parse(s)
 
     def parse(self, s):
-      return self.parser.parse(s, lexer=self.formulaLexer)
+      return self.parser.parse(self._replaceVariables(s), lexer=self.formulaLexer)
+
+    def _replaceVariables(self, s):
+      result = []
+      i = 0
+      inText = False
+      text = []
+      while True:
+        if i < len(s) and ischar(s[i]):
+          text.append(s[i])
+          inText = True
+        else:
+          if (len(text) > 0):
+            v = "".join(text)
+            t = self.resolve_var(v)
+            result += str(t)
+            text = []
+          if (i < len(s)):
+            result.append(s[i])
+          inText = False
+        if (i == len(s)):
+          break
+        i += 1
+      result = "".join(result)
+#      print "replaced " + s + " into " + result
+      return result
+
+    def resolve_var(self, v):
+      try:
+        return self.names[v]
+      except LookupError:
+        return v
+
+def ischar(c):
+  o = ord(c)
+  return (o >= ord('a') and o <= ord('z')) or (o >= ord('A') and o <= ord('Z'))
 
 class Node:
   '''A simple tree implementation'''
@@ -128,6 +163,8 @@ toXmlConvertor = NodeXmlConvertor()
 
 class NodeResultEvaluator:
   '''A visitor that go through the tree and computes the values of the sub-tree wrapped inside a 'result' node'''
+  rec_count = 0
+
   def visit(self, node):
     'conver result expressions into their values whenever possible'
 #    print "EVALUATING " + toXmlConvertor.visit(node)
@@ -136,14 +173,19 @@ class NodeResultEvaluator:
     return r
 
   def evaluateResult(self, node, evaluate=False):
+    self.rec_count += 1
     if (not isinstance(node, Node)):
+      self.rec_count -= 1
       return node
 
     if (node.type == "result"):
-      return self.evaluateResult(node.children[0], True)
+      r = self.evaluateResult(node.children[0], True)
+      self.rec_count -= 1
+      return r
 
     n = self.evaluate(node, evaluate)
     if (n != None):
+      self.rec_count -= 1
       return n
 
     newtype = node.type
@@ -158,16 +200,16 @@ class NodeResultEvaluator:
     n2 = self.evaluate(node, evaluate)
     if (n2 != None):
       node = n2
+    self.rec_count -= 1
     return node
 
 #  def power(self, i, j):
-    
+  
   def evaluate(self, node, evaluate):
-#
-#    print "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
+#    print (' '*self.rec_count) + "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
     r = self.theevaluate(node, evaluate)
 #    if (r):
-#      print "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
+#      print (' '*self.rec_count) + "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
     return r
      
   def theevaluate(self, node, evaluate):
@@ -176,7 +218,7 @@ class NodeResultEvaluator:
 #    print type(node.children[0])
 
     # vars are always evaluated
-    if (node.type == 'int' and isNumber(node.children[0])):
+    if ((node.type == 'int' or node.type == 'decimal') and isNumber(node.children[0])):
 #      print "EVALUATING var " + str(node.children)
       return node.children[0]
     if (node.type == 'var' and isNumber(node.children[0])):
@@ -476,7 +518,8 @@ class Calc(FormulaParser):
         'PLUS','MINUS','POWER','TIMES','DIVIDE','EQUALS', #,'EXP'
         'LPAREN','RPAREN', 'COMMA',
         'LBRACE','RBRACE',
-        'VARNAME', 'SYMBOL','OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL',
+        'VARNAME', 'SYMBOL',
+        'OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL',
         'TEXT'
         )
 
@@ -511,6 +554,7 @@ class Calc(FormulaParser):
 
     def t_SYMBOL(self, t):
         r'\\[a-z]+'
+#        print "SYMBOOOOOOOOOOOOL " + t.value
         t.type = self.symbols[t.value]
         return t
 
@@ -612,18 +656,17 @@ class Calc(FormulaParser):
 
     def p_expression_binop(self, p):
         """
-        expression : expression PLUS expression
-                   | expression MINUS expression
+        expression : expression POWER expression
                    | expression TIMES expression
                    | expression DIVIDE expression
-                   | expression POWER expression
-                   | expression VARNAME expression
+                   | expression MINUS expression
+                   | expression PLUS expression
         """
         ops = [ '+', '-', '*', ':', '^']
         if not p[2] in ops:
           p[2] = self.find_var(p[2])
 
-#        print "*** " + p[2] + " " + str(p[1]) + ", " + str(p[3])
+        print "*** " + p[2] + " " + str(p[1]) + ", " + str(p[3])
         p[0] = Node(p[2], [p[1], p[3]])
 
     def p_expression_uminus(self, p):

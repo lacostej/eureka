@@ -13,11 +13,11 @@ def testReadExcelInterfaceFile():
 
   print str(len(classStatus.students)) + " student(s)"
   print str(len(classStatus.studentExercicesStatus)) + " exercise(s)" 
-  assert len(classStatus.students) == 33
-  assert len(classStatus.studentExercicesStatus) == 33
+  assert len(classStatus.students) == 34
+  assert len(classStatus.studentExercicesStatus) == 34
   assert classStatus.studentExercicesStatus[0].studentId == "adeleide"
   assert classStatus.studentExercicesStatus[0].comment == None
-  assert classStatus.studentExercicesStatus[0].shouldGenerate == True
+  assert classStatus.studentExercicesStatus[0].shouldGenerate == False
   assert classStatus.studentExercicesStatus[0].exerciseStatuses['id2'].status == 2
   assert classStatus.studentExercicesStatus[0].exerciseStatuses['id2'].toGenerate == 0
 
@@ -27,5 +27,6 @@ def testReadExcelInterfaceFile():
   assert classStatus.studentExercicesStatus[10].exerciseStatuses['id2'].status == 1
   assert classStatus.studentExercicesStatus[10].exerciseStatuses['id2'].toGenerate == 4
 
-  assert classStatus.studentExercicesStatus[1].studentId == "anders"
-  assert classStatus.studentExercicesStatus[1].shouldGenerate == False
+#  print classStatus.studentExercicesStatus
+  assert classStatus.studentExercicesStatus[33].studentId == "jerome"
+  assert classStatus.studentExercicesStatus[33].shouldGenerate == True

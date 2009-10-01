@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys
+import sys, traceback
 
 # Get the token map from the lexer.  This is required.
 from mathlex import *
@@ -119,11 +119,16 @@ def parseExos(exercises):
     print r
 #    print "---"
 #    print r.text
-    exercise = exoparse.parseExo(r.text+"\n")
-    if not exercise:
-      print "ERROR: couldn't parse exercise. Skipping"
-    else:
-      exercise.generate()
+    try:
+      exercise = exoparse.parseExo(r.text+"\n")
+      if not exercise:
+        print "ERROR: couldn't parse exercise. Skipping"
+      else:
+        exercise.generate()
+    except Exception:
+     print "ERROR: failed to generate exercise " + str(r)
+     traceback.print_exc()
+     raise
 
 def generateLatexExercisesAndResultsForStudent(exercises, dir, exercicesOutputFileName, resultsOutputFileName, student, studentData):
   with open(exercicesOutputFileName, "w") as exosOutput:
@@ -191,10 +196,20 @@ def parseExosLatex(exercises):
 
   print latexHeader()
   for e in exos:
-    print e.generateLatex()
+    try:
+      print e.generateLatex()
+    except Exception:
+     print "ERROR: failed to generate exercise " + str(e)
+     traceback.print_exc()
+     raise
   print middle
   for e in exos:
-    print e.generateLatexResult()
+    try: 
+      print e.generateLatexResult()
+    except Exception:
+     print "ERROR: failed to generate exercise " + str(e)
+     traceback.print_exc()
+     raise
   print latexFooter()
 
 def latexHeader():

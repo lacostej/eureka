@@ -2,85 +2,85 @@
 ---
 id0
 " l1: addisjon og substraksjon med negative tall. Regn ut"
-a (1;10)
-b (-10;-1)
+a (1;5)
+b (-5;-1)
 s \sign1
 \solve a s (b)
 \solution \res {a s (b)}
 ---
 id1
 " l2: addisjon og substraksjon med negative tall. Regn ut"
-a (-10;10)\0
-b (1;10)
+a (-5;5)\0
+b (1;5)
 s \sign1
 \solve a s b
 \solution \res {a s b}
 ---
 id2
 " l3: multiplikasjon og divisjon med negative tall. Regn ut"
-a,b (1;10)
-e,f,g (-10;-1)
+a,b (2;5)
+e,f,g (-5;-1)
 s,t,u,v \sign2
 \solve a s (e) t b u (f) v (g)
 \solution \res { a s (e) t b u (f) v (g)}
 ---
 id3
 " l4: addisjon og substraksjon med negative tall. Regn ut"
-a,b (1;10)
-e,f,g (-10;-1)
+a,b (2;5)
+e,f,g (-5;-1)
 s,t,u,v \sign1
 \solve a s (e) t b u (f) v (g)
 \solution \res { a s (e) t b u (f) v (g)}
 ---
 id4
 " l5: mixup med negative tall. Regn ut"
-a,b (1;10)
-e,f,g,h (-10;-1)
+a,b (2;5)
+e,f,g,h (-5;-1)
 s,t,u,v \sign
-\solve (a s (e) t b)*h u (f) v (g)
-\solution \res { a s (e) t b u (f) v (g)}
+\solve (a s (e) t b)* (h) u (f) v (g)
+\solution \res { (a s (e) t b)* (h) u (f) v (g)}
 ---
 id5
 " l6: mixup med negative tall og potens. Regn ut"
-a,b (1;10)
-e,f,g,h,j (-10;-1)
-i (2;4)
+a,b (2;3)
+e,f,g,h,j (-3;-1)
+i (2;3)
 s,t,u,v,w \sign
-\solve (a s (e) t b)*h u ((f) v (g))^i w j
-\solution \res { (a s (e) t b)*h u ((f) v (g))^i w j}
+\solve (a s (e) t b)* (h) u ((f) v (g))^i w (j)
+\solution \res { (a s (e) t b)*(h) u ((f) v (g))^i w (j)}
 ---
 \cat " brøk "
 ---
 id6
 " forkort mest mulig: "
-a,b,c,d,e,f,g (1,2,3,5,7,11,13)
+a,b,c,d,e,f,g (2,3,5,7)
 \solve \frac {\res{a*b*c*d*e}}{\res {c*d*e*f*g}}
 \solution \frac {a*b}{f*g}
 ---
 id7
 " addisjon og substraksjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d,e,f (2;6)
 u,v \sign1
 \solve \frac {a}{b} u \frac {c}{d} v \frac {e}{f}
 \solution \res {\frac {a}{b} u \frac {c}{d} v \frac {e}{f}}
 ---
 id8
 " addisjon og substraksjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d,e,f (1;6)
 u,v \sign1
 \solve a u \frac {c}{d} v \frac {e}{f}
 \solution \res {a u \frac {c}{d} v \frac {e}{f}}
 ---
 id9
 " multiplikasjon og divisjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d,e,f (1;6)
 u,v \sign2
 \solve \frac {a}{b} u \frac {c}{d} v \frac {e}{f}
 \solution \res {\frac {a}{b} u \frac {c}{d} v \frac {e}{f}}
 ---
 id10
 " multiplikasjon og divisjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d,e,f (1;6)
 u,v \sign2
 \solve a u \frac {c}{d} v \frac {e}{f}
 \solution \res {a u \frac {c}{d} v \frac {e}{f}}
@@ -95,7 +95,7 @@ a (1;10)
 ---
 id12
 "Skriv tallene som tierpotenser"
-a (1;10)
+a (1;6)
 \solve \res {10^a}
 \solution 10^a
 ---
@@ -115,7 +115,7 @@ b (1;10)
 ---
 id15
 "Skriv  tierpotenser som desimaltall"
-a (-10;0)
+a (-8;0)
 \solve 10^a
 \solution \res{10^a}
 ---
@@ -125,7 +125,7 @@ a (-10;10)\0
 b (-10;10)\0
 s \sign2
 \solve \res {10^a} s \res {10^b}
-\solution 10^\res{asb}
+\solution 10^\res{a s b}
 ---
 id17
 "Skriv de negative tierpotensene som desimaltall:"
@@ -138,14 +138,14 @@ a (-10;-1)
 id18
 "skriv tallene på standardform"
 a \d(1;10)
-b (-10;10)\0
+b (-5;5)\0
 \solve \res {a*10^b}
 \solution a*10^b
 ---
 id19
 "skriv som vanlig tall"
 a \d(1;10)
-b (-10;10)\0
+b (-5;5)\0
 \solve a*10^b
 \solution \res {a*10^b}
 ---
@@ -238,7 +238,7 @@ id30
 a, c, h (1;9)
 b (a)
 u, v, w, x, y, z \sign
-\solve a u b^c v (b w b) x b y (b z h*b)
+\solve a * b^c v (b w b) - b y (b z h*b)
 \solution "FIXME"
 ---
 \cat "likninger"
@@ -253,7 +253,7 @@ x (x)
 ---
 id32
 "Nivå 2: løs likningene ved regn g. Sett prøve på svarene"
-a, b, d (1;4)
+a, b, d (2;4)
 c (5;9)
 x (x)
 \solve a * x - b=c*x - d
@@ -285,7 +285,7 @@ x (x)
 ---
 id36
 "Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c, d, e, f, g, h,i,j,k,l,m (1;9)
+a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
 x (x)
 u , v, w, y, z, r, t,s \sign1
 \solve a + g* (b*x - c) + g*(i*x + j)=d - h* (e*x + f)- k* (l*x + m)
@@ -294,7 +294,7 @@ u , v, w, y, z, r, t,s \sign1
 ---
 id37
 "Nivå 7: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l (1;5)
+a,b,c,d,e,f,g,h,i,j,k,l (2;5)
 x (x)
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {x}{e} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h} * (\frac {x}{i} - \frac {k}{l})
 \solution "FIXME"
@@ -302,14 +302,14 @@ x (x)
 ---
 id38
 "Nivå 8: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l (1;5)
+a,b,c,d,e,f,g,h,i,j,k,l (2;5)
 x (x)
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {e}{x} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h}* (\frac {i}{x} - \frac {k}{l})
 \solution \frac {\res{(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}}{\res{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
 ---
 id39
 "Nivå 9: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l (1;5)
+a,b,c,d,e,f,g,h,i,j,k,l (2;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {e}{x} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h}* (\frac {i}{x} - \frac {k}{l})
@@ -317,7 +317,7 @@ u , v, w, y, z, r, t \sign1
 ---
 id40
 "Nivå 10: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c, d (1;9)
+a, b, c, d (2;9)
 x (x)
 \solve \frac {x}{a} - b=c*x - d
 # FIXME proposed solution
@@ -326,7 +326,7 @@ x (x)
 ---
 id41
 "Nivå 11: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
+a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (2;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d} * (\frac {x}{e} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h}* (\frac {x}{i} y \frac {k}{l}) z \frac {m}{n}* (\frac {x}{o} r \frac {p}{q})
@@ -334,7 +334,7 @@ u , v, w, y, z, r, t \sign1
 ---
 id42
 "Nivå 12: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (1;5)
+a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (2;5)
 x (x)
 u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} u \frac {c}{d}* (\frac {e}{x} v \frac {f}{g})=\frac {h}{i} w \frac {g}{h} * (\frac {i}{x} y \frac {k}{l}) z \frac {m}{n} * (\frac {o}{x} r \frac {p}{q})
@@ -350,14 +350,14 @@ a,b   (2;9)
 id44
 "Nivå 14: løs potens likningene ved regning"
 x (x)
-a,b,c   (2;9)
+a,b,c   (2;6)
 \solve c*x^a= \res {\res {b^a} *c}
 \solution x=b
 ---
 id45
 "Nivå 15: løs potens likningene ved regning"
 x (x)
-a,b   \d(2;9)
+a,b   \d(2;6)
 \solve x^a= \res {b^a}
 \solution x=b
 ---
@@ -514,7 +514,7 @@ a,b (1;4)
 id66
 "regn ut"
 a (-4;-1)
-b (1;4)
+b (2;4)
 \solve (a)^b
 \solution \res{a^b}
 ---
@@ -526,26 +526,26 @@ a (1;10)
 ---
 id68
 "Nivå 1: regn ut og angi potensformen"
-a,b,c (1;9)
+a,b,c (2;9)
 \solve a^b*a^c
 \solution a^\res {b+c}
 ---
 id69
 "Nivå 2: regn ut og angi potensformen"
-a,b,c (1;9)
+a,b,c (2;9)
 \solve a^b:a^c
 \solution a^\res {b-c}
 ---
 id70
 "Nivå 3: regn ut og angi potensformen"
-b,c,d,e,f (1;9)
+b,c,d,e,f (2;9)
 a (a)
 \solve a^b*a^c*a^d*a^e*a^f
 \solution a^\res {b+c+d+e+f}
 ---
 id71
 "Nivå 4: regn ut og angi potensformen"
-b,c,d,e,f (1;9)
+b,c,d,e,f (2;9)
 x (x)
 y (y)
 \solve x^b*y^c*x^d*y^e*x^f
@@ -553,7 +553,7 @@ y (y)
 ---
 id72
 "Nivå 5: regn ut og angi potensformen"
-b,c,d,e,f (1;9)
+b,c,d,e,f (2;9)
 a (a)
 \solve \frac {a^b*a^c*a^d} {a^e*a^f}
 \solution a^\res{b+c+d-e-f}
@@ -654,16 +654,16 @@ d (d)
 ---
 id86
 "Nivå 1bis: regn ut og angi potensformen"
-a (-4;4)\0
-b,c (-9;9)
-\solve a^b*a^c
+a (-9;-1)
+b,c (-9;9)\0
+\solve (a)^b*(a)^c
 \solution a^\res{b+c}
 ---
 id87
 "Nivå 2bis: regn ut og angi potensformen"
-a (-4;4)\0
-b,c (-9;9)
-\solve a^b:a^c
+a (-9;-1)
+b,c (-9;9)\0
+\solve (a)^b:(a)^c
 \solution a^\res{b-c}
 ---
 id88
@@ -836,8 +836,8 @@ b   (2;10)
 ---
 id109
 "Nivå 3 ter: skriv enkelt som mulig"
-a,c,d,e   (2;9)
-b   (2;10)
+a,c,d,e   (2;5)
+b   (2;5)
 \solve \frac {\sqrt {a}  {\res {b^a}} * \sqrt {c}  {\res {b^a} ^d}} { \res {b^a}^e * \sqrt {c}  {\res {b^a} ^e}}
 \solution \sqrt {c} {b^\res{c+a*d-a*e-a*e*c}}
 ---
@@ -859,8 +859,8 @@ d (d)
 ---
 id112
 "skriv multiplikasjon og divisjon med tierpotenser"
-a (-10;10)\0
-b (-10;10)\0
+a (-5;5)\0
+b (-8;5)\0
 s \sign1
 \solve 10^a s 10^b
 \solution \res {10^a s 10^b}
@@ -902,7 +902,7 @@ s,t,u,v,w \sign1
 #---
 id117
 " l6: mixup med negative tall og potens. Regn ut"
-a,b,f,g (1;10)
+a,b,f,g (1;5)
 \solve ((a-b^2)^2 - (f^2 - g^2)^2)^2
 \solution \res { ((a-b^2)^2 - (f^2 - g^2)^2)^2}
 ---
@@ -931,4 +931,25 @@ id121
 a,b,c,d,e,f (-5;-2)
 \solve (\frac{a}{b} )^c * (\frac{d}{e} )^f
 \solution \res {(\frac{a}{b} )^c * (\frac{d}{e} )^f}
+---
+id122
+"Minus brøk, likning"
+a,b,c,d,e,f (2;6)
+x (x)
+\solve a - \frac {c-d*x}{e}
+\solution \frac {\res {a*e-c} - d*x} {e}
+---
+id123
+"Algebra: Regn ut"
+a, c, h,i,j (2;4)
+b (b)
+\solve a*b^2+(c*b-h)*(i-j*b)
+\solution (a,b^c,(a + b),b,(b - h*b))
+---
+id124
+" multiplikasjon og divisjon med brøker "
+a,b,c,d,e,f (1;6)
+u,v \sign2
+\solve a u \frac {c}{d}
+\solution \res {a u \frac {c}{d} }
 ---

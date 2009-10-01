@@ -148,7 +148,11 @@ class Variable:
     return self.val
 
   def __str__(self):
-    return "var " + self.name + ":" + str(self.value())
+    if type(self.value()) == int:
+      value = str(self.value())
+    else:
+      value = "'" + str(self.value()) + "'"
+    return "'" + self.name + "':" + value
 
 class Exercice:
   def __init__(self, id, description, statements, formula, result):
@@ -290,6 +294,14 @@ class Exercice:
 
   def toText(self, node):
     return formulaTextOutput.visit(node)
+
+  def __str__(self):
+    s = "[" + self.id + "]: " + str(self.description) + "\n"
+    for statement in self.statements:
+      s += str(statement) + ",\n"
+    s += "Formula: " + self.formula + "\n"
+    s += "Result: " + self.result + "\n"
+    return s
 
 def p_exercise(p):
   'exercise : id description statements formula result'

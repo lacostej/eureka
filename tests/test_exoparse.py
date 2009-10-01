@@ -94,6 +94,50 @@ def testMultipleSolutions():
 def test_id4_1():
   assertEvaluationRenders({}, "\\res {(1 - (-10) * 3) * -8 + (-8) : (-5)}", "-246.4")
 
+def test_id5_1_result():
+  v = {
+"a":2,
+"b":2,
+"e":-2,
+"f":-3,
+"g":-3,
+"h":-3,
+"j":-3,
+"i":2,
+"s":':',
+"t":'+',
+"u":'-',
+"v":'+',
+"w":'*',
+  }
+#  assertEvaluationRenders(v, "\\res { (a s (e) t b)*(h) u ((f) v (g))^i w (j)}", "105")
+
+def test_id5_2_result():
+  assertEvaluationRenders({}, "\\res { (2 : (-2) + 2)*(-3) - ((-3) + (-3))^2 * (-3)}", "105")
+
+def test_id5_3_result():
+  v = {
+"a":2,
+"b":2,
+"e":-2,
+"s":':',
+"t":'+',
+  }
+  assertEvaluationRenders(v, "\\res { (a s (e) t b)}", "1")
+
+def test_id5_3bis_result():
+  v = {
+"a":2,
+"b":2,
+"e":2,
+"s":':',
+"t":'-',
+  }
+  assertEvaluationRenders(v, "\\res { a s e - b }", "-1")
+
+def test_id5_4_result():
+  assertEvaluationRenders({}, "\\res { (2 : (-2) + 2)}", "1")
+
 def testEvaluateSimpleOperators_id4_2():
   v = { "a": 6,
        "b": 9,
@@ -105,7 +149,7 @@ def testEvaluateSimpleOperators_id4_2():
        "u": '*',
        "v": ':'
      }
-  assertEvaluationRenders(v, "\\res { a s (e) t b u (f) v (g)}", "-10.8")
+  assertEvaluationRenders(v, "\\res { a s (e) t b u (f) v (g)}", "-0.13")
 
 def test_id5_1():
   assertEvaluationRenders({}, "\\res { (2 : (-4) + 2)*-5 : ((-6) + (-2))^2 + -9}", "-9.12")
@@ -138,7 +182,7 @@ def testEvaluatePowersAndStandardForm():
        "d": -4,
        "s": ':'
      }
-  assertEvaluationRenders(v, "\\stdform {\\res { a*10^b s c*10^d}}", "8.22 * 10^-4")
+  assertEvaluationRenders(v, "\\stdform {\\res { a*10^b s c*10^d}}", "8.22 * 10^-12")
 
 def testEqualIsATopLevelFormulaElement():
   v = {
@@ -254,9 +298,24 @@ def testTextSolution():
   s = e.generateLatexResult()
   assertEquals("\\begin{result} id1 FIXME\\vspace{3mm}\end{result}", s)
 
+
+def test_replaceVariables_1():
+  v = {
+    "a": 2,
+    "b": -3,
+    "s": '+',
+  }
+  assertEquals(_replaceVariables(v, "a s (b)"), "2 + (-3)")
+
 ########################################################################
 ### HELPER FUNCTIONS
 ########################################################################
+
+def _replaceVariables(variables, formula):
+  formulaParser = calc.Calc()
+  for s in variables:
+    formulaParser.names[s] = variables[s]
+  return formulaParser._replaceVariables(formula)
 
 def evaluate(variables, formula):
   formulaParser = calc.Calc()
@@ -285,11 +344,11 @@ def assertFracReduction(frac1, expectedFrac):
 def assertEquals(a, b):
   result = (a == b)
   if (not result):
-    print str(a) + " not equals to\n" + b
+    print str(a) + " not equals to\n" + str(b)
     assert False
 
 def assertNotEquals(a, b):
   result = (a != b)
   if (not result):
-    print str(a) + " equals to\n" + b
+    print str(a) + " equals to\n" + str(b)
     assert False
