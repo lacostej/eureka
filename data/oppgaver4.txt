@@ -235,7 +235,7 @@ c, h,k (2;9)
 id30
 "regn ut"
 a, c, h (1;9)
-b (a)
+b (b)
 u, v, w, x, y, z \sign
 \solve a * b^c v (b w b) - b y (b z h*b)
 \solution "FIXME"
@@ -247,8 +247,7 @@ id31
 a, b, c (1;9)
 x (x)
 \solve a*x - b=c
-\solution "FIXME"
-#\solution x=\res{(c+b):a}
+\solution x=\res{(c+b):a}
 ---
 id32
 "Nivå 2: løs likningene ved regn g. Sett prøve på svarene"
