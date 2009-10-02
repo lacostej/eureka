@@ -124,15 +124,14 @@ id16
 "skriv multiplikasjon og divisjon med tierpotenser"
 a (-10;10)\0
 b (-10;10)\0
-s \sign2
-\solve \res {10^a} s \res {10^b}
-\solution 10^\res{a s b}
+\solve \res {\decform {10^a}} : \res {\decform {10^b}}
+\solution 10^\res{a - b}
 ---
 id17
 "Skriv de negative tierpotensene som desimaltall:"
 a (-10;-1)
 \solve 10^a
-\solution \res {10^a}
+\solution \res {\decform {10^a}}
 ---
 \cat "standardform"
 ---
@@ -140,7 +139,7 @@ id18
 "skriv tallene på standardform"
 a \d(1;10)
 b (-5;5)\0
-\solve \res {a*10^b}
+\solve \res {\decform{a*10^b}}
 \solution a*10^b
 ---
 id19
@@ -148,7 +147,7 @@ id19
 a \d(1;10)
 b (-5;5)\0
 \solve a*10^b
-\solution \res {a*10^b}
+\solution \res {\decform {a*10^b}}
 ---
 id20
 "skriv svaret på standardform"
@@ -164,8 +163,8 @@ id21
 "Skriv svaret på standardform"
 a, c, e, g \d(1;10)
 b, d, f, h (-4;4)\0
-\solve \frac {\res {a*10^b} * \res {c*10^d}}{\res {e*10^f} * \res {g*10^h}}
-\solution \stdform {\res {\frac {\res {a*10^b} * \res {c*10^d}}{\res {e*10^f} * \res {g*10^h}}}}
+\solve \frac {\res {\decform{a*10^b}} * \res {\decform {c*10^d}}}{\res {\decform{e*10^f}} * \res {\decform{g*10^h}}}
+\solution \stdform {\res {\frac {\res  {a*10^b} * \res {c*10^d}}{\res {e*10^f} * \res {g*10^h}}}}
 ---
 id22
 "Skriv svaret på standardform"
@@ -190,7 +189,7 @@ a,b,c,d,e,f,g,h,i   (1;5)
 e (e)
 \solve a*e + (b*e+c) *d + f* (g*e-h)*i
 #\solution \res {a + b*d+f*g*i} * e + \res {c*d * -h*f*i}
-\solution \res {(a + b*d+f*g*i) * e + (c*d * -h*f*i)}
+\solution \res {(a + b*d+f*g*i) * e + (c*d - h*f*i)}
 ---
 id25
 "Regn ut"
@@ -245,15 +244,16 @@ v, w, y, z \sign
 ---
 id31
 "Nivå 1: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c (1;9)
+a, b (1;5)
+c (6;9)
 x (x)
 \solve a*x - b=c
 \solution x=\res{(c+b):a}
 ---
 id32
 "Nivå 2: løs likningene ved regn g. Sett prøve på svarene"
-a, b, d (2;4)
-c (5;9)
+a, b (2;4)
+c, d (5;9)
 x (x)
 \solve a * x - b=c*x - d
 \solution x=\res {(-d+b):(a-c)}
@@ -859,7 +859,7 @@ a (-5;5)\0
 b (-8;5)\0
 s \sign1
 \solve 10^a s 10^b
-\solution \res {10^a s 10^b}
+\solution \res {\decform{10^a s 10^b}}
 ---
 id113
 "skriv svaret på standardform"
@@ -869,7 +869,7 @@ c \d(1;10)
 d (-10;10)\0
 s \sign1
 \solve a*10^b s c*10^d
-\solution \stdform {\res { a*10^b s c*10^d}}
+\solution \stdform {\res  { a*10^b s c*10^d}}
 ---
 id114
 " l1: addisjon og substraksjon med negative tall. Regn ut"
@@ -933,14 +933,14 @@ id122
 a,c,d,e (2;6)
 x (x)
 \solve a - \frac {c-d*x}{e}
-\solution \frac {\res {a*e-c} - d*x} {e}
+\solution \frac {\res {a*e-c} + d*x} {e}
 ---
 id123
 "Algebra: Regn ut"
 a, c, h,i,j (2;4)
 b (b)
 \solve a*b^2+(c*b-h)*(i-j*b)
-\solution (a,b^c,(a + b),b,(b - h*b))
+\solution \res{a-j*c} * b^2+\res{c*i+h*j}*b-\res{h*i}
 ---
 id124
 " multiplikasjon og divisjon med brøker "
@@ -988,4 +988,11 @@ a,c,d,e,f,g,h,i,j,k   (2;5)
 b (b)
 \solve \frac {\sqrt {a}  {b} * ( \sqrt {c}  {b}) ^d * b^\frac {d}{e}} { (f*b^\frac {g}{h})^i *\sqrt {j}{b^k}}
 \solution \frac {b^\res{(1:a)+(d:c)+(d:e)-(g*i:h)-k:j}}{\res {f^i}}
+---
+id131
+"skriv multiplikasjon og divisjon med tierpotenser"
+a (-10;10)\0
+b (-10;10)\0
+\solve \res {10^a} * \res {10^b}
+\solution 10^\res{a + b}
 ---

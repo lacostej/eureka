@@ -239,6 +239,9 @@ class NodeResultEvaluator:
     if (node.type == 'stdform' and isNumber(node.children[0])):
       return node
 
+    if (node.type == 'decform' and isNumber(node.children[0])):
+      return node
+
     if (node.type == 'list'):
       l = [self.evaluateResult(elem, evaluate) for elem in node.children]
       return Node("list", l)
@@ -307,6 +310,65 @@ def stdform(d):
 #    s += "E" + str(d.adjusted())
     s += " * 10^" + str(d.adjusted())
   return s
+
+def decform(d):
+  '''Returns the full representation of a number as a string'''
+  if (isInt(d)):
+    return str(d)
+  print "DECFORM " + str(type(d)) + " " + __decstr(d)
+  return __decstr(d)
+
+def __decstr(d):
+  '''Return string representation of the decimal in scientific notation.
+   Captures all of the information in the underlying representation.
+   VARIATION FROM PYTHON2.6 decimal.Decimal.__str__ where scientitic notation doesn't exist
+  '''
+
+  sign = ['', '-'][d._sign]
+  if d._is_special:
+    if d._exp == 'F':
+      return sign + 'Infinity'
+    elif d._exp == 'n':
+      return sign + 'NaN' + d._int
+    else: # self._exp == 'N'
+      return sign + 'sNaN' + d._int
+
+  # number of digits of self._int to left of decimal point
+  leftdigits = d._exp + len(d._int)
+
+  # dotplace is number of digits of self._int to the left of the
+  # decimal point in the mantissa of the output string (that is,
+  # after adjusting the exponent)
+  if d._exp <= 0 and leftdigits > -100:
+    # no exponent required
+    dotplace = leftdigits
+  elif not eng:
+    # usual scientific notation: 1 digit on left of the point
+    dotplace = 1
+  elif d._int == '0':
+    # engineering notation, zero
+    dotplace = (leftdigits + 1) % 3 - 1
+  else:
+    # engineering notation, nonzero
+    dotplace = (leftdigits - 1) % 3 + 1
+
+  if dotplace <= 0:
+    intpart = '0'
+    fracpart = '.' + '0'*(-dotplace) + d._int
+  elif dotplace >= len(d._int):
+    intpart = d._int+'0'*(dotplace-len(d._int))
+    fracpart = ''
+  else:
+    intpart = d._int[:dotplace]
+    fracpart = '.' + d._int[dotplace:]
+  if leftdigits == dotplace:
+    exp = ''
+  else:
+    if context is None:
+      context = getcontext()
+      exp = ['e', 'E'][context.capitals] + "%+d" % (leftdigits-dotplace)
+
+  return sign + intpart + fracpart + exp
 
 def stdformLatex(d):
   '''Returns the standard form representation of a number as a string'''
@@ -454,6 +516,10 @@ class NodeFormulaSimpleOuptutGenerator:
       if (isNumber(node.children[0])):
         return stdform(node.children[0])
       raise MyException("The following node cannot be converted through stdform. Evaluation error ? Node: " + self.toString(node.children[0]))
+    if (node.type == "decform"):
+      if (isNumber(node.children[0])):
+        return decform(node.children[0])
+      raise MyException("The following node cannot be converted through decform. Evaluation error ? Node: " + self.toString(node.children[0]))
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
     if (node.type == "equals"):
@@ -521,6 +587,8 @@ class NodeLatexConvertor():
       return self.visit(node.children[0]) + " eller " + self.visit(node.children[1])
     if (node.type == "stdform"):
       return stdformLatex(node.children[0])
+    if (node.type == "decform"):
+      return self.toString(decform(node.children[0]))
     if (node.type == "neg"):
       return "-" + self.toString(node.children[0])
     if (node.type == "equals"):
@@ -554,7 +622,7 @@ class Calc(FormulaParser):
         'LPAREN','RPAREN', 'COMMA',
         'LBRACE','RBRACE',
         'VARNAME',
-        'OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL',
+        'OR_SYMBOL','SQRTSYMBOL','RESULTSYMBOL','FRACSYMBOL','STDFORMSYMBOL','DECFORMSYMBOL',
         'TEXT'
         )
 
@@ -577,6 +645,7 @@ class Calc(FormulaParser):
     t_FRACSYMBOL = r'\\frac'
     t_SQRTSYMBOL = r'\\sqrt'
     t_STDFORMSYMBOL = r'\\stdform'
+    t_DECFORMSYMBOL = r'\\decform'
 #    t_OR_SYMBOL = r'eller'
     t_TEXT = r'".+"'
 
@@ -728,6 +797,10 @@ class Calc(FormulaParser):
     def p_expression_stdform(self, p):
         'expression : STDFORMSYMBOL LBRACE expression RBRACE'
         p[0] = Node("stdform", [p[3]])
+
+    def p_expression_decform(self, p):
+        'expression : DECFORMSYMBOL LBRACE expression RBRACE'
+        p[0] = Node("decform", [p[3]])
 
     def p_error(self, p):
         if p:

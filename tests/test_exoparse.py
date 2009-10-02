@@ -253,6 +253,29 @@ def testOperationsFractions_3():
   }
   assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "15/28")
 
+def testOperationsFractions_id118_2():
+  v = {
+    "a": 4,
+    "b": 2,
+    "c": 2,
+    "d": 8,
+    "e": 4,
+    "f": 1,
+    "u": '-',
+  }
+  assertEvaluationRenders(v, "\\res {(\\frac {a}{b} u \\frac {c}{d}) * \\frac {e}{f}}", "7")
+
+def testOperationsFractions_id121():
+  v = {
+    "a": -5,
+    "b": -3,
+    "c": -3,
+    "d": -4,
+    "e": -3,
+    "f": -3,
+  }
+  assertEvaluationRenders(v, "\\res {(\\frac{a}{b} )^c * (\\frac{d}{e} )^f}", "(5/3)^-3 * (4/3)^-3")
+
 def testOperationsFractions_id127():
   v = {
     "a": 3,
@@ -322,6 +345,18 @@ def testStdformDecimalNoExponent():
 def testStdformDecimalNoExponentRounding():
   assertEquals ("8.23", calc.stdform(Decimal("8.226")))
 
+def testDecformNegative():
+  assertEquals ("0.0001", calc.decform(Decimal("0.0001")))
+
+def testDecform():
+  v = {
+    "a": -5,
+    "b": -3,
+  }  
+  assertEvaluationLatexRenders(v, "\\res {\\decform {10^a}} : \\res {\\decform {10^b}}", "0.00001 \div 0.001")
+
+
+
 def testTextSolution():
   f = open('data/example_with_text_solution.txt', 'r')
   text = f.read()
@@ -337,6 +372,10 @@ def test_replaceVariables_1():
     "s": '+',
   }
   assertEquals(_replaceVariables(v, "a s (b)"), "2 + (-3)")
+
+def test___decstr__():
+  s = "0.00000000000001"
+  assertEquals(s, calc.__decstr(Decimal(s)))
 
 ########################################################################
 ### HELPER FUNCTIONS
