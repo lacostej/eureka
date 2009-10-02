@@ -398,14 +398,14 @@ id51
 x (x)
 a,b,c,d   (1;9)
 \solve a* x* (x + b) = c + d*x
-\solution x1=\frac{d-a*b+((a*b-d)^2+4*a*c)^0.5}{2*a} eller x2=\frac{d-a*b-((a*b-d)^2+4*a*c)^0.5}{2*a}
+\solution x1=\res{\frac{d-a*b+((a*b-d)^2+4*a*c)^0.5}{2*a}} eller x2=\res{\frac{d-a*b-((a*b-d)^2+4*a*c)^0.5}{2*a}}
 ---
 id52
 "Nivå 22: "løs andregradslikning ved regning"
 x (x)
 a,b,c,d,e   (1;9)
 \solve \frac {a}{x} + \frac {b}{c*x}=e+d*x
-\solution x1=\frac {-e+(e^2+4*d*(a+b:c))^(0.5)}{2*d} eller x2=\frac {-e-(e^2+4*d*(a+b:c))^0.5}{2*d}
+\solution x1=\res{\frac {-e+(e^2+4*d*(a+b:c))^(0.5)}{2*d}} eller x2=\res{\frac {-e-(e^2+4*d*(a+b:c))^0.5}{2*d}}
 ---
 \cat "formler"
 ---
