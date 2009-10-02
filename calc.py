@@ -218,6 +218,8 @@ class NodeResultEvaluator:
 #    print type(node.children[0])
 
     # vars are always evaluated
+    if isNumber(node):
+      return node
     if ((node.type == 'int' or node.type == 'decimal') and isNumber(node.children[0])):
 #      print "EVALUATING var " + str(node.children)
       return node.children[0]
@@ -246,6 +248,11 @@ class NodeResultEvaluator:
         return self.evaluate(Node(node.type, [node.children[0].children[0], node.children[1]]), evaluate)
       if (node.type in ['*', ':'] and isparen(node.children[1])):
         return self.evaluate(Node(node.type, [node.children[0], node.children[1].children[0]]), evaluate)
+      if (node.type == '^' and isInt(node.children[1])):
+        if (node.children[1] == 0):
+          return 1
+        if (node.children[1] == 1):
+          return self.evaluate(node.children[0], evaluate)
       if (node.type == '^' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return decimal.getcontext().power(decimal.Decimal(node.children[0]), decimal.Decimal(node.children[1]))
       if (node.type == '-' and isNumber(node.children[0]) and isNumber(node.children[1])):
