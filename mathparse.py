@@ -152,7 +152,7 @@ def _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, 
 
   exosOutput.write(latexHeader() + "\n")
   resultsOutput.write(latexHeader() + "\n")
-
+  resultsOutput.write(middle + "\n")
 
   if (studentData.comment != None and len(studentData.comment) > 0):
     comment = studentData.comment.encode("iso-8859-15")
