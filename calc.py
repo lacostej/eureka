@@ -242,6 +242,10 @@ class NodeResultEvaluator:
         return decimal.Decimal(node.children[0]) / decimal.Decimal(node.children[1])
       if (node.type == 'paren' and isNumber(node.children[0])):
         return node.children[0]
+      if (node.type in ['*', ':'] and isparen(node.children[0])):
+        return self.evaluate(Node(node.type, [node.children[0].children[0], node.children[1]]), evaluate)
+      if (node.type in ['*', ':'] and isparen(node.children[1])):
+        return self.evaluate(Node(node.type, [node.children[0], node.children[1].children[0]]), evaluate)
       if (node.type == '^' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return decimal.getcontext().power(decimal.Decimal(node.children[0]), decimal.Decimal(node.children[1]))
       if (node.type == '-' and isNumber(node.children[0]) and isNumber(node.children[1])):
@@ -268,6 +272,9 @@ class NodeResultEvaluator:
         top = topIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1]) 
         bottom = bottomIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1])
         return reduceToFracOrIntNode(top, bottom)
+
+def isparen(node):
+  return isinstance(node, Node) and node.type == "paren"
 
 def stdform(d):
   '''Returns the standard form representation of a number as a string'''
