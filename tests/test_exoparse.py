@@ -355,7 +355,8 @@ def testDecform():
   }  
   assertEvaluationLatexRenders(v, "\\res {\\decform {10^a}} : \\res {\\decform {10^b}}", "0.00001 \div 0.001")
 
-
+def testNegativeFractions():
+  assertEvaluationLatexRenders({}, "\\res {\\frac{-5}{2}}", "-\\frac{5}{2}")
 
 def testTextSolution():
   f = open('data/example_with_text_solution.txt', 'r')
