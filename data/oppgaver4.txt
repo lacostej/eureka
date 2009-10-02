@@ -793,7 +793,7 @@ f,g,e (-5;-1)
 b (b)
 d (d)
 \solve (\frac {(a*b*d)^f}{(c*b*d)^g})^e
-\solution \frac {a^f*b^\res{f-g*e}*d^\res{f-g*e}}{c^\res{g*e}}
+\solution \frac {a^f*b^\res{(f-g)*e}*d^\res{(f-g)*e}}{c^\res{g*e}}
 ---
 id104
 "Nivå 18: regn ut og angi potensformen"
