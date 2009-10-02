@@ -239,6 +239,16 @@ def testOperationsFractions():
   }
   assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "15/28")
 
+def testOperationsFractions_id127():
+  v = {
+    "a": 3,
+    "b": 2,
+    "c": 3,
+    "d": 3,
+    "g": 4,
+  }
+  assertEvaluationRenders(v, "\\res{\\frac{a-g*c-d}{g*b}}", "-3/2")
+
 def testFormatNumber1():
   assertEquals(calc.formatNumber(Decimal("-10.800000000000")), "-10.8")
 
@@ -263,6 +273,13 @@ def testReduceFrac():
   assertFracReduction([2,5], [2,5])
 
   assertFracReduction([2*2*2*3*7, 2*3*5*11], [28, 55])
+
+def testReduceFrac2():
+  assertFracReduction([12,8], [3,2])
+  assertFracReduction([2*2*3*4*5,2*2*3*4*7], [5,7])
+
+def testSplit():
+  assertSplit(12, [2,2,3])
 
 def testStdformNegative():
   assertEquals ("8.22 * 10^-4", calc.stdform(Decimal("0.0008221")))
@@ -340,6 +357,10 @@ def assertFracReduction(frac1, expectedFrac):
   a, b = calc.reduceFrac(frac1[0], frac1[1])
   assertEquals(a, expectedFrac[0])
   assertEquals(b, expectedFrac[1])
+
+def assertSplit(x, expectedSplit):
+  y = calc.split(x)
+  assertEquals(y, expectedSplit)
 
 def assertEquals(a, b):
   result = (a == b)

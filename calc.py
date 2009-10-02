@@ -235,7 +235,8 @@ class NodeResultEvaluator:
       if (node.type == 'equals'):
         return Node("equals", [self.evaluate(top, evaluate), self.evaluate(bottom, evaluate)])
       if (node.type == 'frac' and isInt(node.children[0]) and isInt(node.children[1])):
-        return node
+        top, bottom = reduceFrac(node.children[0], node.children[1])
+        return Node("frac", [top, bottom])
       if (node.type == "neg" and isNumber(node.children[0])):
         return -1 * node.children[0]
       if (node.type == 'frac' and isNumber(node.children[0]) and isNumber(node.children[1])):
@@ -331,12 +332,16 @@ def reduceFrac(top, bottom):
 
   a = split(top)
   b = split(bottom)
-  for i in a:
+  x = 0
+  while x < len(a):
+    i = a[x]
     if (i in b):
       a.remove(i)
       b.remove(i)
       top = top / i
       bottom = bottom / i
+    else:
+      x += 1
   return sign*top, bottom
 
 def split(a):
@@ -353,6 +358,8 @@ def split(a):
         a = a / i
       else:
         i += 1
+    if (a != 1):
+      array.append(a)
     return array
 
 def isIntOrFracInt(x):
