@@ -215,10 +215,10 @@ class NodeResultEvaluator:
 #  def power(self, i, j):
   
   def evaluate(self, node, evaluate):
-    print (' '*self.rec_count) + "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
+#    print (' '*self.rec_count) + "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
     r = self.theevaluate(node, evaluate)
-    if (r):
-      print (' '*self.rec_count) + "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
+#    if (r):
+#      print (' '*self.rec_count) + "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
     return r
      
   def theevaluate(self, node, evaluate):
