@@ -66,7 +66,7 @@ u,v \sign1
 ---
 id8
 " addisjon og substraksjon med brøker "
-a,b,c,d,e,f (1;6)
+a,c,d,e,f (1;6)
 u,v \sign1
 \solve a u \frac {c}{d} v \frac {e}{f}
 \solution \res {a u \frac {c}{d} v \frac {e}{f}}
@@ -80,7 +80,7 @@ u,v \sign2
 ---
 id10
 " multiplikasjon og divisjon med brøker "
-a,b,c,d,e,f (1;6)
+a,c,d,e,f (1;6)
 u,v \sign2
 \solve a u \frac {c}{d} v \frac {e}{f}
 \solution \res {a u \frac {c}{d} v \frac {e}{f}}
@@ -236,7 +236,7 @@ id30
 "regn ut"
 a, c, h (1;9)
 b (b)
-u, v, w, x, y, z \sign
+v, w, y, z \sign
 \solve a * b^c v (b w b) - b y (b z h*b)
 \solution "FIXME"
 ---
@@ -285,14 +285,13 @@ id36
 "Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
 a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
 x (x)
-u , v, w, y, z, r, t,s \sign1
 \solve a + g* (b*x - c) + g*(i*x + j)=d - h* (e*x + f)- k* (l*x + m)
 \solution "FIXME"
 #\solution \res{\frac{d-a+g*c-g*j-h*f-k*m}{g*b+g*i+h*e+k*l}}
 ---
 id37
 "Nivå 7: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l (2;5)
+a,b,c,d,e,f,g,h,i,k,l (2;5)
 x (x)
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {x}{e} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h} * (\frac {x}{i} - \frac {k}{l})
 \solution "FIXME"
@@ -300,16 +299,15 @@ x (x)
 ---
 id38
 "Nivå 8: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l (2;5)
+a,b,c,d,e,f,g,h,i,k,l (2;5)
 x (x)
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {e}{x} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h}* (\frac {i}{x} - \frac {k}{l})
 \solution \frac {\res{(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}}{\res{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
 ---
 id39
 "Nivå 9: løs likningene ved regn g. Sett prøve på svarene"
-a,b,c,d,e,f,g,h,i,j,k,l (2;5)
+a,b,c,d,e,f,g,h,i,k,l (2;5)
 x (x)
-u , v, w, y, z, r, t \sign1
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {e}{x} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h}* (\frac {i}{x} - \frac {k}{l})
 \solution \frac {\res{(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}}{\res{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
 ---
@@ -610,7 +608,6 @@ id80
 "Nivå 12: regn ut og angi potensformen"
 a,c,e,f,g (2;5)
 b (b)
-d (d)
 \solve (\frac {(a*b)^f}{(c*b)^g})^e
 \solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
 ---
@@ -748,7 +745,6 @@ id98
 a,c (2;5)
 e,f,g (-5;-1)
 b (b)
-d (d)
 \solve (\frac {(a*b)^f}{(c*b)^g})^e
 \solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
 ---
@@ -853,7 +849,8 @@ a,c,e,f,g (2;5)
 b (b)
 d (d)
 \solve (\frac{a}{b} )^c * (\frac{d}{e} )^f
-\solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
+\solution "FIXME wrong result"
+#\solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
 ---
 id112
 "skriv multiplikasjon og divisjon med tierpotenser"
@@ -877,16 +874,16 @@ id114
 " l1: addisjon og substraksjon med negative tall. Regn ut"
 a (1;10)
 b,c,d (-10;-1)
-s,t \sign1
+s \sign1
 \solve (a s (b) - (c - (d)))
 \solution \res {(a s (b) - (c - (d)))}
 ---
 id115
 " l6: mixup med negative tall og potens. Regn ut"
 a,b (1;10)
-e,f,g,h,j (-10;-1)
+e,f,g,h (-10;-1)
 i (2;4)
-s,t,u,v,w \sign1
+s,t,u,v \sign1
 \solve ((a s (e) t b^2)^2*h u ((f)^2 v (g)^2)^i)^2
 \solution \res { ((a s (e) t b^2)^2*h u ((f)^2 v (g)^2)^i)^2}
 ---
@@ -913,14 +910,14 @@ u \sign1
 ---
 id119
 " addisjon og substraksjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d (1;10)
 u \sign1
 \solve \frac {a}{b} u \frac {c}{d}
 \solution \res {\frac {a}{b} u \frac {c}{d}}
 ---
 id120
 " addisjon og substraksjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d (1;10)
 \solve \frac {a}{b} * \frac {c}{d}
 \solution \res {\frac {a}{b} * \frac {c}{d}}
 ---
@@ -932,7 +929,7 @@ a,b,c,d,e,f (-5;-2)
 ---
 id122
 "Minus brøk, likning"
-a,b,c,d,e,f (2;6)
+a,c,d,e (2;6)
 x (x)
 \solve a - \frac {c-d*x}{e}
 \solution \frac {\res {a*e-c} - d*x} {e}
@@ -946,14 +943,14 @@ b (b)
 ---
 id124
 " multiplikasjon og divisjon med brøker "
-a,b,c,d,e,f (1;6)
-u,v \sign2
+a,c,d (1;6)
+u \sign2
 \solve a u \frac {c}{d}
 \solution \res {a u \frac {c}{d} }
 ---
 id125
 " divisjon med brøker "
-a,b,c,d,e,f (1;10)
+a,b,c,d (1;10)
 \solve \frac {a}{b} : \frac {c}{d}
 \solution \res {\frac{a*d}{b*c}}
 ---
@@ -965,25 +962,22 @@ a,b,f,g (1;5)
 ---
 id127
 "Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
+a, b, c, d, g (2;5)
 x (x)
-u , v, w, y, z, r, t,s \sign1
 \solve a + g* (-b*x - c) =d
 \solution \res{\frac{a-g*c-d}{g*b}}
 ---
 id128
 "Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
+a, b, c, d, e, f (2;5)
 x (x)
-u , v, w, y, z, r, t,s \sign1
 \solve \frac {a*x}{b} = c-\frac {d*x-e}{f}
 \solution \res{\frac{a*c*b*f+b*e}{a*f+b*d}}
 ---
 id129
 "Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
+a, e, f (2;5)
 x (x)
-u , v, w, y, z, r, t,s \sign1
 \solve \frac {a}{x} = \frac {e}{f}
 \solution \res{\frac{e*a}{f}}
 ---
