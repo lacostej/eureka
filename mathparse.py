@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import sys, traceback
+import datetime
 
 # Get the token map from the lexer.  This is required.
 from mathlex import *
@@ -150,8 +151,9 @@ def _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, 
 #      print "generated " + exercise
       exos.append(exercise)
 
-  exosOutput.write(latexHeader() + "\n")
-  resultsOutput.write(latexHeader() + "\n")
+  now = datetime.datetime.utcnow()
+  exosOutput.write(latexHeader(now, student.fullName) + "\n")
+  resultsOutput.write(latexHeader(now, student.fullName) + "\n")
   resultsOutput.write(middle + "\n")
 
   if (studentData.comment != None and len(studentData.comment) > 0):
@@ -194,7 +196,8 @@ def parseExosLatex(exercises):
 #      print "generated " + exercise
       exos.append(exercise)
 
-  print latexHeader()
+  now = datetime.datetime.utcnow()
+  print latexHeader(now, "N/A")
   for e in exos:
     try:
       print e.generateLatex()
@@ -212,7 +215,7 @@ def parseExosLatex(exercises):
      raise
   print latexFooter()
 
-def latexHeader():
+def latexHeader(date, name):
   header = '''
 \\documentclass[12pt, norsk, a4paper]{article}
 \\usepackage{babel, amssymb, amsthm,enumitem, amsmath}
@@ -226,11 +229,12 @@ def latexHeader():
 \\begin{document}
 
 \\begin{flushleft}
-\\textsc{Tid:} 90 minutter\\\\[0.8cm]
+\\textsc{Dato:} %s\\\\[0.8cm]
+\\textsc{Navn:} %s\\\\[0.8cm]
 \\textsc{Hjelpemidler:} Egenproduserte rammenotater\\\\[0.8cm]
 \\textsc{Alle svar maa begrunnes}\\\\[1.5cm]
 \\end{flushleft}
-'''
+''' % (date.strftime("%d %b %Y"), name)
   return header
 
 def latexFooter():
