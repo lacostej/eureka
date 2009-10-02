@@ -131,25 +131,25 @@ def parseExos(exercises):
      traceback.print_exc()
      raise
 
-def generateLatexExercisesAndResultsForStudent(exercises, dir, exercicesOutputFileName, resultsOutputFileName, student, studentData):
+def generateLatexExercisesAndResultsForStudent(exercises, sortedExoIDs, dir, exercicesOutputFileName, resultsOutputFileName, student, studentData):
   with open(exercicesOutputFileName, "w") as exosOutput:
     with open(resultsOutputFileName, "w") as resultsOutput:
-      _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, resultsOutput, student, studentData)
+      _generateLatexExercisesAndResultsForStudentFile(exercises, sortedExoIDs, dir, exosOutput, resultsOutput, student, studentData)
 
-def _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, resultsOutput, student, studentData):
+def _generateLatexExercisesAndResultsForStudentFile(exercises, sortedExoIDs, dir, exosOutput, resultsOutput, student, studentData):
   middle = '''
 \\newtheorem{result}{Resultat}
 '''
 
-  exos = []
+  exos = {}
   import exoparse
   for r in exercises:
     exercise = exoparse.parseExo(r.text+"\n")
     if not exercise:
       sys.stderr.write("ERROR: couldn't parse exercise. Skipping\n")
     else:
-#      print "generated " + exercise
-      exos.append(exercise)
+#      print "generated " + str(exercise)
+      exos[exercise.id] = exercise
 
   now = datetime.datetime.utcnow()
   exosOutput.write(latexHeader(now, student.fullName) + "\n")
@@ -166,9 +166,10 @@ def _generateLatexExercisesAndResultsForStudentFile(exercises, dir, exosOutput, 
     resultsOutput.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
     resultsOutput.write("\\end{flushleft}\n")
 
-  for exo in exos:
-    if (not exo.id in studentData.exerciseStatuses.iterkeys()):
+  for exoId in sortedExoIDs:
+    if (not exos.has_key(exoId)):
       continue
+    exo = exos[exoId]
     exoData = studentData.exerciseStatuses[exo.id]
     if (exoData == None):
       raise MyException("no data for " + exo.id + " for student " + student.shortName)

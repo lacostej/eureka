@@ -40,7 +40,7 @@ def main(interfaceFile, exercisesFile, sendMails=False):
     outputFileName = fileBaseName(student) + ".latex"
     resultOutputFileName = fileBaseName(student) + "_result.latex"
 
-    mathparse.generateLatexExercisesAndResultsForStudent(exercises, "gen", outputFileName, resultOutputFileName, student, data)
+    mathparse.generateLatexExercisesAndResultsForStudent(exercises, classStatus.sortedExoIDs, "gen", outputFileName, resultOutputFileName, student, data)
     print "Generated " + outputFileName + " and " + resultOutputFileName
 
     if (not os.access(outputFileName, os.F_OK)):

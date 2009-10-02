@@ -3,8 +3,9 @@ import xlrd
 
 class ClassStatus:
 
-  def __init__(self, students, studentExercicesStatus):
+  def __init__(self, students, sortedExoIDs, studentExercicesStatus):
     self.students = students
+    self.sortedExoIDs = sortedExoIDs
     self.studentExercicesStatus = studentExercicesStatus
 
   def getStudentData(self, shortName):
@@ -61,6 +62,9 @@ def parse(fileName):
   startStudentColumnIdx = 4
   startExerciseRowId = 3
 
+  sortedExoIDs = []
+  firstStudent = True
+
   for cx in range(startStudentColumnIdx, exercisesSheet.ncols, 2):
     shouldGenerate = False
     comment = None
@@ -90,6 +94,8 @@ def parse(fileName):
       exoToGen = 0
       exoId = exercisesSheet.cell(rx, 1).value
       exoId = exoId.encode("iso-8859-1")
+      if (firstStudent):
+        sortedExoIDs.append(exoId)
       if exercisesSheet.cell(rx, cx+1).ctype == xlrd.XL_CELL_NUMBER:
         exoStatus =  int(exercisesSheet.cell(rx, cx+1).value)
       if exercisesSheet.cell(rx, cx).ctype == xlrd.XL_CELL_NUMBER:
@@ -98,7 +104,8 @@ def parse(fileName):
       exerciseStatus = ExerciseStatus(exoId, exoStatus, exoToGen)
       exerciseStatuses[exoId] = exerciseStatus
     studentsExercisesStatus.append(StudentExercicesStatus(studentId, comment, shouldGenerate, exerciseStatuses))
-  return ClassStatus(students, studentsExercisesStatus)
+    firstStudent = False
+  return ClassStatus(students, sortedExoIDs, studentsExercisesStatus)
 
 
 if __name__ == "__main__":
