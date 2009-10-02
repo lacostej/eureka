@@ -36,6 +36,7 @@ class FormulaParser:
     def __init__(self, **kw):
         self.debug = kw.get('debug', 0)
         self.names = { }
+        self.resolved_vars = []
         try:
             modname = os.path.split(os.path.splitext(__file__)[0])[1] + "_" + self.__class__.__name__
         except:
@@ -75,6 +76,7 @@ class FormulaParser:
         else:
           if (len(text) > 0):
             v = "".join(text)
+            # FIXME we are also trying to resolve the functions (res, frac, etc...)
             t = self.resolve_var(v)
             result += str(t)
             text = []
@@ -89,10 +91,17 @@ class FormulaParser:
       return result
 
     def resolve_var(self, v):
+      if (not v in self.resolved_vars):
+        self.resolved_vars.append(v)
       try:
         return self.names[v]
       except LookupError:
         return v
+
+    def print_unused_vars(self):
+      for v in self.names.keys():
+        if (not v in self.resolved_vars):
+          print "WARNING: Unused: var: name: " + str(v) + " value: " + str(self.names[v])
 
 def ischar(c):
   o = ord(c)

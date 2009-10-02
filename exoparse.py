@@ -183,12 +183,14 @@ class Exercice:
     return text
 #    return self.resolve(text)
 
-  def parse(self, text):
+  def parse(self, text, displayUnusedVars=False):
     formulaParser = calc.Calc()
     for s in self.statements:
       formulaParser.names[s.name] = s.value()
 
     result = formulaParser.parse(text)
+    if displayUnusedVars:
+      formulaParser.print_unused_vars()
 #    print "====== parsing: " + text + " into " + str(type(result)) + " " + str(result)
     return result
  
@@ -255,9 +257,8 @@ class Exercice:
 #    print "Result: " + self.toPrettyXml(self.parse(self.result))
 #    print "Evaluated Formula: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.formula)))
 #    print "Evaluated Result: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.result)))
-    print "Evaluated Formula: " + self.toText(nodeResultEvaluator.visit(self.parse(self.formula)))
+    print "Evaluated Formula: " + self.toText(nodeResultEvaluator.visit(self.parse(self.formula, True)))
     print "Evaluated Result: " + self.toText(nodeResultEvaluator.visit(self.parse(self.result)))
-
 
   def randomize(self):
 #    print "randomize: Exercise"
@@ -269,7 +270,7 @@ class Exercice:
     s = ""
     s += "\\begin{oppgave} " + self.id + " " + str(self.description)
     s += " \\[ "
-    s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula)))
+    s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula, True)))
     s += " \\] "
     s += "\\vspace{3mm}"
     s += "\\end{oppgave}"
