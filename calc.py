@@ -231,7 +231,8 @@ class NodeResultEvaluator:
       return node
 
     if (node.type == 'list'):
-      return Node("list", [self.evaluate(elem, evaluate) for elem in node.children])
+      l = [self.evaluateResult(elem, evaluate) for elem in node.children]
+      return Node("list", l)
 
     if (evaluate):
       if (node.type == 'equals'):
@@ -279,6 +280,7 @@ class NodeResultEvaluator:
         top = topIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1]) 
         bottom = bottomIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1])
         return reduceToFracOrIntNode(top, bottom)
+#      return node   
 
 def isparen(node):
   return isinstance(node, Node) and node.type == "paren"
@@ -659,15 +661,15 @@ class Calc(FormulaParser):
 
     def p_expression_list(self, p):
        'list : LPAREN list_inside RPAREN'
-       p[0] = Node("list", [p[2]])
+       p[0] = Node("list", p[2])
 
     def p_expression_list_inside(self, p):
       '''list_inside : list_inside COMMA expression
                      | expression'''
-      if (type(p[1]) == list and len(p) > 2):
-        p[0] = p[1] + p[3]
+      if type(p[1]) == list:
+        p[0] = p[1] + [ p[3] ]
       else:
-        p[0] = p[1]
+        p[0] = [ p[1] ]
 
     def p_expression_equals(self, p):
        'equals : expression EQUALS expression'
