@@ -182,15 +182,14 @@ b (b)
 c (c)
 \solve a*(b + c)
 \solution a*b+a*c
-# FIXME signs
-#---
-#id24
-#"Regn ut"
-#a,b,c,d,e,f,g,h,i   (1;9)
-#e (e)
-#\solve a*e * (b*e+c) *d : f* (g*e-h)*i
-#\solution \res {a u b*d+f*g*i} e + \res {c*d \res {(v1)*(-h*f*i)}}
-#\solution \res {a u b*d+f*g*i} * e + \res {c*d * \res {(v1)*(-h*f*i)}}
+---
+id24
+"Regn ut"
+a,b,c,d,e,f,g,h,i   (1;5)
+e (e)
+\solve a*e + (b*e+c) *d + f* (g*e-h)*i
+#\solution \res {a + b*d+f*g*i} * e + \res {c*d * -h*f*i}
+\solution \res {(a + b*d+f*g*i) * e + (c*d * -h*f*i)}
 ---
 id25
 "Regn ut"
