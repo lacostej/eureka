@@ -235,8 +235,7 @@ class NodeResultEvaluator:
       if (node.type == 'equals'):
         return Node("equals", [self.evaluate(top, evaluate), self.evaluate(bottom, evaluate)])
       if (node.type == 'frac' and isInt(node.children[0]) and isInt(node.children[1])):
-        top, bottom = reduceFrac(node.children[0], node.children[1])
-        return Node("frac", [top, bottom])
+        return reduceToFracOrIntNode(node.children[0], node.children[1])
       if (node.type == "neg" and isNumber(node.children[0])):
         return -1 * node.children[0]
       if (node.type == 'frac' and isNumber(node.children[0]) and isNumber(node.children[1])):
@@ -260,18 +259,15 @@ class NodeResultEvaluator:
           sign = -1
         top = topIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1]) + sign * topIntOrFracInt(node.children[1]) * bottomIntOrFracInt(node.children[0]) 
         bottom = bottomIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1])
-        top, bottom = reduceFrac(top, bottom)
-        return Node("frac", [top, bottom])
+        return reduceToFracOrIntNode(top, bottom)
       if ((node.type == '*') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
         top = topIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1]) 
         bottom = bottomIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1])
-        top, bottom = reduceFrac(top, bottom)
-        return Node("frac", [top, bottom])
+        return reduceToFracOrIntNode(top, bottom)
       if ((node.type == ':') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
         top = topIntOrFracInt(node.children[0]) * bottomIntOrFracInt(node.children[1]) 
         bottom = bottomIntOrFracInt(node.children[0]) * topIntOrFracInt(node.children[1])
-        top, bottom = reduceFrac(top, bottom)
-        return Node("frac", [top, bottom])
+        return reduceToFracOrIntNode(top, bottom)
 
 def stdform(d):
   '''Returns the standard form representation of a number as a string'''
@@ -316,6 +312,13 @@ def bottomIntOrFracInt(intOrFrac):
   if isinstance(intOrFrac, int):
     return abs(intOrFrac)
   return intOrFrac.children[1]
+
+def reduceToFracOrIntNode(top, bottom):
+  top, bottom = reduceFrac(top, bottom)
+  if (bottom != 1):
+    return Node("frac", [top, bottom])
+  else:
+    return top
 
 def reduceFrac(top, bottom):
   '''Reduces a fraction of integers. E.g. 30,35 -> 6,7. Returns a new couple of integers representing the fraction. top can be positive.'''
