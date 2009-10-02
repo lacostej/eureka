@@ -43,7 +43,8 @@ s,t,u,v \sign
 id5
 " l6: mixup med negative tall og potens. Regn ut"
 a,b (2;3)
-e,f,g,h,j (-3;-1)
+e,f,h,j (-3;-1)
+g (-4)
 i (2;3)
 s,t,u,v,w \sign
 \solve (a s (e) t b)* (h) u ((f) v (g))^i w (j)
