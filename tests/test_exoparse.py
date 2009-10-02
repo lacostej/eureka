@@ -202,6 +202,7 @@ def test_id31():
   assertEvaluationRenders(v, "a*x - b = c", "5 * x - 4 = 8")
   assertEvaluationRenders(v, "\\res{(c+b):a}", "2.4")
 
+
 def test_id109():
   v = {
    "a": 2,
@@ -226,7 +227,20 @@ def testOperationsFractions():
   }
   assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "-9/28")
 
-def testOperationsFractions():
+def testOperationsFractions_2():
+  v = {
+    "a": 5,
+    "b": 5,
+    "c": 5,
+    "d": 5,
+    "e": 5,
+    "f": 3,
+    "u": '+',
+    "v": '+'
+  }
+  assertEvaluationRenders(v, "\\res {\\frac {a}{b} u \\frac {c}{d} v \\frac {e}{f}}", "11/3")
+
+def testOperationsFractions_3():
   v = {
     "a": 3,
     "b": 7,

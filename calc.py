@@ -215,10 +215,10 @@ class NodeResultEvaluator:
 #  def power(self, i, j):
   
   def evaluate(self, node, evaluate):
-#    print (' '*self.rec_count) + "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
+    print (' '*self.rec_count) + "EVALUATING " + str(evaluate) + " " + toXmlConvertor.visit(node)
     r = self.theevaluate(node, evaluate)
-#    if (r):
-#      print (' '*self.rec_count) + "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
+    if (r):
+      print (' '*self.rec_count) + "EVALUATED " + str(evaluate) + " " + toXmlConvertor.visit(r)
     return r
      
   def theevaluate(self, node, evaluate):
@@ -325,7 +325,7 @@ def topIntOrFracInt(intOrFrac):
   if (not isIntOrFracInt(intOrFrac)):
     raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
 #  print toXmlConvertor.visit(intOrFrac)
-  if isinstance(intOrFrac, int):
+  if isInt(intOrFrac):
     return intOrFrac
   return intOrFrac.children[0]
 
@@ -334,8 +334,8 @@ def bottomIntOrFracInt(intOrFrac):
   if (not isIntOrFracInt(intOrFrac)):
     raise MyException(str(intOrFrac) + " of type " + str(type(intOrFrac)))
 #  print toXmlConvertor.visit(intOrFrac)
-  if isinstance(intOrFrac, int):
-    return abs(intOrFrac)
+  if isInt(intOrFrac):
+    return 1
   return intOrFrac.children[1]
 
 def reduceToFracOrIntNode(top, bottom):
