@@ -703,7 +703,7 @@ a,e (2;5)
 d,f (-5;-1)
 b (b)
 \solve (a*b)^d*(e*b)^f
-\solution a^d*b^d*e^f*b^f
+\solution a^d*e^f*b^\res{d+f}
 ---
 id93
 "Nivå 8bis: regn ut og angi potensformen"
