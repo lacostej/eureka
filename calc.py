@@ -403,7 +403,11 @@ def bottomIntOrFracInt(intOrFrac):
 def reduceToFracOrIntNode(top, bottom):
   top, bottom = reduceFrac(top, bottom)
   if (bottom != 1):
-    return Node("frac", [top, bottom])
+    negative = top < 0
+    n = Node("frac", [abs(top), bottom])
+    if (negative):
+      n = Node("neg", [n])
+    return n
   else:
     return top
 
