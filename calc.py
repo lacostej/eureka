@@ -315,7 +315,7 @@ def decform(d):
   '''Returns the full representation of a number as a string'''
   if (isInt(d)):
     return str(d)
-  print "DECFORM " + str(type(d)) + " " + __decstr(d)
+#  print "DECFORM " + str(type(d)) + " " + __decstr(d)
   return __decstr(d)
 
 def __decstr(d):
