@@ -272,7 +272,7 @@ class Exercice:
     s += " \\[ "
     s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula, True)))
     s += " \\] "
-    s += "\\vspace{3mm}"
+    s += "\\vspace{-10mm}"
     s += "\\end{oppgave}"
     return s
 
@@ -286,7 +286,7 @@ class Exercice:
       s += "\\["
       s += result
       s += "\\]"
-    s += "\\vspace{3mm}"
+    s += "\\vspace{-10mm}"
     s += "\\end{result}"
     return s
 
