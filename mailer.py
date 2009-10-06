@@ -55,13 +55,13 @@ def send_mail(send_from, send_to, subject, text, files=[], server="localhost", u
 
 #  print server
   smtp = smtplib.SMTP(server, 587)
-  smtp.set_debuglevel(1)
+#  smtp.set_debuglevel(1)
   smtp.ehlo()
   settings = HandshakeSettings()
   smtp.starttls()
   if (user != None and password != None):
     smtp.login(user, password)
-  print "Sending mail..."
+  print "Sending mail to " + msg['To']
   smtp.sendmail(send_from, send_to, msg.as_string())
   print "mail sent."
   smtp.close()

@@ -91,14 +91,27 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
       f = (userPdfDir + "/" + userExosPdfFile).encode("iso-8859-1")
       open(f, "rb").read()
       print f
-      mailer.send_mail("eureka@vgsn.no", [student.email], "Latest exercises from vgsn", "Bla bla bla", [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+      now = datetime.datetime.utcnow()
+      week = now.strftime("%W")
+      comment = data.comment
+      if (comment == None):
+        comment = ""
+      comment = comment + "\n"
+      text = __u("Hei,\n" + comment + ur"\u00d8velse gj\u00f8r mester\nLykke til!\nJean")
+      mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises
+
+def __u(s):
+  return s.encode("utf-8")
 
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
 if __name__ == "__main__":
   interfaceFile = sys.argv[1]
   exercisesFile = sys.argv[2]
-  pdflink = sys.argv[3]
+  if (len(sys.argv) > 3):
+    pdflink = sys.argv[3]
+  else:
+    pdflink = None
 
-  main(interfaceFile, exercisesFile, pdflink)
+  main(interfaceFile, exercisesFile, pdflink, True)
