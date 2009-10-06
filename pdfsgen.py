@@ -3,9 +3,11 @@ import excelparse
 import mathparse
 
 import time
+import datetime
 import os
 
 import mailer
+from utils import *
 
 def fileBaseName(student):
   return student.shortName.replace(" ", "_")
@@ -19,8 +21,18 @@ def main(interfaceFile, exercisesFile, sendMails=False):
   exercisesData = f.read()
   exercises = mathparse.parseFile(exercisesData)
 
-  if (not os.access("gen", os.F_OK)):
-    os.mkdir("gen")
+  now = datetime.datetime.utcnow()
+
+  if os.access("gen", os.F_OK):
+    if os.path.islink("gen"):
+      os.unlink("gen")
+    else:
+      raise MyException("gen exists but isn't a link")
+
+  target = "gen_" + now.strftime("%Y%m%d-%H%M%S")
+  if (not os.access(target, os.F_OK)):
+    os.mkdir(target)
+    os.symlink(os.path.abspath(target), "gen")
 
   os.chdir('gen')
 
