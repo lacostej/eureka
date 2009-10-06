@@ -2,6 +2,7 @@ import glob,os,stat,time
 import traceback
 
 import pdfsgen
+from memutils import *
 
 def checkSum():
   '''Return a long which can be used to know if any .py files have changed.
@@ -25,6 +26,7 @@ def run():
         val = newVal
         print "val " + str(val)
         pdfsgen.main("matte/interface.xls", "matte/oppgaver4.txt", "/home/vgsn/webapps/static_files/matte/pdfs")
+        print_top_n(10)
     except Exception, e:
       print "ERROR: couldn't generate: " + str(e) 
       traceback.print_exc()

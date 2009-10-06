@@ -9,7 +9,6 @@ from mathlex import *
 # Build the lexer
 import ply.lex as lex
 import re
-fileLexer = lex.lex(reflags=re.UNICODE)
 
 from utils import *
 
@@ -106,12 +105,16 @@ def toto():
   yacc.restart()
 
 def parseFile(text):
+  fileLexer = lex.lex(reflags=re.UNICODE)
   # Build the parser
   import ply.yacc as yacc
   parser = yacc.yacc(tabmodule="mathparse_parsetab")
 
   #print "\n" + text
-  return parser.parse(text, lexer=fileLexer)
+  r = parser.parse(text, lexer=fileLexer)
+  del fileLexer
+  del parser
+  return r
 
 def parseExos(exercises):
   import exoparse
@@ -182,6 +185,12 @@ def _generateLatexExercisesAndResultsForStudentFile(exercises, sortedExoIDs, dir
 
   exosOutput.write(latexFooter() + "\n")
   resultsOutput.write(latexFooter() + "\n")
+  exosOutput.close()
+  resultsOutput.close()
+  exoparse.unload()
+  del sys.modules['exoparse']
+#  print "________"
+#  print sys.modules
 
 def parseExosLatex(exercises):
   middle = '''

@@ -7,7 +7,6 @@ from exolex import *
 # Build the lexer
 import ply.lex as lex
 import re
-exoLexer = lex.lex(reflags=re.UNICODE)
 
 import calc
 from utils import *
@@ -17,6 +16,12 @@ nodeXmlConvertor = calc.NodeXmlConvertor()
 nodeResultEvaluator = calc.NodeResultEvaluator()
 formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
 nodeLatexConvertor = calc.NodeLatexConvertor()
+
+def load():
+  import calc
+
+def unload():
+  del sys.modules['calc']
 
 class Executor:
   '''A simple Command pattern implementation'''
@@ -184,6 +189,7 @@ class Exercice:
 #    return self.resolve(text)
 
   def parse(self, text, displayUnusedVars=False):
+    load()
     formulaParser = calc.Calc()
     for s in self.statements:
       formulaParser.names[s.name] = s.value()
@@ -192,6 +198,7 @@ class Exercice:
     if displayUnusedVars:
       formulaParser.print_unused_vars()
 #    print "====== parsing: " + text + " into " + str(type(result)) + " " + str(result)
+    del formulaParser
     return result
  
   def findStartStopBraces(self, text, idx):
@@ -459,7 +466,10 @@ def parseExo(lines):
 #  print "========= PARSING EXO"
 #  print lines
 #  print "========="
-  return parser.parse(lines, lexer=exoLexer)
+  exoLexer = lex.lex(reflags=re.UNICODE)
+  r = parser.parse(lines, lexer=exoLexer)
+  del exoLexer
+  return r
 
 if __name__ == "__main__":
   lines = ""

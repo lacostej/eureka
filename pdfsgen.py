@@ -93,6 +93,8 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
       print f
       mailer.send_mail("eureka@vgsn.no", [student.email], "Latest exercises from vgsn", "Bla bla bla", [f], "smtp.gmail.com", "jbhkp.eureka", "jVsmpdg1*")
 
+  del exercises
+
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
 if __name__ == "__main__":
   interfaceFile = sys.argv[1]
