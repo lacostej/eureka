@@ -10,6 +10,7 @@ import cStringIO
 import base64
 import email.Message
 from tlslite.api import *
+import quopri
 
 def send_mail(send_from, send_to, subject, text, files=[], server="localhost", user=None, password=None):
   assert type(send_to)==list
