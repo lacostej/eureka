@@ -12,7 +12,7 @@ from utils import *
 def fileBaseName(student):
   return student.shortName.replace(" ", "_")
 
-def main(interfaceFile, exercisesFile, sendMails=False):
+def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
   print "Parsing %s" % interfaceFile
   classStatus = excelparse.parse(interfaceFile)
   print str(len(classStatus.students)) + " student(s)"
@@ -65,8 +65,6 @@ def main(interfaceFile, exercisesFile, sendMails=False):
     os.system('latex -interaction nonstopmode ' + outputFileName + " 2>&1 >> full_gen.log")
     os.system('latex -interaction nonstopmode ' + resultOutputFileName + " 2>&1 >> full_gen.log")
 
-    userPdfDir = "pdfs/" + fileBaseName(student)
-
     userExosPdfFile = fileBaseName(student) + ".pdf"
     userResultsPdfFile = fileBaseName(student) + "_result.pdf"
     if (not os.access(userExosPdfFile, os.F_OK)):
@@ -75,10 +73,17 @@ def main(interfaceFile, exercisesFile, sendMails=False):
     if (not os.access(userResultsPdfFile, os.F_OK)):
       print "ERROR: couldn't generate the Result PDF. Check the logs"
       continue
+
     if (not os.access("pdfs", os.F_OK)):
-      os.mkdir("pdfs")
+      if pdflink != None:
+        os.symlink(os.path.abspath(pdflink), "pdfs")
+      else:
+        os.mkdir("pdfs")
+
+    userPdfDir = "pdfs/" + fileBaseName(student)
     if (not os.access(userPdfDir, os.F_OK)):
       os.mkdir(userPdfDir)
+
     os.rename(userExosPdfFile, userPdfDir + "/" + userExosPdfFile)
     os.rename(userResultsPdfFile, userPdfDir + "/" + userResultsPdfFile)
 
@@ -92,5 +97,6 @@ def main(interfaceFile, exercisesFile, sendMails=False):
 if __name__ == "__main__":
   interfaceFile = sys.argv[1]
   exercisesFile = sys.argv[2]
+  pdflink = sys.argv[3]
 
-  main(interfaceFile, exercisesFile)
+  main(interfaceFile, exercisesFile, pdflink)
