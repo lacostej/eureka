@@ -363,7 +363,7 @@ def testTextSolution():
   text = f.read()
   e = exoparse.parseExo(text)
   s = e.generateLatexResult()
-  assertEquals("\\begin{result} id1 FIXME\\vspace{-10mm}\end{result}", s)
+  assertEquals("\\begin{result} id1 \\[\\textrm{FIXME}\\]\\vspace{-10mm}\end{result}", s)
 
 
 def test_replaceVariables_1():

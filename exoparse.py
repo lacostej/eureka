@@ -288,7 +288,9 @@ class Exercice:
     s += "\\begin{result} " + self.id + " " 
     result = nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.result)))
     if (result[0] == '"'):
+      s += "\\[\\textrm{"
       s += unquoteTEXT(result)
+      s += "}\\]"
     else:
       s += "\\["
       s += result
