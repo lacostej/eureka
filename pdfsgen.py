@@ -93,11 +93,11 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
 #      print f
       now = datetime.datetime.utcnow()
       week = now.strftime("%W")
-      comment = __u(data.comment)
+      comment = u(data.comment)
       if (comment == None):
         comment = ""
       comment = comment + "\n"
-      text = "Hei,\n" + comment + __u(ur"\u00d8velse gj\u00f8r mester") + "\nLykke til!\nJean"
+      text = "Hei,\n" + comment + u(ur"\u00d8velse gj\u00f8r mester") + "\nLykke til!\nJean"
       mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises

@@ -8,7 +8,7 @@ class MyException(Exception):
   def __str__(self):
     return repr(self.value)
 
-def __u(s):
+def u(s):
   '''encode the specified unicode string to utf-8'''
   if s == None:
     return None
