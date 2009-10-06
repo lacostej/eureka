@@ -10,7 +10,7 @@ def checkSum():
   for f in ['matte/interface.xls', 'matte/oppgaver4.txt']:
     stats = os.stat (f)
     val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
-    return val
+  return val
 
 def run():
   val=0
