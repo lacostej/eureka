@@ -91,7 +91,7 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
       f = (userPdfDir + "/" + userExosPdfFile).encode("iso-8859-1")
       open(f, "rb").read()
       print f
-      mailer.send_mail("eureka@vgsn.no", [student.email], "Latest exercises from vgsn", "Bla bla bla", [f], "smtp.gmail.com", "jbhkp.eureka", "jVsmpdg1*")
+      mailer.send_mail("eureka@vgsn.no", [student.email], "Latest exercises from vgsn", "Bla bla bla", [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises
 
