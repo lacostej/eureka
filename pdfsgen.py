@@ -87,7 +87,7 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
     os.rename(userExosPdfFile, userPdfDir + "/" + userExosPdfFile)
     os.rename(userResultsPdfFile, userPdfDir + "/" + userResultsPdfFile)
 
-    if (sendMails and student.shortName == "jerome"):
+    if (sendMails):
       f = (userPdfDir + "/" + userExosPdfFile).encode("iso-8859-1")
       open(f, "rb").read()
       print f
