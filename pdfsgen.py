@@ -93,7 +93,7 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
 #      print f
       now = datetime.datetime.utcnow()
       week = now.strftime("%W")
-      comment = u(data.comment)
+      comment = u(data.uComment)
       if (comment == None):
         comment = ""
       comment = comment + "\n"

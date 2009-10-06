@@ -16,13 +16,13 @@ def testReadExcelInterfaceFile():
   assert len(classStatus.students) == 34
   assert len(classStatus.studentExercicesStatus) == 34
   assert classStatus.studentExercicesStatus[0].studentId == "adeleide"
-  assert classStatus.studentExercicesStatus[0].comment == None
+  assert classStatus.studentExercicesStatus[0].uComment == None
   assert classStatus.studentExercicesStatus[0].shouldGenerate == False
   assert classStatus.studentExercicesStatus[0].exerciseStatuses['id2'].status == 2
   assert classStatus.studentExercicesStatus[0].exerciseStatuses['id2'].toGenerate == 0
 
   assert classStatus.studentExercicesStatus[10].studentId == "johannes"
-  assert classStatus.studentExercicesStatus[10].comment == ur'Pass p\u00e5 \u00e5 \u00f8ve med operasjoner med negative tall og parenteser '
+  assert classStatus.studentExercicesStatus[10].uComment == ur'Pass p\u00e5 \u00e5 \u00f8ve med operasjoner med negative tall og parenteser '
   print classStatus.studentExercicesStatus[10].exerciseStatuses['id2']
   assert classStatus.studentExercicesStatus[10].exerciseStatuses['id2'].status == 1
   assert classStatus.studentExercicesStatus[10].exerciseStatuses['id2'].toGenerate == 4

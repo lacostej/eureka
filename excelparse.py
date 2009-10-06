@@ -21,9 +21,9 @@ class Student:
     return self.shortName + " (\"" + str(self.fullName) + "\" <" + str(self.email) + ">)"
 
 class StudentExercicesStatus:
-  def __init__(self, studentId, comment, shouldGenerate, exerciseStatuses):
+  def __init__(self, studentId, uComment, shouldGenerate, exerciseStatuses):
     self.studentId = studentId
-    self.comment = comment
+    self.uComment = uComment
     self.shouldGenerate = shouldGenerate
     self.exerciseStatuses = exerciseStatuses
 
@@ -67,21 +67,24 @@ def parse(fileName):
 
   for cx in range(startStudentColumnIdx, exercisesSheet.ncols, 2):
     shouldGenerate = False
-    comment = None
+    uComment = None
 
     exerciseStatuses = {}
-    studentId = exercisesSheet.cell(2, cx).value
-    studentId = studentId.encode("iso-8859-1")
+    uStudentId = exercisesSheet.cell(2, cx).value
+    studentId = uStudentId.encode("iso-8859-1")
 #    print "Treating student: " + studentId
+
+    uStudentId2 = exercisesSheet.cell(2, cx+1).value
+    studentId2 = uStudentId.encode("iso-8859-1")
+    if (studentId != studentId2):
+#      print cx 
+      raise MyException("The 2 columns for student don't have matching names " + studentId + " and " + studentId2)
+
 
     commentCell = exercisesSheet.cell(0, cx+1)
     if commentCell.ctype != xlrd.XL_CELL_EMPTY:
       if commentCell.ctype == xlrd.XL_CELL_TEXT:
-        comment = commentCell.value
-
-    if (studentId != exercisesSheet.cell(2, cx+1).value):
-#      print cx 
-      raise MyException("The 2 columns for student don't have matching names " + studentId + " and " + exercisesSheet.cell(2, cx+1).value)
+        uComment = commentCell.value
 
     genCell = exercisesSheet.cell(1, cx+1)
     if genCell.ctype == xlrd.XL_CELL_NUMBER:
@@ -92,8 +95,8 @@ def parse(fileName):
     for rx in range(startExerciseRowId, exercisesSheet.nrows):
       exoStatus = 0
       exoToGen = 0
-      exoId = exercisesSheet.cell(rx, 1).value
-      exoId = exoId.encode("iso-8859-1")
+      uExoId = exercisesSheet.cell(rx, 1).value
+      exoId = uExoId.encode("iso-8859-1")
       if (firstStudent):
         sortedExoIDs.append(exoId)
       if exercisesSheet.cell(rx, cx+1).ctype == xlrd.XL_CELL_NUMBER:
@@ -103,7 +106,7 @@ def parse(fileName):
 #       print exoId, exoStatus, exoToGen
       exerciseStatus = ExerciseStatus(exoId, exoStatus, exoToGen)
       exerciseStatuses[exoId] = exerciseStatus
-    studentsExercisesStatus.append(StudentExercicesStatus(studentId, comment, shouldGenerate, exerciseStatuses))
+    studentsExercisesStatus.append(StudentExercicesStatus(studentId, uComment, shouldGenerate, exerciseStatuses))
     firstStudent = False
   return ClassStatus(students, sortedExoIDs, studentsExercisesStatus)
 
