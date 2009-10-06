@@ -40,7 +40,7 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
   os.system('touch full_gen.log')
 
   for student in classStatus.students:
-    print "Handling student : " + student.fullName.encode("iso-8859-1")
+    print "Handling student : " + student.fullName
     data = classStatus.getStudentData(student.shortName)
     if (not data):
       print "WARNING: missing data for student: " + str(student)
@@ -88,7 +88,7 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
     os.rename(userResultsPdfFile, userPdfDir + "/" + userResultsPdfFile)
 
     if (sendMails):
-      f = (userPdfDir + "/" + userExosPdfFile).encode("iso-8859-1")
+      f = (userPdfDir + "/" + userExosPdfFile)
       open(f, "rb").read()
 #      print f
       now = datetime.datetime.utcnow()
@@ -101,11 +101,6 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
       mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises
-
-def __u(s):
-  if s == None:
-    return None
-  return s.encode("utf-8")
 
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
 if __name__ == "__main__":

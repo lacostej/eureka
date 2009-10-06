@@ -8,6 +8,12 @@ class MyException(Exception):
   def __str__(self):
     return repr(self.value)
 
+def __u(s):
+  '''encode the specified unicode string to utf-8'''
+  if s == None:
+    return None
+  return s.encode("utf-8")
+
 def removeSYMBOL(text):
   return text.split(None, 1)[1].strip()
 
