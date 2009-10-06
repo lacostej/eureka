@@ -90,19 +90,21 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
     if (sendMails):
       f = (userPdfDir + "/" + userExosPdfFile).encode("iso-8859-1")
       open(f, "rb").read()
-      print f
+#      print f
       now = datetime.datetime.utcnow()
       week = now.strftime("%W")
-      comment = data.comment
+      comment = __u(data.comment)
       if (comment == None):
         comment = ""
       comment = comment + "\n"
-      text = __u("Hei,\n" + comment + ur"\u00d8velse gj\u00f8r mester\nLykke til!\nJean")
+      text = "Hei,\n" + comment + __u(ur"\u00d8velse gj\u00f8r mester") + "\nLykke til!\nJean"
       mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises
 
 def __u(s):
+  if s == None:
+    return None
   return s.encode("utf-8")
 
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
