@@ -51,7 +51,7 @@ def parse(fileName):
     if (rx == 0):
       continue # skip header
     row = studentSheet.row(rx)
-    students.append(Student(row[0].value.strip().encode("iso-8859-1"), row[1].value.strip().encode("iso-8859-1"), row[2].value.strip()))
+    students.append(Student(row[0].value.strip().encode("utf-8"), row[1].value.strip().encode("utf-8"), row[2].value.strip()))
 
   studentsExercisesStatus = []
   exercisesSheet = book.sheet_by_index(1)
@@ -71,11 +71,11 @@ def parse(fileName):
 
     exerciseStatuses = {}
     uStudentId = exercisesSheet.cell(2, cx).value
-    studentId = uStudentId.encode("iso-8859-1")
+    studentId = uStudentId.encode("utf-8")
 #    print "Treating student: " + studentId
 
     uStudentId2 = exercisesSheet.cell(2, cx+1).value
-    studentId2 = uStudentId.encode("iso-8859-1")
+    studentId2 = uStudentId.encode("utf-8")
     if (studentId != studentId2):
 #      print cx 
       raise MyException("The 2 columns for student don't have matching names " + studentId + " and " + studentId2)
@@ -96,7 +96,7 @@ def parse(fileName):
       exoStatus = 0
       exoToGen = 0
       uExoId = exercisesSheet.cell(rx, 1).value
-      exoId = uExoId.encode("iso-8859-1")
+      exoId = uExoId.encode("utf-8")
       if (firstStudent):
         sortedExoIDs.append(exoId)
       if exercisesSheet.cell(rx, cx+1).ctype == xlrd.XL_CELL_NUMBER:
