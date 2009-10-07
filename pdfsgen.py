@@ -92,7 +92,8 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
       open(f, "rb").read()
 #      print f
       now = datetime.datetime.utcnow()
-      week = now.strftime("%W")
+      realYear, week, day = now.isocalendar()
+      week = str(week)
       comment = u(data.uComment)
       if (comment == None):
         comment = ""
