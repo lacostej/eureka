@@ -22,7 +22,7 @@ def send_mail(send_from, send_to, subject, text, files=[], server="localhost", u
   msg['Date'] = formatdate(localtime=True)
   msg['Subject'] = subject
 
-  msg.attach( MIMEText(text) )
+  msg.attach( MIMEText(text, _charset='utf-8') )
 
   for fileName in files:
     contentType,ignored=mimetypes.guess_type(fileName)
