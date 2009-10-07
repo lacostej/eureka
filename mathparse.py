@@ -159,14 +159,14 @@ def _generateLatexExercisesAndResultsForStudentFile(exercises, sortedExoIDs, dir
   resultsOutput.write(latexHeader(now, student.fullName) + "\n")
   resultsOutput.write(middle + "\n")
 
-  if (studentData.comment != None and len(studentData.comment) > 0):
-    comment = studentData.comment.encode("iso-8859-15")
+  if (studentData.uComment != None and len(studentData.uComment) > 0):
+    comment = studentData.uComment.encode("iso-8859-15")
     # FIXME encode Norwegian characters appropriately
     exosOutput.write("\\begin{flushleft}\n")
-    exosOutput.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
+    exosOutput.write("\\textsc{Oppgave:} " + comment + "\\\\[1.2cm]\n")
     exosOutput.write("\\end{flushleft}\n")
     resultsOutput.write("\\begin{flushleft}\n")
-    resultsOutput.write("\\textsc{Oppgave:} " + studentData.comment.encode("iso-8859-15") + "\\\\[1.2cm]\n")
+    resultsOutput.write("\\textsc{Oppgave:} " + comment + "\\\\[1.2cm]\n")
     resultsOutput.write("\\end{flushleft}\n")
 
   for exoId in sortedExoIDs:
