@@ -14,8 +14,7 @@ def checkSum():
   return val
 
 def run():
-  val=0
-  newVal= 0
+  val = checkSum()
   pwd = os.path.abspath(".")
   while (True):
 #    print pwd
