@@ -24,7 +24,8 @@ def run():
       if newVal != val:
         val = newVal
         print "val " + str(val)
-        pdfsgen.main("matte/interface.xls", "matte/oppgaver4.txt", "/home/vgsn/webapps/static_files/matte/pdfs", True)
+        pdfsgen.main("matte/interface.xls", "matte/oppgaver4.txt", "/home/vgsn/webapps/static_files/matte/pdfs")
+#        pdfsgen.main("matte/interface.xls", "matte/oppgaver4.txt", None)
         print_top_n(10)
     except Exception, e:
       print "ERROR: couldn't generate: " + str(e) 
