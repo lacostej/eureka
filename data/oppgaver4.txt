@@ -1,7 +1,7 @@
 \cat " regning med hele tall "
 ---
 id0
-" l1: addisjon og substraksjon med negative tall. Regn ut"
+"Regn ut"
 a (1;5)
 b (-5;-1)
 s \sign1
@@ -9,7 +9,7 @@ s \sign1
 \solution \res {a s (b)}
 ---
 id1
-" l2: addisjon og substraksjon med negative tall. Regn ut"
+"Regn ut"
 a (-5;5)\0
 b (1;5)
 s \sign1
@@ -17,7 +17,7 @@ s \sign1
 \solution \res {a s b}
 ---
 id2
-" l3: multiplikasjon og divisjon med negative tall. Regn ut"
+"Regn ut"
 a,b (2;5)
 e,f,g (-5;-1)
 s,t,u,v \sign2
@@ -25,7 +25,7 @@ s,t,u,v \sign2
 \solution \res { a s (e) t b u (f) v (g)}
 ---
 id3
-" l4: addisjon og substraksjon med negative tall. Regn ut"
+"Regn ut"
 a,b (2;5)
 e,f,g (-5;-1)
 s,t,u,v \sign1
@@ -33,7 +33,7 @@ s,t,u,v \sign1
 \solution \res { a s (e) t b u (f) v (g)}
 ---
 id4
-" l5: mixup med negative tall. Regn ut"
+"Regn ut"
 a,b (2;5)
 e,f,g,h (-5;-1)
 s,t,u,v \sign
@@ -41,7 +41,7 @@ s,t,u,v \sign
 \solution \res { (a s (e) t b)* (h) u (f) v (g)}
 ---
 id5
-" l6: mixup med negative tall og potens. Regn ut"
+"Regn ut"
 a,b (2;3)
 e,f,h,j (-3;-1)
 g (-4)
@@ -54,33 +54,34 @@ s,t,u,v,w \sign
 ---
 id6
 " forkort mest mulig: "
-a,b,c,d,e,f,g (2,3,5,7)
+a,b (1;2)
+c,d,e,f,g (3,5)
 \solve \frac {\res{a*b*c*d*e}}{\res {c*d*e*f*g}}
 \solution \frac {a*b}{f*g}
 ---
 id7
-" addisjon og substraksjon med brøker "
+"Regn ut:"
 a,b,c,d,e,f (2;6)
 u,v \sign1
 \solve \frac {a}{b} u \frac {c}{d} v \frac {e}{f}
 \solution \res {\frac {a}{b} u \frac {c}{d} v \frac {e}{f}}
 ---
 id8
-" addisjon og substraksjon med brøker "
+"Regn ut:"
 a,c,d,e,f (1;6)
 u,v \sign1
 \solve a u \frac {c}{d} v \frac {e}{f}
 \solution \res {a u \frac {c}{d} v \frac {e}{f}}
 ---
 id9
-" multiplikasjon og divisjon med brøker "
+" Regn ut:"
 a,b,c,d,e,f (1;6)
 u,v \sign2
 \solve \frac {a}{b} u \frac {c}{d} v \frac {e}{f}
 \solution \res {\frac {a}{b} u \frac {c}{d} v \frac {e}{f}}
 ---
 id10
-" multiplikasjon og divisjon med brøker "
+"Regn ut: "
 a,c,d,e,f (1;6)
 u,v \sign2
 \solve a u \frac {c}{d} v \frac {e}{f}
@@ -118,13 +119,14 @@ id15
 "Skriv  tierpotenser som desimaltall"
 a (-8;0)
 \solve 10^a
-\solution \res{10^a}
+\solution \res {\decform {10^a}}
 ---
 id16
 "skriv multiplikasjon og divisjon med tierpotenser"
 a (-10;10)\0
 b (-10;10)\0
 \solve \res {\decform {10^a}} : \res {\decform {10^b}}
+#\solution 10^a : 10^b}
 \solution 10^\res{a - b}
 ---
 id17
@@ -155,9 +157,8 @@ a \d(1;10)
 b (-10;10)\0
 c \d(1;10)
 d (-10;10)\0
-s \sign2
-\solve a*10^b s c*10^d
-\solution \stdform {\res { a*10^b s c*10^d}}
+\solve \frac {a*10^b} {c*10^d}
+\solution \stdform {\res {\frac {a*10^b} {c*10^d}}}
 ---
 id21
 "Skriv svaret på standardform"
@@ -185,7 +186,8 @@ c (c)
 ---
 id24
 "Regn ut"
-a,b,c,d,e,f,g,h,i   (1;5)
+a,b,e,f,g,h,i   (2;3)
+c,d (6;8)
 e (e)
 \solve a*e + (b*e+c) *d + f* (g*e-h)*i
 #\solution \res {a + b*d+f*g*i} * e + \res {c*d * -h*f*i}
@@ -243,7 +245,7 @@ v, w, y, z \sign
 \cat "likninger"
 ---
 id31
-"Nivå 1: løs likningene ved regn g. Sett prøve på svarene"
+"Løs likningene ved regning. Sett prøve på svarene"
 a, b (1;5)
 c (6;9)
 x (x)
@@ -251,7 +253,7 @@ x (x)
 \solution x=\res{(c+b):a}
 ---
 id32
-"Nivå 2: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a, b (2;4)
 c, d (5;9)
 x (x)
@@ -259,7 +261,7 @@ x (x)
 \solution x=\res {(-d+b):(a-c)}
 ---
 id33
-"Nivå 3: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a, b, d \d(1;4)
 c \d(5;9)
 x (x)
@@ -267,7 +269,7 @@ x (x)
 \solution x=\res {(d+b):(a-c)}
 #---
 #id34
-#"Nivå 4: løs likningene ved regn g. Sett prøve på svarene"
+#"løs likningene ved regn g. Sett prøve på svarene"
 #a, b, c, d, e, f, g, h (1;9)
 #x (x)
 #u , v, w, y, z \sign1
@@ -283,38 +285,37 @@ x (x)
 #\solution x= \res {(d-a-(u1)*(v1)*g*c+(w1)*(y1)*h*f):((u1)*g*b-(w1)*h*e)}
 ---
 id36
-"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a, b, c, d, e, f, g, h,i,j,k,l,m (2;5)
 x (x)
-\solve a + g* (b*x - c) + g*(i*x + j)=d - h* (e*x + f)- k* (l*x + m)
-\solution "FIXME"
-#\solution \res{\frac{d-a+g*c-g*j-h*f-k*m}{g*b+g*i+h*e+k*l}}
+\solve a + g* (b*x - c) + g*(i*x + j) = d - h* (e*x + f)- k* (l*x + m)
+\solution \res{ \frac {d-a+g*c-g*j-h*f-k*m}{g*b+g*i+h*e+k*l}}
 ---
 id37
-"Nivå 7: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,k,l (2;5)
 x (x)
-\solve \frac {a}{b} + \frac {c}{d} * (\frac {x}{e} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h} * (\frac {x}{i} - \frac {k}{l})
-\solution "FIXME"
-#\solution \frac {\res{(h*h*l*b*d*g-*g*k*i*b*d*g-a*h*i*l*d*g+c*f*h*i*l*b)*e}}{\res {l*b*(c*h*i-g*d*e)}}
+\solve \frac {a}{b} + \frac {c}{d} * (\frac {x}{e} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h} * (\frac {-x}{i} - \frac {k}{l})
+\solution \frac {\res{h:i-g*k:h:l+c*f:d:g-a:b}}{\res {c:(d*e)+g:(h*i)}}
 ---
 id38
-"Nivå 8: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,k,l (2;5)
 x (x)
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {e}{x} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h}* (\frac {i}{x} - \frac {k}{l})
-\solution \frac {\res{(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}}{\res{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
+\solution \res{\frac {(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
 ---
 id39
-"Nivå 9: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,k,l (2;5)
 x (x)
 \solve \frac {a}{b} + \frac {c}{d} * (\frac {e}{x} - \frac {f}{g})=\frac {h}{i} + \frac {g}{h}* (\frac {i}{x} - \frac {k}{l})
-\solution \frac {\res{(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}}{\res{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
+\solution \res{\frac {(g*i*l*d-g*k*d-c*e*h*l)*b*d*g*i}{h*l*d*(a*g*d*i-c*f*b*i-h*b*d*g)}}
 ---
 id40
-"Nivå 10: løs likningene ved regn g. Sett prøve på svarene"
-a, b, c, d (2;9)
+"løs likningene ved regning. Sett prøve på svarene"
+a, b, c (2;4)
+d (5;9)
 x (x)
 \solve \frac {x}{a} - b=c*x - d
 # FIXME proposed solution
@@ -322,7 +323,7 @@ x (x)
 \solution \res{\frac {(b-d)*a}{1-c*a}}
 ---
 id41
-"Nivå 11: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (2;5)
 x (x)
 u , v, w, y, z, r, t \sign1
@@ -330,7 +331,7 @@ u , v, w, y, z, r, t \sign1
 \solution "FIXME"
 ---
 id42
-"Nivå 12: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q (2;5)
 x (x)
 u , v, w, y, z, r, t \sign1
@@ -338,35 +339,35 @@ u , v, w, y, z, r, t \sign1
 \solution "FIXME"
 ---
 id43
-"Nivå 13: løs potens likningene ved regn g"
+"løs potens likningene ved regning"
 x (x)
 a,b   (2;9)
 \solve x^a= \res {b^a}
 \solution x=b
 ---
 id44
-"Nivå 14: løs potens likningene ved regning"
+"løs potens likningene ved regning"
 x (x)
 a,b,c   (2;6)
 \solve c*x^a= \res {\res {b^a} *c}
 \solution x=b
 ---
 id45
-"Nivå 15: løs potens likningene ved regning"
+"løs potens likningene ved regning"
 x (x)
 a,b   \d(2;6)
 \solve x^a= \res {b^a}
 \solution x=b
 ---
 id46
-"Nivå 16: løs potens likningene ved regning"
+"løs potens likningene ved regning"
 x (x)
 a,b,c   \d(2;9)
 \solve c*x^a= \res {\res {b^a} *c}
 \solution x=b
 ---
 id47
-"Nivå 17: løs andregradslikning ved regning"
+"løs andregradslikning ved regning"
 x (x)
 b   (1;5)
 a,c   (3;9)
@@ -374,35 +375,36 @@ a,c   (3;9)
 \solution "Ingen løsning"
 ---
 id48
-"Nivå 18: løs andregradslikning ved regning"
+"løs andregradslikning ved regning"
 x (x)
-a,b,c   (1;9)
-\solve a*x^2+\res {a*(b+c)} *x+\res {a*b*c}=0
-\solution "FIXME"
+b   (6;9)
+a,c   (1;3)
+\solve a*x^2+b*x+c=0
+\solution x1=\res{\frac {-b+(b*b-4*a*c)^0.5}{2*a}} eller x2=\res{\frac {-b-(b*b-4*a*c)^0.5}{2*a}}
 ---
 id49
-"Nivå 19: løs andregradslikning ved regning"
+"Løs andregradslikning ved regning"
 x (x)
-a,b   (1;9)
+a,b   (2;9)
 \solve a*x^2+\res {a*(b+b)} *x+\res {a*b*b}=0
 \solution x=\res {-b}
 ---
 id50
-"Nivå 20: løs andregradslikning ved regning"
+"løs andregradslikning ved regning"
 x (x)
 a,b,c   (1;6)
 \solve a*x^2+b*x+c=0
 \solution "FIXME"
 ---
 id51
-"Nivå 21: løs andregradslikning ved regning"
+"løs andregradslikning ved regning"
 x (x)
 a,b,c,d   (1;9)
 \solve a* x* (x + b) = c + d*x
 \solution x1=\res{\frac{d-a*b+((a*b-d)^2+4*a*c)^0.5}{2*a}} eller x2=\res{\frac{d-a*b-((a*b-d)^2+4*a*c)^0.5}{2*a}}
 ---
 id52
-"Nivå 22: "løs andregradslikning ved regning"
+"løs andregradslikning ved regning"
 x (x)
 a,b,c,d,e   (1;9)
 \solve \frac {a}{x} + \frac {b}{c*x}=e+d*x
@@ -454,8 +456,8 @@ id58
 m (m)
 I (I)
 h (h)
-\solve m=I*h^2
-\solution "FIXME"
+\solve I=\frac {m} {h^2}
+\solution m=I*h^2
 ---
 id59
 "Kroppsmass deks: Formelen iser at kroppsmasse deksen I er massen m dividert med høyden h i andre. Massen måles i kilogram og høyden i meter. F n en formel for å beregne høyden"
@@ -491,20 +493,21 @@ K (K)
 \cat "potenser"
 ---
 id63
-"Nivå 0: regn ut "
+"regn ut "
 a   (1;20)
 \solve a^0
 \solution 1
 ---
 id64
 "regn ut"
-a, b (1;4)
+a, b (2;4)
 \solve a^b
 \solution \res{a^b}
 ---
 id65
 "regn ut"
-a,b (1;4)
+a (1;4)
+b (2,4)
 \solve -a^b
 \solution -\res{a^b}
 ---
@@ -522,26 +525,26 @@ a (1;10)
 \solution \res{(-1)^a}
 ---
 id68
-"Nivå 1: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b,c (2;9)
 \solve a^b*a^c
 \solution a^\res {b+c}
 ---
 id69
-"Nivå 2: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b,c (2;9)
-\solve a^b:a^c
+\solve \frac {a^b}{a^c}
 \solution a^\res {b-c}
 ---
 id70
-"Nivå 3: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,d,e,f (2;9)
 a (a)
 \solve a^b*a^c*a^d*a^e*a^f
 \solution a^\res {b+c+d+e+f}
 ---
 id71
-"Nivå 4: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,d,e,f (2;9)
 x (x)
 y (y)
@@ -549,29 +552,29 @@ y (y)
 \solution x^\res{b+d+f}*y^\res{c+e}
 ---
 id72
-"Nivå 5: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,d,e,f (2;9)
 a (a)
 \solve \frac {a^b*a^c*a^d} {a^e*a^f}
 \solution a^\res{b+c+d-e-f}
 ---
 id73
-"Nivå 6: regn ut og angi potensformen"
-a,d (2;5)
+"regn ut og angi potensformen"
+a,d (2;7)
 b (b)
 c (c)
 \solve (a*b*c)^d
 \solution a^d*b^d*c^d
 ---
 id74
-"Nivå 7: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,d,e,f (2;5)
 b (b)
 \solve (a*b)^d*(e*b)^f
 \solution a^d*e^f*b^\res{d+f}
 ---
 id75
-"Nivå 8: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,d,e,f (2;5)
 b (b)
 c (c)
@@ -579,98 +582,100 @@ c (c)
 \solution a^d*b^\res{d+f}*c^\res{d+f}*e^f
 ---
 id76
-"Nivå 8: regn ut og angi potensformen"
-a,b,c (2;5)
+"regn ut og angi potensformen"
+a, c (2;5)
+b (6;8)
 \solve (\frac{a}{b})^c
 \solution \frac {a^c}{b^c}
 ---
 id77
-"Nivå 9: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c (2;5)
 b (b)
 \solve (\frac {a}{b})^c
 \solution \frac {a^c}{b^c}
 ---
 id78
-"Nivå 10: regn ut og angi potensformen"
-a,b,c,d,e (2;5)
-\solve (\frac {(a*b)}{(c*d)})^e
+"regn ut og angi potensformen"
+a,b,e (2;5)
+c,d (6;10)
+\solve (\frac {a*b}{c*d})^e
 \solution \frac {a^e*b^e}{c^e*d^e}
 ---
 id79
-"Nivå 11: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,e (2;5)
 b (b)
 d (d)
-\solve (\frac {(a*b)}{(c*d)})^e
+\solve (\frac {a*b}{c*d})^e
 \solution \frac {a^e*b^e}{c^e*d^e}
 ---
 id80
-"Nivå 12: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,e,f,g (2;5)
 b (b)
 \solve (\frac {(a*b)^f}{(c*b)^g})^e
 \solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
 ---
 id81
-"Nivå 13: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b,c (2;5)
 \solve (a^b)^c
 \solution a^\res{b*c}
 ---
 id82
-"Nivå 14: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c (2;5)
 a (a)
 \solve (a^b)^c
 \solution a^\res{b*c}
 ---
 id83
-"Nivå 15: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,e (2;5)
 a (a)
 \solve (e*a^b)^c
 \solution e^c*a^\res{b*c}
 ---
 id84
-"Nivå 16: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,e,f,g (2;5)
 b (b)
 d (d)
-\solve (\frac {(a*b)^f}{(c*d)^g})^e
-\solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
+\solve (\frac {(a*b)^f}{(c*b)^g})^e
+\solution \frac {a^\res{f*e}*b^\res{f*e-g*e}}{c^\res{g*e}}
 ---
 id85
-"Nivå 17: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,e,f,g (2;5)
 b (b)
 d (d)
 \solve (\frac {(a*b*d)^f}{(c*b*d)^g})^e
-\solution \frac {a^f*b^\res{f-g*e}*d^\res{f-g*e}}{c^\res{g*e}}
+\solution \frac {a^\res{f*e}*b^\res{f*e-g*e}*d^\res{f*e-g*e}}{c^\res{g*e}}
 ---
 id86
-"Nivå 1bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a (-9;-1)
 b,c (-9;9)\0
 \solve (a)^b*(a)^c
-\solution a^\res{b+c}
+\solution (a)^\res{b+c}
 ---
 id87
-"Nivå 2bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a (-9;-1)
 b,c (-9;9)\0
 \solve (a)^b:(a)^c
-\solution a^\res{b-c}
+\solution (a)^\res{b-c}
 ---
 id88
-"Nivå 3bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,d,e,f (-9;9)
 a (a)
 \solve a^b*a^c*a^d*a^e*a^f
 \solution a^\res{b+c+d+e+f}
 ---
 id89
-"Nivå 4bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,d,e,f (-9;9)
 x (x)
 y (y)
@@ -678,14 +683,14 @@ y (y)
 \solution x^\res{b+d+f}*y^\res{c+e}
 ---
 id90
-"Nivå 5bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b,c,d,e,f (-9;9)
 a (a)
 \solve \frac {a^b*a^c*a^d} {a^e*a^f}
 \solution a^\res{b+c+d-e-f}
 ---
 id91
-"Nivå 6bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a (2;5)
 d (-5;-0)
 b (b)
@@ -694,7 +699,7 @@ c (c)
 \solution a^d*b^d*c^d
 ---
 id92
-"Nivå 7bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,e (2;5)
 d,f (-5;-1)
 b (b)
@@ -702,7 +707,7 @@ b (b)
 \solution a^d*e^f*b^\res{d+f}
 ---
 id93
-"Nivå 8bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,e (2;5)
 d,f (-5;-1)
 b (b)
@@ -711,14 +716,14 @@ c (c)
 \solution a^d*b^\res{d+f}*c^\res{d+f}*e^f
 ---
 id94
-"Nivå 8bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b (2;5)
 c (-5;-1)
 \solve (\frac {a}{b})^c
 \solution \frac {a^c}{b^c}
 ---
 id95
-"Nivå 9bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a (2;5)
 b (b)
 c (-5;-1)
@@ -726,14 +731,14 @@ c (-5;-1)
 \solution \frac {a^c}{b^c}
 ---
 id96
-"Nivå 10bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b,c,d (2;5)
 e (-5;-1)
 \solve (\frac {(a*b)}{(c*d)})^e
 \solution \frac {a^e*b^e}{c^e*d^e}
 ---
 id97
-"Nivå 11bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c (2;5)
 e (-5;-1)
 b (b)
@@ -742,22 +747,22 @@ d (d)
 \solution \frac {a^e*b^e}{c^e*d^e}
 ---
 id98
-"Nivå 12bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c (2;5)
 e,f,g (-5;-1)
 b (b)
 \solve (\frac {(a*b)^f}{(c*b)^g})^e
-\solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
+\solution \frac {a^\res{f*e}*b^\res{f*e-g*e}}{c^\res{g*e}}
 ---
 id99
-"Nivå 13bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b (2;5)
 c (-5;-1)
 \solve (a^b)^c
 \solution a^\res{b*c}
 ---
 id100
-"Nivå 14bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 b (2;5)
 c (-5;-1)
 a (a)
@@ -765,7 +770,7 @@ a (a)
 \solution a^\res{b*c}
 ---
 id101
-"Nivå 15bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 c,e (2;5)
 b (-5;-1)
 a (a)
@@ -773,7 +778,7 @@ a (a)
 \solution e^c*a^\res{b*c}
 ---
 id102
-"Nivå 16bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c (2;5)
 f,g,e (-5;-1)
 b (b)
@@ -782,62 +787,62 @@ d (d)
 \solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
 ---
 id103
-"Nivå 17bis: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c (2;5)
 f,g,e (-5;-1)
 b (b)
 d (d)
 \solve (\frac {(a*b*d)^f}{(c*b*d)^g})^e
-\solution \frac {a^f*b^\res{(f-g)*e}*d^\res{(f-g)*e}}{c^\res{g*e}}
+\solution \frac {a^\res{f*e}*b^\res{(f-g)*e}*d^\res{(f-g)*e}}{c^\res{g*e}}
 ---
 id104
-"Nivå 18: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,h,i (2;5)
 f,g,e,l,m,n (-5;5)\0
 b (b)
 d (d)
 \solve (\frac {(a*b*d)^f}{(c*b*d)^g})^e*(\frac {(h*b*d)^l}{(i*b*d)^n})^m
-\solution \frac {a^\res{f*e}*b^\res{f*e-g*e-n*m-l*m}*d^\res{f*e-g*e-n*m-l*m}*h^\res{l*m}}{c^\res{g*e}*i^\res{n*m}}
+\solution \frac {a^\res{f*e}*b^\res{f*e-g*e-n*m+l*m}*d^\res{f*e-g*e-n*m+l*m}*h^\res{l*m}}{c^\res{g*e}*i^\res{n*m}}
 ---
 id105
-"Nivå 19: regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,h,i (2;5)
 f,g,e,l,m,n (-5;5)\0
 b (b)
 d (d)
-\solve (\frac {(a*(b+d))^f}{(c*(b-d))^g})^e*(\frac {(h*b+d)^l}{(i*b*d)^n})^m
+\solve (\frac {(a*(b*d))^f}{(c*(b*d))^g})^e*(\frac {(h*b+d)^l}{(i*b*d)^n})^m
 \solution \frac {a^\res{f*e}*b^\res{f*e-g*e-n*m}*d^\res{f*e-g*e-n*m}*(h*b+d)^\res{l*m}}{c^\res{g*e}*i^\res{n*m}}
 ---
 id106
-"Nivå 1 ter: regn ut"
+"regn ut"
 a   (2;5)
 b   (2;8)
 \solve \sqrt {a} {\res {b^a}}
 \solution b
 ---
 id107
-"Nivå 2 ter: regn ut"
+"regn ut"
 a   (3,5)
 b   (-8;-2)
 \solve \sqrt {a}  {\res {b^a}}
 \solution b
 ---
 id108
-"Nivå 3 ter: skriv enkelt som mulig"
+"skriv enkelt som mulig"
 a,c,d   (2;9)
 b   (2;10)
 \solve \sqrt {a}  {\res {b^a}} * \sqrt {c}  {\res {b^a} ^d}
-\solution \sqrt {c}  {b^\res {c+a*d}}
+\solution b^\res {\frac {c+a*d}{c}}
 ---
 id109
-"Nivå 3 ter: skriv enkelt som mulig"
+"skriv enkelt som mulig"
 a,c,d,e   (2;5)
 b   (2;5)
 \solve \frac {\sqrt {a}  {\res {b^a}} * \sqrt {c}  {\res {b^a} ^d}} { \res {b^a}^e * \sqrt {c}  {\res {b^a} ^e}}
-\solution \sqrt {c} {b^\res{c+a*d-a*e-a*e*c}}
+\solution b^\res{ \frac {c+a*d-a*e-a*e*c}{c}}
 ---
 id110
-"Nivå 4 ter: regn ut"
+"regn ut"
 a   (2;9)
 b   (2;4)
 c   (5;9)
@@ -845,16 +850,14 @@ c   (5;9)
 \solution a
 ---
 id111
-"Nivå : regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,c,e,f,g (2;5)
 b (b)
-d (d)
-\solve (\frac{a}{b} )^c * (\frac{d}{e} )^f
-\solution "FIXME wrong result"
-#\solution \frac {a^f*b^\res{f-g*e}}{c^\res{g*e}}
+\solve (\frac{a}{b} )^c * (\frac{b}{e} )^f
+\solution \frac {a^c*b^\res{f-c}}{e^f}
 ---
 id112
-"skriv multiplikasjon og divisjon med tierpotenser"
+"Regn ut"
 a (-5;5)\0
 b (-8;5)\0
 s \sign1
@@ -872,7 +875,7 @@ s \sign1
 \solution \stdform {\res  { a*10^b s c*10^d}}
 ---
 id114
-" l1: addisjon og substraksjon med negative tall. Regn ut"
+" Regn ut"
 a (1;10)
 b,c,d (-10;-1)
 s \sign1
@@ -880,13 +883,13 @@ s \sign1
 \solution \res {(a s (b) - (c - (d)))}
 ---
 id115
-" l6: mixup med negative tall og potens. Regn ut"
-a,b (1;10)
-e,f,g,h (-10;-1)
+" Regn ut"
+a,b (1;5)
+e,f,g,h (-5;-1)
 i (2;4)
 s,t,u,v \sign1
-\solve ((a s (e) t b^2)^2*h u ((f)^2 v (g)^2)^i)^2
-\solution \res { ((a s (e) t b^2)^2*h u ((f)^2 v (g)^2)^i)^2}
+\solve ((a s (e) t b^2)^2*(h) u ((f)^2 v (g)^2)^i)^2
+\solution \res { ((a s (e) t b^2)^2*(h) u ((f)^2 v (g)^2)^i)^2}
 ---
 #id116
 #"Regn ut"
@@ -903,87 +906,87 @@ a,b,f,g (1;5)
 \solution \res { ((a-b^2)^2 - (f^2 - g^2)^2)^2}
 ---
 id118
-" addisjon og substraksjon med brøker "
+" Regn ut "
 a,b,c,d,e,f (1;10)
 u \sign1
 \solve (\frac {a}{b} u \frac {c}{d}) * \frac {e}{f}
 \solution \res {(\frac {a}{b} u \frac {c}{d}) * \frac {e}{f}}
 ---
 id119
-" addisjon og substraksjon med brøker "
+" regn ut "
 a,b,c,d (1;10)
 u \sign1
 \solve \frac {a}{b} u \frac {c}{d}
 \solution \res {\frac {a}{b} u \frac {c}{d}}
 ---
 id120
-" addisjon og substraksjon med brøker "
+" Regn ut "
 a,b,c,d (1;10)
 \solve \frac {a}{b} * \frac {c}{d}
 \solution \res {\frac {a}{b} * \frac {c}{d}}
 ---
 id121
-"Nivå : regn ut og angi potensformen"
+"regn ut og angi potensformen"
 a,b,c,d,e,f (-5;-2)
 \solve (\frac{a}{b} )^c * (\frac{d}{e} )^f
 \solution \res {(\frac{a}{b} )^c * (\frac{d}{e} )^f}
 ---
 id122
-"Minus brøk, likning"
+"Regn ut"
 a,c,d,e (2;6)
 x (x)
 \solve a - \frac {c-d*x}{e}
 \solution \frac {\res {a*e-c} + d*x} {e}
 ---
 id123
-"Algebra: Regn ut"
+"Regn ut"
 a, c, h,i,j (2;4)
 b (b)
 \solve a*b^2+(c*b-h)*(i-j*b)
 \solution \res{a-j*c} * b^2+\res{c*i+h*j}*b-\res{h*i}
 ---
 id124
-" multiplikasjon og divisjon med brøker "
+" Regn ut"
 a,c,d (1;6)
 u \sign2
 \solve a u \frac {c}{d}
 \solution \res {a u \frac {c}{d} }
 ---
 id125
-" divisjon med brøker "
+" Regn ut "
 a,b,c,d (1;10)
 \solve \frac {a}{b} : \frac {c}{d}
 \solution \res {\frac{a*d}{b*c}}
 ---
 id126
-" l6: mixup med negative tall og potens. Regn ut"
+"  Regn ut"
 a,b,f,g (1;5)
 \solve a-b*(f^2 - g^2)^2
 \solution \res { a-b*(f^2 - g^2)^2}
 ---
 id127
-"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+" løs likningene ved regning. Sett prøve på svarene"
 a, b, c, d, g (2;5)
 x (x)
 \solve a + g* (-b*x - c) =d
 \solution \res{\frac{a-g*c-d}{g*b}}
 ---
 id128
-"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+"løs likningene ved regning. Sett prøve på svarene"
 a, b, c, d, e, f (2;5)
 x (x)
 \solve \frac {a*x}{b} = c-\frac {d*x-e}{f}
-\solution \res{\frac{a*c*b*f+b*e}{a*f+b*d}}
+\solution \res{\frac{c*b*f+b*e}{a*f+b*d}}
 ---
 id129
-"Nivå 6: løs likningene ved regn g. Sett prøve på svarene"
+" løs likningene ved regning. Sett prøve på svarene"
 a, e, f (2;5)
 x (x)
 \solve \frac {a}{x} = \frac {e}{f}
-\solution \res{\frac{e*a}{f}}
+\solution \res{\frac{f*a}{e}}
 ---
 id130
-"Nivå 3 ter: skriv enkelt som mulig"
+"skriv enkelt som mulig"
 a,c,d,e,f,g,h,i,j,k   (2;5)
 b (b)
 \solve \frac {\sqrt {a}  {b} * ( \sqrt {c}  {b}) ^d * b^\frac {d}{e}} { (f*b^\frac {g}{h})^i *\sqrt {j}{b^k}}
@@ -995,4 +998,43 @@ a (-10;10)\0
 b (-10;10)\0
 \solve \res {10^a} * \res {10^b}
 \solution 10^\res{a + b}
+---
+id132
+"løs likningene ved regning. Sett prøve på svarene"
+a, c (1;5)
+x (x)
+\solve a*x =c
+\solution x=\res{c:a}
+---
+id33
+" løs likningene ved regning. Sett prøve på svarene"
+b (1;5)
+c (6;9)
+x (x)
+\solve x - b=c
+\solution x=\res{(c+b)}
+---
+id134
+"løs likningene ved regning. Sett prøve på svarene"
+a, e, f , g ,h (2;5)
+x (x)
+\solve \frac {a}{x} - \frac {g}{h} = \frac {e}{f}
+\solution \res{\frac {(f*h*a)}{(e*h+g*f)}}
+---
+id135
+"Regn ut"
+a (a)
+b (b)
+c (c)
+\solve -(a-(b - c))
+\solution -a+b-c
+---
+id136
+"Regn ut"
+a (a)
+b (b)
+c (c)
+d, e, f (2;5)
+\solve -f*(a-(d*b - c-e))
+\solution -f*a+\res{f*d}*b-f*c-\res{f*e}
 ---
