@@ -84,12 +84,14 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
     if (not os.access(userPdfDir, os.F_OK)):
       os.mkdir(userPdfDir)
 
-    os.rename(userExosPdfFile, userPdfDir + "/" + userExosPdfFile)
-    os.rename(userResultsPdfFile, userPdfDir + "/" + userResultsPdfFile)
+    exosPath = (userPdfDir + "/" + userExosPdfFile)
+    resultsPath = (userPdfDir + "/" + userResultsPdfFile)
+
+    os.rename(userExosPdfFile, exosPath)
+    os.rename(userResultsPdfFile, resultsPath)
 
     if (sendMails):
-      f = (userPdfDir + "/" + userExosPdfFile)
-      open(f, "rb").read()
+#      open(f, "rb").read()
 #      print f
       now = datetime.datetime.utcnow()
       realYear, week, day = now.isocalendar()
@@ -99,7 +101,9 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
         comment = ""
       comment = comment + "\n"
       text = "Hei,\n" + comment + u(ur"\u00d8velse gj\u00f8r mester") + "\nLykke til!\nJean"
-      mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [f], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+      mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [exosPath], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+
+      mailer.send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises
 
