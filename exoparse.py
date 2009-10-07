@@ -167,27 +167,6 @@ class Exercice:
     self.formula = formula
     self.result = result
 
-  # FIXME remove
-  def dirty_replace(self, text):
-    '''temporary function until we implement formual and solution parsing'''
-    for s in self.statements:
-      val = str(s.value())
-      if  (text[0] == s.name):
-        text = self.myreplace(text, s.name + " ", val + " ", 1)
-      text = self.myreplace(text, "(" + s.name, "(" + val )
-      text = self.myreplace(text, s.name + ")", val + ")" )
-      text = self.myreplace(text, "{" + s.name, "{" + val )
-      text = self.myreplace(text, s.name + "}", val + "}" )
-      text = self.myreplace(text, " " + s.name, " " + val)
-      text = self.myreplace(text, "*" + s.name, "*" + val)
-      text = self.myreplace(text, "^" + s.name, "^" + val)
-      text = self.myreplace(text, "=" + s.name, "=" + val)
-      text = self.myreplace(text, "-" + s.name, "-" + val)
-      text = self.myreplace(text, "+" + s.name, "+" + val)
-      text = self.myreplace(text, ":" + s.name, ":" + val)
-    return text
-#    return self.resolve(text)
-
   def parse(self, text, displayUnusedVars=False):
     load()
     formulaParser = calc.Calc()
@@ -258,8 +237,6 @@ class Exercice:
       print str(s)
     print "Formula: " + self.formula
     print "Result: " + self.result
-#    print "Formula: " + self.dirty_replace(self.formula)
-#    print "Result: " + self.dirty_replace(self.result)
 #    print "Formula: " + self.toPrettyXml(self.parse(self.formula))
 #    print "Result: " + self.toPrettyXml(self.parse(self.result))
 #    print "Evaluated Formula: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.formula)))
