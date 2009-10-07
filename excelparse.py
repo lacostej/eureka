@@ -3,10 +3,11 @@ import xlrd
 
 class ClassStatus:
 
-  def __init__(self, students, sortedExoIDs, studentExercicesStatus):
+  def __init__(self, students, sortedExoIDs, studentExercicesStatus, email):
     self.students = students
     self.sortedExoIDs = sortedExoIDs
     self.studentExercicesStatus = studentExercicesStatus
+    self.email = email
 
   def getStudentData(self, shortName):
     return find(self.studentExercicesStatus, lambda ses : ses.studentId == shortName)
@@ -53,8 +54,17 @@ def parse(fileName):
     row = studentSheet.row(rx)
     students.append(Student(row[0].value.strip().encode("utf-8"), row[1].value.strip().encode("utf-8"), row[2].value.strip()))
 
+
   studentsExercisesStatus = []
   exercisesSheet = book.sheet_by_index(1)
+
+  email = False
+  emailCell = exercisesSheet.cell(0, 0)
+  if emailCell.ctype != xlrd.XL_CELL_EMPTY:
+    if emailCell.ctype == xlrd.XL_CELL_TEXT:
+      if emailCell.value == "email":
+        email = True
+
 #  print exercisesSheet.name, exercisesSheet.nrows, exercisesSheet.ncols
 #  if (studentSheet.ncols < 3): 
 #    raise MyException("Number of columns in sheet 1 '%s' is invalid. We expect 3 columns." & studentSheet.ncols)
@@ -108,7 +118,7 @@ def parse(fileName):
       exerciseStatuses[exoId] = exerciseStatus
     studentsExercisesStatus.append(StudentExercicesStatus(studentId, uComment, shouldGenerate, exerciseStatuses))
     firstStudent = False
-  return ClassStatus(students, sortedExoIDs, studentsExercisesStatus)
+  return ClassStatus(students, sortedExoIDs, studentsExercisesStatus, email)
 
 
 if __name__ == "__main__":

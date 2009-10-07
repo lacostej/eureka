@@ -7,12 +7,13 @@ import datetime
 import os
 
 import mailer
+import pdfs
 from utils import *
 
 def fileBaseName(student):
   return student.shortName.replace(" ", "_")
 
-def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
+def main(interfaceFile, exercisesFile, pdflink):
   print "Parsing %s" % interfaceFile
   classStatus = excelparse.parse(interfaceFile)
   print str(len(classStatus.students)) + " student(s)"
@@ -38,6 +39,10 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
 
   os.system('rm full_gen.log')
   os.system('touch full_gen.log')
+
+  now = datetime.datetime.utcnow()
+  realYear, week, day = now.isocalendar()
+  week = str(week)
 
   for student in classStatus.students:
     print "Handling student : " + student.fullName
@@ -90,12 +95,9 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
     os.rename(userExosPdfFile, exosPath)
     os.rename(userResultsPdfFile, resultsPath)
 
-    if (sendMails):
+    if (classStatus.email):
 #      open(f, "rb").read()
 #      print f
-      now = datetime.datetime.utcnow()
-      realYear, week, day = now.isocalendar()
-      week = str(week)
       comment = u(data.uComment)
       if (comment == None):
         comment = ""
@@ -104,6 +106,10 @@ def main(interfaceFile, exercisesFile, pdflink, sendMails=False):
       mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [exosPath], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
       mailer.send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+
+  pdfs.pdf_all_combine_to_file("exos_combined.latex", "pdfs/", "**.pdf", "**_result.pdf")
+  pdfs.pdf_all_combine_to_file("results_combined.latex", "pdfs/", "**_result.pdf", None)
+  mailer.send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
   del exercises
 
@@ -116,4 +122,4 @@ if __name__ == "__main__":
   else:
     pdflink = None
 
-  main(interfaceFile, exercisesFile, pdflink, True)
+  main(interfaceFile, exercisesFile, pdflink)

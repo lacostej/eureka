@@ -30,3 +30,10 @@ def testReadExcelInterfaceFile():
 #  print classStatus.studentExercicesStatus
   assert classStatus.studentExercicesStatus[33].studentId == "jerome"
   assert classStatus.studentExercicesStatus[33].shouldGenerate == True
+
+  assert classStatus.email == False
+
+def testReadExcelInterfaceFile2():
+  classStatus = excelparse.parse("data/interface2.xls")
+  assert classStatus.email == True
+
