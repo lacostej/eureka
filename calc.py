@@ -275,7 +275,6 @@ class NodeResultEvaluator:
       if (node.type == '*' and isNumber(node.children[0]) and isNumber(node.children[1])):
         return node.children[0] * node.children[1]
       if (node.type == ':' and isNumber(node.children[0]) and isNumber(node.children[1])):
-        # FIXME this can lead to problems if x / y with y > x and both ints
         return decimal.Decimal(node.children[0]) / node.children[1]
       if ((node.type == '+' or node.type == '-') and isIntOrFracInt(node.children[0]) and isIntOrFracInt(node.children[1])):
         sign = 1
