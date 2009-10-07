@@ -103,15 +103,18 @@ def main(interfaceFile, exercisesFile, pdflink):
         comment = ""
       comment = comment + "\n"
       text = "Hei,\n" + comment + u(ur"\u00d8velse gj\u00f8r mester") + "\nLykke til!\nJean"
-      mailer.send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [exosPath], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+      send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [exosPath])
 
-      mailer.send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+      send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath])
 
   pdfs.pdf_all_combine_to_file("exos_combined.latex", "pdfs/", "**.pdf", "**_result.pdf")
   pdfs.pdf_all_combine_to_file("results_combined.latex", "pdfs/", "**_result.pdf", None)
-  mailer.send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"], "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
+  send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
 
   del exercises
+
+def send_mail(fromEmail, toEmails, subject, content, files):
+  mailer.send_mail(fromEmail, toEmails, subject, content, files, "smtp.gmail.com", "jbhkb.eureka", "jVsmpdg1*")
 
 #  print str(len(classStatus.studentExercicesStatus)) + " exercise(s)"
 if __name__ == "__main__":
