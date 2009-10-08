@@ -3,11 +3,12 @@ import xlrd
 
 class ClassStatus:
 
-  def __init__(self, students, sortedExoIDs, studentExercicesStatus, email):
+  def __init__(self, students, sortedExoIDs, studentExercicesStatus, email, options):
     self.students = students
     self.sortedExoIDs = sortedExoIDs
     self.studentExercicesStatus = studentExercicesStatus
     self.email = email
+    self.options = options
 
   def getStudentData(self, shortName):
     return find(self.studentExercicesStatus, lambda ses : ses.studentId == shortName)
@@ -118,7 +119,16 @@ def parse(fileName):
       exerciseStatuses[exoId] = exerciseStatus
     studentsExercisesStatus.append(StudentExercicesStatus(studentId, uComment, shouldGenerate, exerciseStatuses))
     firstStudent = False
-  return ClassStatus(students, sortedExoIDs, studentsExercisesStatus, email)
+
+
+  optionsSheet = book.sheet_by_index(2)
+  options = {}
+  for col in range(optionsSheet.nrows):
+    cellKey = optionsSheet.cell(col, 0)
+    cellValue = optionsSheet.cell(col, 1)
+    options[u(cellKey.value)] = u(cellValue.value)
+
+  return ClassStatus(students, sortedExoIDs, studentsExercisesStatus, email, options)
 
 
 if __name__ == "__main__":

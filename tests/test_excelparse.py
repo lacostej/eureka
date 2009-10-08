@@ -32,8 +32,11 @@ def testReadExcelInterfaceFile():
   assert classStatus.studentExercicesStatus[33].shouldGenerate == True
 
   assert classStatus.email == False
+  assert classStatus.options['teacher'] == "jerome.lacoste@gmail.com"
 
 def testReadExcelInterfaceFile2():
   classStatus = excelparse.parse("data/interface2.xls")
   assert classStatus.email == True
+
+  assert classStatus.options['teacher'] == "jerome.lacoste@gmail.com"
 
