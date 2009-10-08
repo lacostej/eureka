@@ -24,7 +24,10 @@ def main(interfaceFile, exercisesFile, pdflink):
   prof_name = os.path.splitext(os.path.basename(interfaceFile))[0]
 
   classStatus = excelparse.parse(interfaceFile)
-  print str(len(classStatus.students)) + " student(s)"
+
+  print classStatus.options
+  teacher_email = classStatus.options['teacher']
+  print str(len(classStatus.students)) + " student(s) to " + teacher_email
 
   f = open(exercisesFile)
   exercisesData = f.read()
@@ -132,15 +135,14 @@ def main(interfaceFile, exercisesFile, pdflink):
       text = "Hei,\n" + comment + u(ur"\u00d8velse gj\u00f8r mester") + "\nLykke til!\nJean"
       send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [exosPath])
 
-      send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath])
+      send_mail("eureka@vgsn.no", [teacher_email], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath])
 
   htmlutils.gen_index("pdfs")
   htmlutils.gen_index(online_teacher_pdf_dir)
 
   pdfs.pdf_all_combine_to_file("exos_combined.latex", teacher_pdf_dir, "**.pdf", "**_result.pdf")
   pdfs.pdf_all_combine_to_file("results_combined.latex", teacher_pdf_dir, "**_result.pdf", None)
-  send_mail("eureka@vgsn.no", ["jerome.lacoste@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf", interfaceFilePath])
-#  send_mail("eureka@vgsn.no", ["jerome.lacoste@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
+  send_mail("eureka@vgsn.no", [teacher_email], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf", interfaceFilePath])
 
   del exercises
 
