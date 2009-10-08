@@ -17,6 +17,10 @@ def fileBaseName(student):
 def main(interfaceFile, exercisesFile, pdflink):
   print "Parsing %s" % interfaceFile
 
+  pwd = os.path.abspath(".")
+
+  interfaceFilePath = os.path.join(pwd, interfaceFile)
+
   prof_name = os.path.splitext(os.path.basename(interfaceFile))[0]
 
   classStatus = excelparse.parse(interfaceFile)
@@ -135,7 +139,7 @@ def main(interfaceFile, exercisesFile, pdflink):
 
   pdfs.pdf_all_combine_to_file("exos_combined.latex", teacher_pdf_dir, "**.pdf", "**_result.pdf")
   pdfs.pdf_all_combine_to_file("results_combined.latex", teacher_pdf_dir, "**_result.pdf", None)
-  send_mail("eureka@vgsn.no", ["jerome.lacoste@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
+  send_mail("eureka@vgsn.no", ["jerome.lacoste@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf", interfaceFilePath])
 #  send_mail("eureka@vgsn.no", ["jerome.lacoste@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
 
   del exercises
