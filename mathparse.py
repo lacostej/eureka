@@ -162,7 +162,7 @@ def _generateLatexExercisesAndResultsForStudentFile(exercises, sortedExoIDs, dir
   if (studentData.uComment != None and len(studentData.uComment) > 0):
     comment = studentData.uComment.encode("utf-8")
     exosOutput.write("\\begin{flushleft}\n")
-    resultsOutput.write("\\textsc{Oppgave:} " + comment + "\\\\[1.2cm]\n")
+    exosOutput.write("\\textsc{Oppgave:} " + comment + "\\\\[1.2cm]\n")
     exosOutput.write("\\end{flushleft}\n")
     resultsOutput.write("\\begin{flushleft}\n")
     resultsOutput.write("\\textsc{Oppgave:} " + comment + "\\\\[1.2cm]\n")
