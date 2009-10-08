@@ -9,6 +9,7 @@ import os
 import mailer
 import pdfs
 from utils import *
+import htmlutils
 
 def fileBaseName(student):
   return student.shortName.replace(" ", "_")
@@ -128,6 +129,9 @@ def main(interfaceFile, exercisesFile, pdflink):
       send_mail("eureka@vgsn.no", [student.email], "Matematikk lekser (uke " + week + ")", text, [exosPath])
 
       send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath])
+
+  htmlutils.gen_index("pdfs")
+  htmlutils.gen_index(online_teacher_pdf_dir)
 
   pdfs.pdf_all_combine_to_file("exos_combined.latex", teacher_pdf_dir, "**.pdf", "**_result.pdf")
   pdfs.pdf_all_combine_to_file("results_combined.latex", teacher_pdf_dir, "**_result.pdf", None)
