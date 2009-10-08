@@ -47,7 +47,7 @@ class Monitor:
 
 if __name__ == '__main__':
   link = "/home/vgsn/webapps/static_files/matte/pdfs"
-  if not os.path.exist(link):
+  if not os.path.exists(link):
     print "WARNING: link " + link + " doesn't exist"
     link = None
   m = Monitor(FileSet("matte/interfaces", "**.xls").find_paths(), 'matte/oppgaver4.txt', link)
