@@ -37,11 +37,21 @@ def files(directory):
 def footer():
   return "</body></html>\n"
 
+def filterOp_wrapper(filterOp, directory):
+  def func(f):
+    return filterOp(os.path.join(directory, f))
+  return func
 
 def sortedListDir(directory, filterOp):
-  files = filter(filterOp, os.listdir(directory))
+  files = filter(filterOp_wrapper(filterOp, directory), os.listdir(directory))
   files.sort()
   return files
+
+def x():
+  l = [ os.path.join(directory, f) for f in  os.listdir(directory) ]
+  files = filter(filterOp, l)
+  files.sort()
+  return [ os.path.basename(f) for f in files ]
 
 if __name__ == "__main__":
   gen_index(".")
