@@ -53,4 +53,3 @@ def findall(seq, f):
       if f(element):
         result.append(element)
     return result
-

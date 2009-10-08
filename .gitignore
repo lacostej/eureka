@@ -1,2 +1,8 @@
 *.pyc
 *parsetab.py
+latest
+gen/
+nosetests.xml
+*~
+vgsn.log
+index.html

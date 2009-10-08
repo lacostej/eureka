@@ -15,6 +15,9 @@ def fileBaseName(student):
 
 def main(interfaceFile, exercisesFile, pdflink):
   print "Parsing %s" % interfaceFile
+
+  prof_name = os.path.splitext(os.path.basename(interfaceFile))[0]
+
   classStatus = excelparse.parse(interfaceFile)
   print str(len(classStatus.students)) + " student(s)"
 
@@ -24,18 +27,30 @@ def main(interfaceFile, exercisesFile, pdflink):
 
   now = datetime.datetime.utcnow()
 
+  # temporary cleanup
   if os.access("gen", os.F_OK):
     if os.path.islink("gen"):
       os.unlink("gen")
-    else:
-      raise MyException("gen exists but isn't a link")
 
-  target = "gen_" + now.strftime("%Y%m%d-%H%M%S")
+  if os.access("latest", os.F_OK):
+    if os.path.islink("latest"):
+      os.unlink("latest")
+    else:
+      raise MyException("latest exists but isn't a link")
+
+  gen = "gen"
+  if os.path.islink(gen):
+    os.unlink(gen)
+  if (not os.access(gen, os.F_OK)):
+    os.mkdir(gen)
+
+  target = os.path.join(gen, prof_name + "_" + now.strftime("%Y%m%d-%H%M%S"))
+
   if (not os.access(target, os.F_OK)):
     os.mkdir(target)
-    os.symlink(os.path.abspath(target), "gen")
+    os.symlink(os.path.abspath(target), "latest")
 
-  os.chdir('gen')
+  os.chdir('latest')
 
   os.system('rm full_gen.log')
   os.system('touch full_gen.log')
@@ -57,7 +72,7 @@ def main(interfaceFile, exercisesFile, pdflink):
     outputFileName = fileBaseName(student) + ".latex"
     resultOutputFileName = fileBaseName(student) + "_result.latex"
 
-    mathparse.generateLatexExercisesAndResultsForStudent(exercises, classStatus.sortedExoIDs, "gen", outputFileName, resultOutputFileName, student, data)
+    mathparse.generateLatexExercisesAndResultsForStudent(exercises, classStatus.sortedExoIDs, target, outputFileName, resultOutputFileName, student, data)
     print "Generated " + outputFileName + " and " + resultOutputFileName
 
     if (not os.access(outputFileName, os.F_OK)):
@@ -79,18 +94,25 @@ def main(interfaceFile, exercisesFile, pdflink):
       print "ERROR: couldn't generate the Result PDF. Check the logs"
       continue
 
-    if (not os.access("pdfs", os.F_OK)):
+    teacher_pdf_dir = os.path.join("pdfs", prof_name)
+    if (not os.access(teacher_pdf_dir, os.F_OK)):
       if pdflink != None:
-        os.symlink(os.path.abspath(pdflink), "pdfs")
+        online_teacher_pdf_dir = os.path.join(os.path.abspath(pdflink), prof_name)
+        if not os.path.exists(online_teacher_pdf_dir):
+          os.mkdir(online_teacher_pdf_dir)
+#        print online_teacher_pdf_dir
+#        print teacher_pdf_dir
+        os.symlink(pdflink, "pdfs")
       else:
-        os.mkdir("pdfs")
+        online_teacher_pdf_dir = teacher_pdf_dir
+        os.mkdir(teacher_pdf_dir)
 
-    userPdfDir = "pdfs/" + fileBaseName(student)
-    if (not os.access(userPdfDir, os.F_OK)):
-      os.mkdir(userPdfDir)
+    studentPdfDir = os.path.join(teacher_pdf_dir, fileBaseName(student))
+    if (not os.access(studentPdfDir, os.F_OK)):
+      os.mkdir(studentPdfDir)
 
-    exosPath = (userPdfDir + "/" + userExosPdfFile)
-    resultsPath = (userPdfDir + "/" + userResultsPdfFile)
+    exosPath = (studentPdfDir + "/" + userExosPdfFile)
+    resultsPath = (studentPdfDir + "/" + userResultsPdfFile)
 
     os.rename(userExosPdfFile, exosPath)
     os.rename(userResultsPdfFile, resultsPath)
@@ -107,9 +129,10 @@ def main(interfaceFile, exercisesFile, pdflink):
 
       send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser (uke " + week + ") for " + student.fullName, text, [exosPath, resultsPath])
 
-  pdfs.pdf_all_combine_to_file("exos_combined.latex", "pdfs/", "**.pdf", "**_result.pdf")
-  pdfs.pdf_all_combine_to_file("results_combined.latex", "pdfs/", "**_result.pdf", None)
-  send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
+  pdfs.pdf_all_combine_to_file("exos_combined.latex", teacher_pdf_dir, "**.pdf", "**_result.pdf")
+  pdfs.pdf_all_combine_to_file("results_combined.latex", teacher_pdf_dir, "**_result.pdf", None)
+#  send_mail("eureka@vgsn.no", ["jeanbaptiste.huynh@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
+  send_mail("eureka@vgsn.no", ["jerome.lacoste@gmail.com"], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf"])
 
   del exercises
 
