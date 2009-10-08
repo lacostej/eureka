@@ -1,4 +1,5 @@
 * fix duplicate comment in result
+* consider moving the email smtp user password config into interfaces.xls
 
 PARSING / CONVERSION
 * [J] fix latex conversion
