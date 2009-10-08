@@ -39,7 +39,7 @@ def send_mail(send_from, send_to, subject, text, files=[], server="localhost", u
       base64.encode(f,contentsEncoded)
     f.close()
     subMsg=email.Message.Message()
-    subMsg.add_header("Content-type",contentType,name=fileName)
+    subMsg.add_header("Content-type",contentType,name=flatten_name(fileName))
     subMsg.add_header("Content-transfer-encoding",cte)
     subMsg.set_payload(contentsEncoded.getvalue())
     contentsEncoded.close()
@@ -67,3 +67,6 @@ def send_mail(send_from, send_to, subject, text, files=[], server="localhost", u
   smtp.close()
   print "done"
 
+def flatten_name(fileName):
+  fileName = fileName.replace("/", "_")
+  return fileName.replace("\\", "_")
