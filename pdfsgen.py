@@ -142,7 +142,7 @@ def main(interfaceFile, exercisesFile, pdflink):
 
   pdfs.pdf_all_combine_to_file("exos_combined.latex", teacher_pdf_dir, "**.pdf", "**_result.pdf")
   pdfs.pdf_all_combine_to_file("results_combined.latex", teacher_pdf_dir, "**_result.pdf", None)
-  send_mail("eureka@vgsn.no", [teacher_email], "Matematikk lekser og resultater (uke " + week + ") for alle", "", ["exos_combined.pdf", "results_combined.pdf", interfaceFilePath])
+  send_mail("eureka@vgsn.no", [teacher_email], "Matematikk lekser og resultater (uke " + week + ") for alle", "Hei " + prof_name, ["exos_combined.pdf", "results_combined.pdf", interfaceFilePath])
 
   del exercises
 
