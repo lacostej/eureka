@@ -23,7 +23,7 @@ class Monitor:
     return val
 
   def run(self):
-    restartVal = self.checksum([self.restartFile])
+    restartVal = self.checkSum([self.restartFile])
     for f in self.interfaces:
       self.values[f] = self.checkSum([f, self.exoDatabaseFile])
 
@@ -45,7 +45,7 @@ class Monitor:
           print "ERROR: couldn't generate: " + str(e)
           traceback.print_exc()
 
-      newRestartVal = self.checksum([self.restartFile])
+      newRestartVal = self.checkSum([self.restartFile])
       if newRestartVal != restartVal:
         print self.restartFile + " changed. Quiting..."
         return
