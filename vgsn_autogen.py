@@ -1,3 +1,4 @@
+import sys
 import glob,os,stat,time
 import traceback
 
@@ -38,6 +39,7 @@ class Monitor:
     while (True):
       for f in self.interfaces:
         print "checking " + str(f)
+        sys.out.flush()
         os.chdir(pwd)
         val = self.values[f]
         try:
@@ -57,7 +59,7 @@ class Monitor:
         print self.restartFile + " changed. Quiting..."
         return
 
-      time.sleep(1)
+      time.sleep(10)
 
 if __name__ == '__main__':
   link = "/home/vgsn/webapps/static_files/matte/pdfs"
