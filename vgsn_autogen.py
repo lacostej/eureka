@@ -37,7 +37,7 @@ class Monitor:
     pwd = os.path.abspath(".")
     while (True):
       for f in self.interfaces:
-#        print pwd
+        print "checking " + str(f)
         os.chdir(pwd)
         val = self.values[f]
         try:
