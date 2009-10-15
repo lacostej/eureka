@@ -18,12 +18,19 @@ class Monitor:
     '''Return a long which can be used to know if any files have changed.'''
     val = 0
     for f in files:
-      stats = os.stat (f)
-      val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
+      try:
+        if os.access(self.restartFile, os.FS_OK):
+          stats = os.stat (f)
+          val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
+      except Exception:
+        continue
     return val
 
+  def restartChecksum():
+    return self.checkSum([self.restartFile])
+
   def run(self):
-    restartVal = self.checkSum([self.restartFile])
+    restartVal = self.restartChecksum()
     for f in self.interfaces:
       self.values[f] = self.checkSum([f, self.exoDatabaseFile])
 
@@ -45,7 +52,7 @@ class Monitor:
           print "ERROR: couldn't generate: " + str(e)
           traceback.print_exc()
 
-      newRestartVal = self.checkSum([self.restartFile])
+      newRestartVal = self.restartChecksum()
       if newRestartVal != restartVal:
         print self.restartFile + " changed. Quiting..."
         return
