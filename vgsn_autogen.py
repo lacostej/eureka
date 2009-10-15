@@ -23,8 +23,9 @@ class Monitor:
         if os.access(f, os.FS_OK):
           stats = os.stat (f)
           val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
-      except Exception:
-        print "Failure..."
+      except Exception, e:
+        print "ERROR: couldn't compute checkSum: " + str(e)
+        traceback.print_exc()
         continue
     return val
 
