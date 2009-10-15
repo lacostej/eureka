@@ -39,7 +39,7 @@ class Monitor:
     while (True):
       for f in self.interfaces:
         print "checking " + str(f)
-        sys.out.flush()
+        sys.stdout.flush()
         os.chdir(pwd)
         val = self.values[f]
         try:
