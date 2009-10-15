@@ -24,6 +24,7 @@ class Monitor:
           stats = os.stat (f)
           val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
       except Exception:
+        print "Failure..."
         continue
     return val
 
@@ -59,7 +60,7 @@ class Monitor:
         print self.restartFile + " changed. Quiting..."
         return
 
-      time.sleep(10)
+      time.sleep(1)
 
 if __name__ == '__main__':
   link = "/home/vgsn/webapps/static_files/matte/pdfs"
