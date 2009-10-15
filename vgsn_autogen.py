@@ -20,7 +20,7 @@ class Monitor:
     val = 0
     for f in files:
       try:
-        if os.access(f, os.FS_OK):
+        if os.access(f, os.F_OK):
           stats = os.stat (f)
           val += stats [stat.ST_SIZE] + stats [stat.ST_MTIME]
       except Exception, e:
