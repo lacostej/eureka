@@ -8,9 +8,10 @@ from fileset import *
 class Monitor:
   values = {}
 
-  def __init__(self, interfaces, exoDatabaseFile, link=None):
+  def __init__(self, interfaces, exoDatabaseFile, restartFile, link=None):
     self.exoDatabaseFile = exoDatabaseFile
     self.interfaces = interfaces
+    self.restartFile = restartFile
     self.link = link
 
   def checkSum(self, files):
@@ -22,6 +23,7 @@ class Monitor:
     return val
 
   def run(self):
+    restartVal = self.checksum([self.restartFile])
     for f in self.interfaces:
       self.values[f] = self.checkSum([f, self.exoDatabaseFile])
 
@@ -43,6 +45,11 @@ class Monitor:
           print "ERROR: couldn't generate: " + str(e)
           traceback.print_exc()
 
+      newRestartVal = self.checksum([self.restartFile])
+      if newRestartVal != restartVal:
+        print self.restartFile + " changed. Quiting..."
+        return
+
       time.sleep(1)
 
 if __name__ == '__main__':
@@ -50,5 +57,6 @@ if __name__ == '__main__':
   if not os.path.exists(link):
     print "WARNING: link " + link + " doesn't exist"
     link = None
-  m = Monitor(FileSet("matte/interfaces", "**.xls").find_paths(), 'matte/oppgaver4.txt', link)
+  # FIXME make it so we can dynamically add a new file without restarting
+  m = Monitor(FileSet("matte/interfaces", "**.xls").find_paths(), 'matte/oppgaver4.txt', 'matte/restart', link)
   m.run()
