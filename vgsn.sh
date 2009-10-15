@@ -9,7 +9,7 @@ while [ 1 ]; do
   if [ $nb_dropbox -gt 0  ]; then
     ps -o pid,user,comm -ae | grep dropbox | cut -c 0-6 | xargs -l1 kill
   fi
-  ~/.dropbox-dist/dropbox
+  ~/.dropbox-dist/dropbox &
 
   echo "resetting ssh agent"
   nb_ssh_agent=`ps -u vgsn -aef | grep ssh-agent | grep -v grep | wc -l`
