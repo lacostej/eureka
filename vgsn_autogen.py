@@ -26,7 +26,7 @@ class Monitor:
         continue
     return val
 
-  def restartChecksum():
+  def restartChecksum(self):
     return self.checkSum([self.restartFile])
 
   def run(self):
