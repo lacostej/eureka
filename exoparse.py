@@ -70,7 +70,7 @@ class Range(Func):
     self.exclude = exclude
 
   def randomize(self):
-    theRange = range(self.start, self.stop)
+    theRange = range(self.start, self.stop + 1)
     if (self.exclude != None):
       theRange.remove(self.exclude)
     r = randomFrom(theRange)
