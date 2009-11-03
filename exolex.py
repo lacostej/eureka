@@ -24,7 +24,7 @@ tokens=(
 )
 
 
-t_TEXT=r'".+"'
+t_TEXT=r'"[^\"]+"'
 t_FUNC_SIGNALL=r'\\sign'
 t_FUNC_SIGN1=r'\\sign1'
 t_FUNC_SIGN2=r'\\sign2'

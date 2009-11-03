@@ -1,5 +1,5 @@
 id5
-"l2: this is an exercise with multiline description " & THE_C &
+"l2: this is an exercise with multiline description " & THE_C & "-" & THE_C &
 " a description that only ends when there are " &
 "no more lines"
 a (-10;10)\0
