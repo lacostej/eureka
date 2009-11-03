@@ -657,7 +657,7 @@ class Calc(FormulaParser):
         return t
 
     def t_VARNAME(self, t):
-        r'[a-zA-Z]'
+        r'[_a-zA-Z]+'
         return t
 
     def t_DECIMAL(self, t):

@@ -1,10 +1,10 @@
 id5
-"l2: this is an exercise with multiline description " & c &
+"l2: this is an exercise with multiline description " & THE_C &
 " a description that only ends when there are " &
 "no more lines"
 a (-10;10)\0
 b (1;10)
-c (1;1)
+THE_C (1;1)
 s \sign1
 \solve a s b
 \solution \res {a s b}

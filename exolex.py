@@ -37,7 +37,7 @@ t_COMMA=r','
 t_SEMICOLON=r';'
 t_LPAREN='\('
 t_RPAREN='\)'
-t_VAR=r'[a-zA-Z]'
+t_VAR=r'[_a-zA-Z]+'
 t_AND=r'&'
 
 def t_ID(t):
