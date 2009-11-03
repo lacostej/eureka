@@ -38,6 +38,7 @@ class Func:
 def randomFrom(array):
   '''Return an element randomly from the specified array'''
   import random
+  print len(array)
   return array[random.randint(0, len(array) -1 )]
 
 class List(Func):
@@ -162,13 +163,35 @@ class Variable:
 class Exercice:
   def __init__(self, id, description_list, statements, formula, result):
     self.id = id
-    self.description_list = description_list
+    self.resolved_description_list = self.resolve_variables(description_list, statements)
     self.statements = statements
     self.formula = formula
     self.result = result
 
+  def resolve_variables(self, description_list, statements):
+    '''Make sure we find the variables'''
+    return [ self.resolve_if_necessary(elt, statements) for elt in description_list]
+
+  def resolve_if_necessary(self, elt, statements):
+    if (type(elt) == str):
+      return elt
+    else:
+      statement = find(statements, lambda s : s.name == elt.name)
+      if (statement == None):
+        raise MyException("Unable to resolve variable with name " + s.name)
+      return str(statement.value())
+
   def description(self):
-    return "\n".join(self.description_list)
+#    converted = [ self.description_text(elt) for elt in self.description_list ]
+#    print converted
+#    return "\n".join(converted)
+    return "".join(self.resolved_description_list)
+
+#  def description_text(self, elt):
+#    if (type(elt) == str):
+#      return elt
+#    else:
+#      return elt.value()
 
   def parse(self, text, displayUnusedVars=False):
     load()
@@ -318,8 +341,17 @@ def p_description(p):
     p[0] = [ p[1] ]
 
 def p_description_elt(p):
-  '''description_elt : TEXT'''
+  '''description_elt : description_text
+                     | description_var'''
+  p[0] = p[1]
+
+def p_description_text(p):
+  '''description_text : TEXT'''
   p[0] = unquoteTEXT(p[1])
+
+def p_description_var(p):
+  '''description_var : VAR'''
+  p[0] = Variable(p[1])
 
 def p_statements(p):
   '''statements : 

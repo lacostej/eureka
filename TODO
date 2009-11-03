@@ -2,6 +2,8 @@
 * auto update code on the server
 * multiple levels of resolution
 
+* test description with missing variable reference
+
 PARSING / CONVERSION
 * [J] fix latex conversion
 ** cleanup latex warnings
