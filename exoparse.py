@@ -38,7 +38,6 @@ class Func:
 def randomFrom(array):
   '''Return an element randomly from the specified array'''
   import random
-  print len(array)
   return array[random.randint(0, len(array) -1 )]
 
 class List(Func):
@@ -351,7 +350,6 @@ def p_description_text(p):
 
 def p_description_var(p):
   '''description_var : VAR'''
-  print "VAR " + p[1]
   p[0] = Variable(p[1])
 
 def p_statements(p):
