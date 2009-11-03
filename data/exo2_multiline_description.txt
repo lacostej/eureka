@@ -1,0 +1,9 @@
+id5
+"l2: this is an exercise with multiline description" &
+"a description that only ends when there are" &
+"no more lines"
+a (-10;10)\0
+b (1;10)
+s \sign1
+\solve a s b
+\solution \res {a s b}

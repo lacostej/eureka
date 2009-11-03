@@ -160,12 +160,15 @@ class Variable:
     return "'" + self.name + "':" + value
 
 class Exercice:
-  def __init__(self, id, description, statements, formula, result):
+  def __init__(self, id, description_list, statements, formula, result):
     self.id = id
-    self.description = description
+    self.description_list = description_list
     self.statements = statements
     self.formula = formula
     self.result = result
+
+  def description(self):
+    return "\n".join(self.description_list)
 
   def parse(self, text, displayUnusedVars=False):
     load()
@@ -232,7 +235,7 @@ class Exercice:
     return v
 
   def generate(self):
-    print "Generating: [" + self.id + "]: " + str(self.description)
+    print "Generating: [" + self.id + "]: " + str(self.description())
     for s in self.statements:
       print str(s)
     print "Formula: " + self.formula
@@ -252,7 +255,7 @@ class Exercice:
 
   def generateLatex(self):
     s = ""
-    s += "\\begin{oppgave} " + self.id + " " + str(self.description)
+    s += "\\begin{oppgave} " + self.id + " " + str(self.description())
     s += " \\[ "
     s += nodeLatexConvertor.visit(nodeResultEvaluator.visit(self.parse(self.formula, True)))
     s += " \\] "
@@ -283,7 +286,7 @@ class Exercice:
     return formulaTextOutput.visit(node)
 
   def __str__(self):
-    s = "[" + self.id + "]: " + str(self.description) + "\n"
+    s = "[" + self.id + "]: " + str(self.description()) + "\n"
     for statement in self.statements:
       s += str(statement) + ",\n"
     s += "Formula: " + self.formula + "\n"
@@ -307,7 +310,15 @@ def removeSYMBOL(text):
   return text.split(None, 1)[1].strip()
 
 def p_description(p):
-  'description : TEXT'
+  '''description : description AND description_elt
+                 | description_elt'''
+  if (type(p[1]) == list):
+    p[0] = p[1] + [ p[3] ]
+  else:
+    p[0] = [ p[1] ]
+
+def p_description_elt(p):
+  '''description_elt : TEXT'''
   p[0] = unquoteTEXT(p[1])
 
 def p_statements(p):

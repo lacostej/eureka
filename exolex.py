@@ -6,6 +6,7 @@ import re
 tokens=(
   'ID',
   'TEXT',
+  'AND',
   'FUNC_SIGNALL',
   'FUNC_SIGN1',
   'FUNC_SIGN2',
@@ -37,7 +38,7 @@ t_SEMICOLON=r';'
 t_LPAREN='\('
 t_RPAREN='\)'
 t_VAR=r'[a-zA-Z]'
-
+t_AND=r'&'
 
 def t_ID(t):
     r'id\d+'

@@ -35,7 +35,7 @@ s \\sign1
 
   e = exoparse.parseExo(text)
 
-  assert e.description == "l1: addisjon og substraksjon med negative tall. Regn ut"
+  assertEquals(e.description(), "l1: addisjon og substraksjon med negative tall. Regn ut")
   assert len(e.statements) == 3
   assert e.statements[0].name == 'a'
   assert e.statements[0].value() in range(-1, 10)
@@ -365,6 +365,11 @@ def testTextSolution():
   s = e.generateLatexResult()
   assertEquals("\\begin{result} id1 \\[\\textrm{FIXME}\\]\\vspace{-5mm}\end{result}", s)
 
+def testParseMultipleLineDescriptions():
+  f = open('data/exo2_multiline_description.txt', 'r')
+  text = f.read()
+  e = exoparse.parseExo(text)
+  assertEquals("l2: this is an exercise with multiline description\na description that only ends when there are\nno more lines", e.description())
 
 def test_replaceVariables_1():
   v = {
