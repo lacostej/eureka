@@ -359,8 +359,7 @@ def testNegativeSignExtractedOutOfFractions():
   assertEvaluationLatexRenders({}, "\\res {\\frac{-5}{2}}", "-\\frac{5}{2}")
 
 def testTextSolution():
-  f = open('data/example_with_text_solution.txt', 'r')
-  text = f.read()
+  text = _dataread('example_with_text_solution.txt')
   e = exoparse.parseExo(text)
   s = e.generateLatexResult()
   assertEquals("\\begin{result} id1 \\[\\textrm{FIXME}\\]\\vspace{-5mm}\end{result}", s)
@@ -386,6 +385,10 @@ def test___decstr__():
 ########################################################################
 ### HELPER FUNCTIONS
 ########################################################################
+
+def _dataread(fileName):
+  f = open('data/' + fileName, 'r')
+  return f.read()
 
 def _replaceVariables(variables, formula):
   formulaParser = calc.Calc()
