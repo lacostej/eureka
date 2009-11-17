@@ -1,5 +1,5 @@
 id4
-"l1: demonstrate use of " & a & " types of constants: "
+"l1: demonstrate use of " & a & " types of constants"
 a 2
 \solve a
 \solution \res {a}
