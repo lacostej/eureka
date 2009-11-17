@@ -13,7 +13,7 @@ tokens=(
 #  'FUNC_SIGN3',
   'SOLVE',
   'SOLUTION',
-  'DECIMAL',
+  'FUNC_DECIMAL',
   'NUMBER',
   'BACKSLASH',
   'COMMA',
@@ -31,7 +31,7 @@ t_FUNC_SIGN2=r'\\sign2'
 #t_FUNC_SIGN3=r'\\sign3'
 t_SOLVE=r'\\solve .+'
 t_SOLUTION=r'\\solution .+'
-t_DECIMAL=r'\\d'
+t_FUNC_DECIMAL=r'\\d'
 t_BACKSLASH=r'\\'
 t_COMMA=r','
 t_SEMICOLON=r';'

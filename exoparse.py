@@ -417,8 +417,8 @@ def p_constant(p):
   p[0] = Constant(p[1])
 
 def p_decimal_range(p):
-  '''decimal_range : DECIMAL LPAREN number SEMICOLON number RPAREN
-                   | DECIMAL LPAREN number SEMICOLON number RPAREN BACKSLASH number'''
+  '''decimal_range : FUNC_DECIMAL LPAREN number SEMICOLON number RPAREN
+                   | FUNC_DECIMAL LPAREN number SEMICOLON number RPAREN BACKSLASH number'''
 #  print len(p)
   if (len(p) == 7):
     p[0] = DecimalRange(p[3], p[5])
