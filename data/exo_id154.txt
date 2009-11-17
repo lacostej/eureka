@@ -1,0 +1,9 @@
+id154
+"En lottovinner har bestemt seg for å satse en million kroner på aksjemarkedet. De " & b & " første årene har han tapt " & a &
+" prosent per år. Kona hans er veldig sur og forteller ham at hun vil forlate ham hvis han ikke får tilbake det han har tapt i løpet av de 2 neste årene." & 
+" Lottovinneren bestemmer seg for å satse alt på aksjemarkedet igjen. Hvilken årlig avkastning i prosent må han få de neste 2 årene for at kona hans ikke forlater ham?"
+a (1;10)
+b (2;10)
+c 2
+\solve 0
+\solution \res {\sqrt{2}{(1-(a:100))^(-b)}-1}

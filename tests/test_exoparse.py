@@ -366,6 +366,13 @@ def testParseMultipleLineDescriptions():
   e = exoparse.parseExo(text)
   assertEquals("l2: this is an exercise with multiline description 1-1 a description that only ends when there are no more lines", e.description())
 
+def testParseMultipleLineDescriptions2():
+  text = _dataread('exo_id154.txt')
+  e = exoparse.parseExo(text)
+  e.generate()
+  print e.description()
+#  assert false
+
 def test_replaceVariables_1():
   v = {
     "a": 2,
