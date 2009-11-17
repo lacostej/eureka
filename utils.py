@@ -20,6 +20,10 @@ def removeSYMBOL(text):
 def prettyPrintXMLTxt(txt):
   return parseString(txt).toprettyxml(indent=' '*2)
 
+
+def list_str(l):
+  return "[" + ",".join([ str(el) for el in l ]) + "]"
+
 #import xml.dom.minidom as md
 #import sys
 

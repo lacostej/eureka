@@ -7,7 +7,8 @@ import calc
 #import os
 #from email import message_from_string, message_from_file
 
-from decimal import*
+from decimal import *
+from utils import *
 
 TEST_DATA_DIR = "data/"
 
@@ -34,6 +35,9 @@ s \\sign1
   print text
 
   e = exoparse.parseExo(text)
+
+  # FIXME this exercise failed once. Adding this print to troubleshoot it
+  print list_str(e.statements)
 
   assertEquals(e.description(), "l1: addisjon og substraksjon med negative tall. Regn ut")
   assert len(e.statements) == 3
