@@ -9,7 +9,7 @@ import calc
 
 from decimal import*
 
-TEST_DATA_DIR = "./tests/data/"
+TEST_DATA_DIR = "data/"
 
 nodeResultEvaluator = calc.NodeResultEvaluator()
 formulaTextOutput = calc.NodeFormulaSimpleOuptutGenerator()
@@ -71,23 +71,20 @@ s \\sign1
   assertNotEquals(a1, a2)
 
 def test_fullLoad():
-  f = open('data/oppgaver4.txt', 'r')
-  lines = f.read()
+  lines = _dataread('oppgaver4.txt')
   exercises = mathparse.parseFile(lines)
   mathparse.parseExos(exercises)
 
 def testCurrentlyFailingExercice():
   ''' usefull during development, place the failing exercice in failing.txt and uncomment'''
-  f = open('data/failing.txt', 'r')
-  text = f.read()
+  text = _dataread('failing.txt')
   e = exoparse.parseExo(text)
   e.generate()
 #  assert False
 
 def testMultipleSolutions():
   '''Here we just fully convert all our exercises to see if we don't have a big error'''
-  f = open('data/multiple_solutions.txt', 'r')
-  text = f.read()
+  text = _dataread('multiple_solutions.txt')
   e = exoparse.parseExo(text)
   e.generate()
 
@@ -365,8 +362,7 @@ def testTextSolution():
   assertEquals("\\begin{result} id1 \\[\\textrm{FIXME}\\]\\vspace{-5mm}\end{result}", s)
 
 def testParseMultipleLineDescriptions():
-  f = open('data/exo2_multiline_description.txt', 'r')
-  text = f.read()
+  text = _dataread('exo2_multiline_description.txt')
   e = exoparse.parseExo(text)
   assertEquals("l2: this is an exercise with multiline description 1-1 a description that only ends when there are no more lines", e.description())
 
@@ -387,7 +383,7 @@ def test___decstr__():
 ########################################################################
 
 def _dataread(fileName):
-  f = open('data/' + fileName, 'r')
+  f = open(TEST_DATA_DIR + fileName, 'r')
   return f.read()
 
 def _replaceVariables(variables, formula):
