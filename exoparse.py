@@ -59,6 +59,23 @@ class List(Func):
   def __str__(self):
     return str(self.value())
 
+class Constant(Func):
+  '''A function whose value is picked is a constant'''
+  val = None
+
+  def __init__(self, value):
+    self.val = value
+
+  def randomize(self):
+    return self.val
+
+  def value(self):
+    return self.val
+
+  def __str__(self):
+    return "Constant(" + str(self.value()) + ")"
+
+
 class Range(Func):
   '''A function whose value is picked a specified range'''
   val = None
@@ -391,8 +408,13 @@ def p_statement_assignment(p):
 def p_value_assignment(p):
   '''value_assignment : decimal_range
                       | int_range
+                      | constant
                       | list'''
   p[0] = p[1]
+
+def p_constant(p):
+  '''constant : number'''
+  p[0] = Constant(p[1])
 
 def p_decimal_range(p):
   '''decimal_range : DECIMAL LPAREN number SEMICOLON number RPAREN
