@@ -413,8 +413,13 @@ def p_value_assignment(p):
   p[0] = p[1]
 
 def p_constant(p):
-  '''constant : number'''
+  '''constant : number_or_decimal'''
   p[0] = Constant(p[1])
+
+def p_number_or_decimal(p):
+  '''number_or_decimal : DECIMAL
+                       | NUMBER'''
+  p[0] = p[1]
 
 def p_decimal_range(p):
   '''decimal_range : FUNC_DECIMAL LPAREN number SEMICOLON number RPAREN

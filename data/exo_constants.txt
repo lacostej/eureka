@@ -1,5 +1,6 @@
 id4
-"l1: demonstrate use of " & a & " types of constants"
+"l1: demonstrate use of " & a & " types of constants: " & b
 a 2
-\solve a
-\solution \res {a}
+b -2.5
+\solve a * b
+\solution \res {a * b}

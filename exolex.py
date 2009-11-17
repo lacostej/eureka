@@ -2,6 +2,7 @@
 
 import ply.lex as lex
 import re
+import decimal
 
 tokens=(
   'ID',
@@ -14,6 +15,7 @@ tokens=(
   'SOLVE',
   'SOLUTION',
   'FUNC_DECIMAL',
+  'DECIMAL',
   'NUMBER',
   'BACKSLASH',
   'COMMA',
@@ -39,6 +41,12 @@ t_LPAREN='\('
 t_RPAREN='\)'
 t_VAR=r'[_a-zA-Z]+'
 t_AND=r'&'
+
+# A regular expression rule with some action code
+def t_DECIMAL(t):
+    r'-?\d+\.\d+'
+    t.value = decimal.Decimal(t.value)
+    return t
 
 def t_ID(t):
     r'id\d+'

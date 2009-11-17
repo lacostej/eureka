@@ -172,9 +172,9 @@ def test_id16():
 def testVarAsConstants():
   text = _dataread("exo_constants.txt")
   e = exoparse.parseExo(text)
-  assertEquals("l1: demonstrate use of 2 types of constants", e.description())
+  assertEquals("l1: demonstrate use of 2 types of constants: -2.5", e.description())
   s = e.generateLatexResult()
-  assertEquals("\\begin{result} id4 \[2\]\\vspace{-5mm}\end{result}", s)
+  assertEquals("\\begin{result} id4 \[-5\]\\vspace{-5mm}\end{result}", s)
 
 def test_operations_latex():
   v = {
