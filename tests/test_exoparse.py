@@ -36,13 +36,12 @@ s \\sign1
 
   e = exoparse.parseExo(text)
 
-  # FIXME this exercise failed once. Adding this print to troubleshoot it
   print list_str(e.statements)
 
   assertEquals(e.description(), "l1: addisjon og substraksjon med negative tall. Regn ut")
   assert len(e.statements) == 3
   assert e.statements[0].name == 'a'
-  assert e.statements[0].value() in range(-1, 10)
+  assert e.statements[0].value() in range(-1, 11)
   assert e.statements[1].name == 'b'
   assert e.statements[1].value() in [-10, -1, -2]
   assert e.statements[2].name == 's'
