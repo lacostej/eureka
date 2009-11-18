@@ -101,7 +101,7 @@ class Range(Func):
     return "Range(" + str(self.value()) + " in " + str(self.start)+","+str(self.stop) + ")"
 
 class DecimalRange(Func):
-  '''A function whose value is picked a specified range'''
+  '''A function whose value is picked a specified range of ints'''
   val = None
 
   def __init__(self, start, stop, exclude=None):
