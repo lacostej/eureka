@@ -174,7 +174,7 @@ def testVarAsConstants():
   e = exoparse.parseExo(text)
   assertEquals("l1: demonstrate use of 2 types of constants: -2.5", e.description())
   s = e.generateLatexResult()
-  assertEquals("\\begin{result} id4 \[-5\]\\vspace{-5mm}\end{result}", s)
+  assertEquals("\\begin{result} id4 \[5\]\\vspace{-5mm}\end{result}", s)
 
 def test_operations_latex():
   v = {
