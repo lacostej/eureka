@@ -3,5 +3,5 @@ id36
 a, b, c, d, e, f, g, h,i,j,k,l,m (1;9)
 x (x)
 u , v, w, y, z, r, t,s \sign1
-\solve a + g* (b*x - c) + g*(i*x + j)=d - h* (e*x + f)- k* (l*x + m)
-\solution \res{\frac{d-a+g*c-g*j-h*f-k*m}{g*b+g*i+h*e+k*l}}
+solve a + g* (b*x - c) + g*(i*x + j)=d - h* (e*x + f)- k* (l*x + m)
+solution \res{\frac{d-a+g*c-g*j-h*f-k*m}{g*b+g*i+h*e+k*l}}

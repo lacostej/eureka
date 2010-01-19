@@ -3,5 +3,5 @@ id4
 n 2
 a -2
 b -2.5
-\solve a * b
-\solution \res {a * b}
+solve a * b
+solution \res {a * b}

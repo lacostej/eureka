@@ -29,8 +29,8 @@ id0
 a (-1;10)
 b (-10,-1,-2)
 s \\sign1
-\\solve a s (b)
-\\solution \\res {a s (b)}
+solve a s (b)
+solution \\res {a s (b)}
 '''
   print text
 
@@ -60,8 +60,8 @@ id0
 a (-1000;1000)
 b (-1000;1000)
 s \\sign1
-\\solve a s (b)
-\\solution \\res {a s (b)}
+solve a s (b)
+solution \\res {a s (b)}
 '''
   print text
 

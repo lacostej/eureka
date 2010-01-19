@@ -25,14 +25,19 @@ tokens=(
   'VAR'
 )
 
+def t_SOLVE(t):
+ r'solve .+'
+ return t
+
+def t_SOLUTION(t):
+ r'solution .+'
+ return t
 
 t_TEXT=r'"[^\"]+"'
 t_FUNC_SIGNALL=r'\\sign'
 t_FUNC_SIGN1=r'\\sign1'
 t_FUNC_SIGN2=r'\\sign2'
 #t_FUNC_SIGN3=r'\\sign3'
-t_SOLVE=r'\\solve .+'
-t_SOLUTION=r'\\solution .+'
 t_FUNC_DECIMAL=r'\\d'
 t_BACKSLASH=r'\\'
 t_COMMA=r','
