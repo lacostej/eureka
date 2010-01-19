@@ -381,7 +381,22 @@ def testParseMultipleLineDescriptions2():
   e = exoparse.parseExo(text)
   e.generate()
   print e.description()
+#  print e.generateLatexResult()
 #  assert false
+
+# introduced to detect an issue. to revisit
+#def testId154():
+#  for a in range(1,11):
+#    for b in range(2,11):
+#      v = {
+#        "a": a,
+#        "b": b
+#      }
+#      formula = "\\res {(1-(a:100))^(-b:2)-1}"
+#      evaluation = evaluate(v, formula)
+#      if nodeLatexConvertor.visit(evaluation) == "0.29":
+#        print "SOLVED with " + str(a) + " " + str(b)
+#  assert False
 
 def test_replaceVariables_1():
   v = {

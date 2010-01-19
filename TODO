@@ -1,8 +1,12 @@
+* test description with missing variable reference
+* list as results
+* support decimal ranges e.g. "a (1.01, 1.99)"
+* support known CONSTANTS (e.g. PI)
+
 * consider moving the email smtp user password config into interfaces.xls
 * auto update code on the server
 * multiple levels of resolution
 
-* test description with missing variable reference
 
 PARSING / CONVERSION
 * [J] fix latex conversion
