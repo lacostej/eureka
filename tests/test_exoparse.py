@@ -9,6 +9,7 @@ import calc
 
 from decimal import *
 from utils import *
+from assert_utils import *
 
 TEST_DATA_DIR = "data/"
 
@@ -406,10 +407,6 @@ def test_replaceVariables_1():
   }
   assertEquals(_replaceVariables(v, "a s (b)"), "2 + (-3)")
 
-def test___decstr__():
-  s = "0.00000000000001"
-  assertEquals(s, calc.__decstr(Decimal(s)))
-
 ########################################################################
 ### HELPER FUNCTIONS
 ########################################################################
@@ -451,15 +448,3 @@ def assertFracReduction(frac1, expectedFrac):
 def assertSplit(x, expectedSplit):
   y = calc.split(x)
   assertEquals(y, expectedSplit)
-
-def assertEquals(a, b):
-  result = (a == b)
-  if (not result):
-    print str(a) + " not equals to\n" + str(b)
-    assert False
-
-def assertNotEquals(a, b):
-  result = (a != b)
-  if (not result):
-    print str(a) + " equals to\n" + str(b)
-    assert False

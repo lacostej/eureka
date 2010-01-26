@@ -12,6 +12,23 @@ def ischar(c):
   o = ord(c)
   return (o >= ord('a') and o <= ord('z')) or (o >= ord('A') and o <= ord('Z'))
 
+def split(a):
+  '''return the list of prime divisors'''
+  import math
+  if (a == 1):
+    return [1]
+  else:
+    array = []
+    i = 2
+    while (i < math.sqrt(a) + 1):
+      if (a % i == 0):
+        array.append(i)
+        a = a / i
+      else:
+        i += 1
+    if (a != 1):
+      array.append(a)
+    return array
 
 def u(s):
   '''encode the specified unicode string to utf-8'''
