@@ -8,6 +8,11 @@ class MyException(Exception):
   def __str__(self):
     return repr(self.value)
 
+def ischar(c):
+  o = ord(c)
+  return (o >= ord('a') and o <= ord('z')) or (o >= ord('A') and o <= ord('Z'))
+
+
 def u(s):
   '''encode the specified unicode string to utf-8'''
   if s == None:
