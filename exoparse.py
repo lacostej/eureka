@@ -222,14 +222,6 @@ class Exercice:
     del formulaParser
     return result
  
-  def myreplace(self, text, old, new, count=None):
-    if (count != None):
-      v = text.replace(old, new, count)
-    else:
-      v = text.replace(old, new)
-#    print "replace " + old + " " + new + " " + v
-    return v
-
   def generate(self):
     print "Generating: [" + self.id + "]: " + str(self.description())
     for s in self.statements:
