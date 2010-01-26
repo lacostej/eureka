@@ -20,12 +20,6 @@ import ply.yacc as yacc
 import os
 import decimal
 
-class MyException(Exception):
-  def __init__(self, value):
-    self.value = value
-  def __str__(self):
-    return repr(self.value)
-
 class FormulaParser:
     """
     Base class for a lexer/parser that has the rules defined as methods
