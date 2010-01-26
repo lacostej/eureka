@@ -19,6 +19,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 import os
 import decimal
+from utils import *
 
 class FormulaParser:
     """
@@ -96,10 +97,6 @@ class FormulaParser:
       for v in self.names.keys():
         if (not v in self.resolved_vars):
           print "WARNING: Unused: var: name: " + str(v) + " value: " + str(self.names[v])
-
-def ischar(c):
-  o = ord(c)
-  return (o >= ord('a') and o <= ord('z')) or (o >= ord('A') and o <= ord('Z'))
 
 class Node:
   '''A simple tree implementation'''
