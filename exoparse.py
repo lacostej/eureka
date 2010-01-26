@@ -228,10 +228,6 @@ class Exercice:
       print str(s)
     print "Formula: " + self.formula
     print "Result: " + self.result
-#    print "Formula: " + self.toPrettyXml(self.parse(self.formula))
-#    print "Result: " + self.toPrettyXml(self.parse(self.result))
-#    print "Evaluated Formula: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.formula)))
-#    print "Evaluated Result: " + self.toPrettyXml(nodeResultEvaluator.visit(self.parse(self.result)))
     print "Evaluated Formula: " + self.toText(nodeResultEvaluator.visit(self.parse(self.formula, True)))
     print "Evaluated Result: " + self.toText(nodeResultEvaluator.visit(self.parse(self.result)))
 
