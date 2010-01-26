@@ -44,7 +44,7 @@ t_COMMA=r','
 t_SEMICOLON=r';'
 t_LPAREN='\('
 t_RPAREN='\)'
-t_VAR=r'[_a-zA-Z]+'
+t_VAR=r'[_a-zA-Z][_a-zA-Z0-9]*'
 t_AND=r'&'
 
 # A regular expression rule with some action code
