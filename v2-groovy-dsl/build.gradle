@@ -1,0 +1,28 @@
+usePlugin 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    groovy 'org.codehaus.groovy:groovy:1.7.0'
+    testCompile 'junit:junit:4.7' // latest not yet available. see http://github.com/KentBeck/junit/issues/issue/66
+}
+
+task initProject(description: 'Initialize project directory structure.') << {
+    // Default package to be created in each src dir.
+    def defaultPackage = 'genesis'
+    
+    ['java', 'groovy', 'resources'].each {
+        // convention.sourceSets contains the directory structure
+        // for our Groovy project. So we use this structure
+        // and make a directory for each node.
+        convention.sourceSets.all."${it}".srcDirs*.each { dir ->
+            def newDir = new File(dir, defaultPackage)
+            logger.info "Creating directory $newDir"  // gradle -i shows this message.
+            newDir.mkdirs()  // Create dir.
+        }
+    }
+}
+
+
