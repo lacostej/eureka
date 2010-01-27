@@ -5,6 +5,10 @@ class DSL {
     return list[random.nextInt(list.size())]
   }
 
+  static int r(range) {
+    return random(range)
+  }
+
   static add(a,b) {
     return a + b 
   }
@@ -12,17 +16,14 @@ class DSL {
   static sub(a,b) {
     return a - b 
   }
-
+  /*
   static sign1(a, b) {
     return random([DSL.&add, DSL.&sub])(a,b)
   }
+  */
 
-  static signe1() {
+  static sign1() {
     return random([DSL.&add, DSL.&sub])
-  }
-
-  static int r(range) {
-    return random(range)
   }
 
   static solve(expression) {

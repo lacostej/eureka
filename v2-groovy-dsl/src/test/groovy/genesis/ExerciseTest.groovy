@@ -6,8 +6,11 @@ class ExerciseTest extends GroovyTestCase {
 
   void testReadOneExercise() {
     def exo = Exercise.fromText(resourceAsText("genesis/exercise1.txt"))
+
     assertNotNull exo: "could read the exercise"
     assert exo.getVariable('id') == 0
+    assert exo.getVariable('a') >= 1 && exo.getVariable('a') <= 10
+    assert Math.abs((int)exo.getVariable('b')) == 1
   }
 
   void testPefReadingOneExercise() {
