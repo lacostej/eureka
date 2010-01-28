@@ -16,7 +16,7 @@ class Exercise {
     // binding.setVariable("foo", new Integer(2));
     GroovyShell shell = new GroovyShell(binding);
     def exo_header = """\
-import static DSL.*
+import static genesis.DSL.*
 """
     shell.evaluate(exo_header + s)
     
