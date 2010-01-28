@@ -1,8 +1,6 @@
 id = 0
 desc = "Compute this operation: "
 a = r(1..10)
-// groovy bug ??!
-// b = r(-1..1 - [0])
 b = r((-1..1) - [0])
 s1 = sign1()
 exercise = s1(1, b)
