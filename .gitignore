@@ -6,3 +6,6 @@ nosetests.xml
 *~
 vgsn.log
 index.html
+.idea
+*.iml
+*/out
