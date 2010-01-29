@@ -1,5 +1,10 @@
 usePlugin 'groovy'
 
+version_prefix = "1.0"
+
+version = "$version_prefix-${new Date().format('yyyyMMdd')}" // The script is all Groovy, so we make use of all methods and features.
+archivesBaseName = 'eurekka'
+
 repositories {
     mavenCentral()
 }
