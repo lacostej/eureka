@@ -4,15 +4,6 @@ import static genesis.TestUtils.*
 
 class ExerciseTest extends GroovyTestCase {
 
-  void testSthg() {
-    println 1
-  }
-
-  void testResultEvaluator() {
-    assertEquals 0, DSL.nodeResultEvaluator.visit(DSL.solve(new ENode('-', [1, 1])))
-    assertEquals 2, DSL.nodeResultEvaluator.visit(DSL.solve(new ENode('+', [1, 1])))
-  }
-
   void testReadOneExercise() {
     def exo = Exercise.fromText(resourceAsText("genesis/exercise1.txt"))
 
@@ -24,10 +15,6 @@ class ExerciseTest extends GroovyTestCase {
     assert exo.getVariable('exercise') instanceof ENode
     def solution = exo.getVariable('solution')
     println solution.toString() + " evaluates to: " + getResult(solution)
-  }
-
-  def getResult(node) {
-    return DSL.nodeResultEvaluator.visit(node)
   }
 
   void testPefReadingOneExercise() {

@@ -7,6 +7,11 @@ package genesis
  */
 class TestUtils {
 
+
+  static def getResult(node) {
+    return DSL.nodeResultEvaluator.visit(node)
+  }
+
   static def resourceAsText(resourceName) {
     InputStream stream = resourceAsStream(resourceName)
     if (stream == null) {
