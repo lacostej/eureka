@@ -23,16 +23,7 @@ import static genesis.DSL.*
     return new Exercise(binding.getVariables())
   }
 
-  /*
-  def parseMultipleInFile(fileName) {
-    def lines = File(fileName).readLines()
+  static List<Exercise> multipleFromText(String s) {
+    return TextUtil.split(s, "^---.*").collect{ Exercise.fromText(it)}
   }
-  def parseMultiple(content) {
-    def lines = File(fileName).readLines()
-  }
-
-  def fromText(String s) {
-    
-  }
-  */
 }

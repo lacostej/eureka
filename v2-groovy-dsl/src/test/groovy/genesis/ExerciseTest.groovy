@@ -17,6 +17,20 @@ class ExerciseTest extends GroovyTestCase {
     println solution.toString() + " evaluates to: " + getResult(solution)
   }
 
+  void testReadMultipleExercises() {
+    List<Exercise> list = Exercise.multipleFromText(resourceAsText("genesis/exercise_bag1.txt"))
+
+    assertEquals 3, list.size()
+
+    assertEquals 1, list[0].variables.size()
+    assertEquals 0, list[0].getVariable('a')
+
+    assertEquals 1, list[1].variables.size()
+    assertEquals 1, list[1].getVariable('b')
+
+    assertEquals 0, list[2].variables.size()
+  }
+
   void testPefReadingOneExercise() {
     def text = resourceAsText("genesis/exercise1.txt")
     long start = System.currentTimeMillis()
